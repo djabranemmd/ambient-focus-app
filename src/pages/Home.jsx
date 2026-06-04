@@ -2,7 +2,7 @@ import AuroraBackground from "../components/layout/AuroraBackground";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import TopBar from "../components/layout/TopBar";
 
-import FocusTimer from "../components/timer/FocusTimer";
+import TimerSection from "../components/timer/TimerSection";
 import Statistics from "../components/stats/Statistics";
 import DashboardExtras from "../components/stats/DashboardExtras";
 import AudioMixer from "../components/audio/AudioMixer";
@@ -16,7 +16,7 @@ function Home() {
         <main className="p-6 lg:p-10">
           <TopBar />
 
-          <FocusTimer />
+          <TimerSection />
 
           <Statistics />
 
