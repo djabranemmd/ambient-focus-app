@@ -1,4 +1,5 @@
 import { useFocus } from "../../context/FocusContext";
+import Card from "../ui/Card";
 
 const DAILY_GOAL_MINUTES = 240;
 
@@ -27,16 +28,7 @@ function DailyGoal() {
   );
 
   return (
-    <div
-      className="
-        bg-white/5
-        backdrop-blur-xl
-        border
-        border-white/10
-        rounded-3xl
-        p-6
-      "
-    >
+    <Card>
       <h3 className="text-xl font-semibold">
         Daily Goal
       </h3>
@@ -64,11 +56,9 @@ function DailyGoal() {
         {Math.floor(
           totalMinutesToday % 60
         )}
-        m
-        {" / "}
-        4h
+        m / 4h
       </p>
-    </div>
+    </Card>
   );
 }
 

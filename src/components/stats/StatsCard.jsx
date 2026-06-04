@@ -1,19 +1,12 @@
+import Card from "../ui/Card";
+
 function StatsCard({
   title,
   value,
   subtitle,
 }) {
   return (
-    <div
-      className="
-        bg-white/5
-        backdrop-blur-xl
-        border
-        border-white/10
-        rounded-3xl
-        p-6
-      "
-    >
+    <Card>
       <p className="text-gray-400 text-sm">
         {title}
       </p>
@@ -27,7 +20,7 @@ function StatsCard({
           {subtitle}
         </p>
       )}
-    </div>
+    </Card>
   );
 }
 
