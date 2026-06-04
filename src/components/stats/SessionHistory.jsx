@@ -1,24 +1,15 @@
 import { useFocus } from "../../context/FocusContext";
+import Card from "../ui/Card";
 
 function SessionHistory() {
   const { sessions } = useFocus();
 
-  const recentSessions =
-    [...sessions]
-      .reverse()
-      .slice(0, 5);
+  const recentSessions = [...sessions]
+    .reverse()
+    .slice(0, 5);
 
   return (
-    <div
-      className="
-        bg-white/5
-        backdrop-blur-xl
-        border
-        border-white/10
-        rounded-3xl
-        p-6
-      "
-    >
+    <Card>
       <h3 className="text-xl font-semibold">
         Recent Sessions
       </h3>
@@ -42,9 +33,7 @@ function SessionHistory() {
                 "
               >
                 <span>
-                  {session.duration /
-                    60}{" "}
-                  min
+                  {session.duration / 60} min
                 </span>
 
                 <span className="text-gray-400 text-sm">
@@ -57,7 +46,7 @@ function SessionHistory() {
           )
         )}
       </div>
-    </div>
+    </Card>
   );
 }
 

@@ -35,8 +35,8 @@ function Sidebar() {
         min-h-screen
         border-r
         border-white/10
-        bg-white/5
-        backdrop-blur-xl
+        bg-black/10
+        backdrop-blur-2xl
       "
     >
       <div className="p-8">
@@ -72,7 +72,6 @@ function Sidebar() {
               "
             >
               <Icon size={18} />
-
               {item.label}
             </button>
           );

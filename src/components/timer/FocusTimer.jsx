@@ -7,6 +7,10 @@ import {
 
 import { useFocus } from "../../context/FocusContext";
 
+import Card from "../ui/Card";
+import Button from "../ui/Button";
+import SectionTitle from "../ui/SectionTitle";
+
 const TWENTY_FIVE = 25 * 60;
 const FIFTY = 50 * 60;
 
@@ -79,7 +83,6 @@ function FocusTimer() {
     setIsRunning(false);
 
     setDuration(value);
-
     setTimeLeft(value);
   };
 
@@ -118,20 +121,12 @@ function FocusTimer() {
 
   return (
     <section className="mt-8">
-      <div
-        className="
-          max-w-5xl
-          mx-auto
-          bg-white/5
-          backdrop-blur-xl
-          border
-          border-white/10
-          rounded-[40px]
-          p-10
-          relative
-          overflow-hidden
-        "
-      >
+      <SectionTitle
+        title="Focus Session"
+        subtitle="Stay focused. One session at a time."
+      />
+
+      <Card className="max-w-5xl mx-auto relative overflow-hidden">
         <div
           className="
             absolute
@@ -142,15 +137,7 @@ function FocusTimer() {
         />
 
         <div className="relative z-10">
-          <h2 className="text-3xl font-bold text-center">
-            Focus Session
-          </h2>
-
-          <p className="text-gray-400 text-center mt-2">
-            Stay focused. One session at a time.
-          </p>
-
-          <div className="flex justify-center mt-10">
+          <div className="flex justify-center">
             <div className="relative">
               <svg
                 width="300"
@@ -188,9 +175,9 @@ function FocusTimer() {
                   absolute
                   inset-0
                   flex
+                  flex-col
                   items-center
                   justify-center
-                  flex-col
                 "
               >
                 <span className="text-6xl font-bold">
@@ -207,42 +194,28 @@ function FocusTimer() {
           </div>
 
           <div className="flex justify-center gap-3 mt-8 flex-wrap">
-            <button
+            <Button
+              variant="secondary"
               onClick={() =>
                 selectPreset(
                   TWENTY_FIVE
                 )
               }
-              className="
-                px-5
-                py-2
-                rounded-xl
-                bg-white/10
-                hover:bg-white/15
-              "
             >
               25 min
-            </button>
+            </Button>
 
-            <button
+            <Button
+              variant="secondary"
               onClick={() =>
-                selectPreset(
-                  FIFTY
-                )
+                selectPreset(FIFTY)
               }
-              className="
-                px-5
-                py-2
-                rounded-xl
-                bg-white/10
-                hover:bg-white/15
-              "
             >
               50 min
-            </button>
+            </Button>
           </div>
 
-          <div className="flex justify-center gap-2 mt-6">
+          <div className="flex justify-center gap-3 mt-6 flex-wrap">
             <input
               type="number"
               placeholder="Custom minutes"
@@ -260,74 +233,53 @@ function FocusTimer() {
                 border-white/10
                 rounded-xl
                 px-4
-                py-2
+                py-3
                 outline-none
               "
             />
 
-            <button
+            <Button
               onClick={
                 applyCustomTime
               }
-              className="
-                bg-purple-600
-                px-4
-                py-2
-                rounded-xl
-              "
             >
               Apply
-            </button>
+            </Button>
           </div>
 
-          <div className="flex justify-center gap-4 mt-8">
-            <button
+          <div className="flex justify-center gap-4 mt-8 flex-wrap">
+            <Button
               onClick={() =>
                 setIsRunning(
                   !isRunning
                 )
               }
-              className="
-                flex
-                items-center
-                gap-2
-                bg-purple-600
-                px-6
-                py-3
-                rounded-xl
-              "
             >
               {isRunning ? (
-                <Pause size={18} />
+                <>
+                  <Pause size={18} />
+                  Pause
+                </>
               ) : (
-                <Play size={18} />
+                <>
+                  <Play size={18} />
+                  Start
+                </>
               )}
+            </Button>
 
-              {isRunning
-                ? "Pause"
-                : "Start"}
-            </button>
-
-            <button
+            <Button
+              variant="secondary"
               onClick={
                 resetTimer
               }
-              className="
-                flex
-                items-center
-                gap-2
-                bg-white/10
-                px-6
-                py-3
-                rounded-xl
-              "
             >
               <RotateCcw size={18} />
               Reset
-            </button>
+            </Button>
           </div>
         </div>
-      </div>
+      </Card>
     </section>
   );
 }
