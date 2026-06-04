@@ -3,6 +3,7 @@ import Hero from "../components/layout/Hero";
 import AudioMixer from "../components/audio/AudioMixer";
 import FocusTimer from "../components/timer/FocusTimer";
 import Statistics from "../components/stats/Statistics";
+import DashboardExtras from "../components/stats/DashboardExtras";
 
 function Home() {
   return (
@@ -15,6 +16,8 @@ function Home() {
         <FocusTimer />
 
         <Statistics />
+
+        <DashboardExtras />
 
         <AudioMixer />
       </main>
