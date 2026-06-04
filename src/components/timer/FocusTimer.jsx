@@ -39,7 +39,6 @@ function FocusTimer() {
     }
 
     if (timeLeft === 0) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsRunning(false);
 
       addSession(duration);
