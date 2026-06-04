@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { Play, Pause, RotateCcw } from "lucide-react";
+import {
+  Play,
+  Pause,
+  RotateCcw,
+} from "lucide-react";
+
 import { useFocus } from "../../context/FocusContext";
 
 const TWENTY_FIVE = 25 * 60;
@@ -8,9 +13,17 @@ const FIFTY = 50 * 60;
 function FocusTimer() {
   const { addSession } = useFocus();
 
-  const [duration, setDuration] = useState(TWENTY_FIVE);
-  const [timeLeft, setTimeLeft] = useState(TWENTY_FIVE);
-  const [isRunning, setIsRunning] = useState(false);
+  const [duration, setDuration] =
+    useState(TWENTY_FIVE);
+
+  const [timeLeft, setTimeLeft] =
+    useState(TWENTY_FIVE);
+
+  const [isRunning, setIsRunning] =
+    useState(false);
+
+  const [customMinutes, setCustomMinutes] =
+    useState("");
 
   useEffect(() => {
     let interval;
@@ -27,19 +40,34 @@ function FocusTimer() {
 
       addSession(duration);
 
-      alert("Focus session completed 🎉");
+      alert(
+        "Focus session completed 🎉"
+      );
     }
 
-    return () => clearInterval(interval);
-  }, [isRunning, timeLeft, duration, addSession]);
+    return () =>
+      clearInterval(interval);
+  }, [
+    isRunning,
+    timeLeft,
+    duration,
+    addSession,
+  ]);
 
   const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
+    const mins = Math.floor(
+      seconds / 60
+    );
+
     const secs = seconds % 60;
 
-    return `${String(mins).padStart(2, "0")}:${String(
-      secs
-    ).padStart(2, "0")}`;
+    return `${String(mins).padStart(
+      2,
+      "0"
+    )}:${String(secs).padStart(
+      2,
+      "0"
+    )}`;
   };
 
   const resetTimer = () => {
@@ -49,160 +77,255 @@ function FocusTimer() {
 
   const selectPreset = (value) => {
     setIsRunning(false);
+
     setDuration(value);
+
     setTimeLeft(value);
   };
 
-  const progress =
-    ((duration - timeLeft) / duration) * 100;
+  const applyCustomTime = () => {
+    const minutes =
+      Number(customMinutes);
 
-  const circumference = 2 * Math.PI * 110;
+    if (
+      !minutes ||
+      minutes < 1
+    )
+      return;
+
+    const seconds =
+      minutes * 60;
+
+    setDuration(seconds);
+    setTimeLeft(seconds);
+    setIsRunning(false);
+  };
+
+  const progress =
+    ((duration - timeLeft) /
+      duration) *
+    100;
+
+  const radius = 120;
+
+  const circumference =
+    2 * Math.PI * radius;
+
+  const offset =
+    circumference -
+    (progress / 100) *
+      circumference;
 
   return (
-    <section className="max-w-6xl mx-auto px-6 mt-20">
+    <section className="mt-8">
       <div
         className="
-        max-w-4xl
-    mx-auto
+          max-w-5xl
+          mx-auto
           bg-white/5
           backdrop-blur-xl
           border
           border-white/10
           rounded-[40px]
           p-10
-          text-center
+          relative
+          overflow-hidden
         "
       >
-        <h2 className="text-3xl font-bold">
-          Focus Timer
-        </h2>
+        <div
+          className="
+            absolute
+            inset-0
+            bg-purple-500/5
+            blur-3xl
+          "
+        />
 
-        <p className="text-gray-400 mt-2">
-          Stay focused and track your sessions.
-        </p>
+        <div className="relative z-10">
+          <h2 className="text-3xl font-bold text-center">
+            Focus Session
+          </h2>
 
-        <div className="mt-8 flex justify-center">
-          <div className="relative">
-            <svg width="260" height="260">
-              <circle
-                cx="130"
-                cy="130"
-                r="110"
-                stroke="rgba(255,255,255,0.1)"
-                strokeWidth="12"
-                fill="none"
-              />
+          <p className="text-gray-400 text-center mt-2">
+            Stay focused. One session at a time.
+          </p>
 
-              <circle
-                cx="130"
-                cy="130"
-                r="110"
-                stroke="#8b5cf6"
-                strokeWidth="12"
-                fill="none"
-                strokeDasharray={circumference}
-                strokeDashoffset={
-                  circumference -
-                  (circumference * progress) / 100
-                }
-                transform="rotate(-90 130 130)"
-                strokeLinecap="round"
-              />
-            </svg>
+          <div className="flex justify-center mt-10">
+            <div className="relative">
+              <svg
+                width="300"
+                height="300"
+              >
+                <circle
+                  cx="150"
+                  cy="150"
+                  r={radius}
+                  stroke="rgba(255,255,255,0.1)"
+                  strokeWidth="14"
+                  fill="none"
+                />
 
-            <div
-              className="
-                absolute
-                inset-0
-                flex
-                items-center
-                justify-center
-                text-5xl
-                font-bold
-              "
-            >
-              {formatTime(timeLeft)}
+                <circle
+                  cx="150"
+                  cy="150"
+                  r={radius}
+                  stroke="#8b5cf6"
+                  strokeWidth="14"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeDasharray={
+                    circumference
+                  }
+                  strokeDashoffset={
+                    offset
+                  }
+                  transform="rotate(-90 150 150)"
+                />
+              </svg>
+
+              <div
+                className="
+                  absolute
+                  inset-0
+                  flex
+                  items-center
+                  justify-center
+                  flex-col
+                "
+              >
+                <span className="text-6xl font-bold">
+                  {formatTime(
+                    timeLeft
+                  )}
+                </span>
+
+                <span className="text-gray-400 mt-2">
+                  Remaining
+                </span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="flex justify-center gap-4 mt-8">
-          <button
-            onClick={() =>
-              setIsRunning(!isRunning)
-            }
-            className="
-              flex
-              items-center
-              gap-2
-              bg-purple-600
-              hover:bg-purple-500
-              px-6
-              py-3
-              rounded-xl
-              transition
-            "
-          >
-            {isRunning ? (
-              <Pause size={18} />
-            ) : (
-              <Play size={18} />
-            )}
+          <div className="flex justify-center gap-3 mt-8 flex-wrap">
+            <button
+              onClick={() =>
+                selectPreset(
+                  TWENTY_FIVE
+                )
+              }
+              className="
+                px-5
+                py-2
+                rounded-xl
+                bg-white/10
+                hover:bg-white/15
+              "
+            >
+              25 min
+            </button>
 
-            {isRunning ? "Pause" : "Start"}
-          </button>
+            <button
+              onClick={() =>
+                selectPreset(
+                  FIFTY
+                )
+              }
+              className="
+                px-5
+                py-2
+                rounded-xl
+                bg-white/10
+                hover:bg-white/15
+              "
+            >
+              50 min
+            </button>
+          </div>
 
-          <button
-            onClick={resetTimer}
-            className="
-              flex
-              items-center
-              gap-2
-              bg-white/10
-              hover:bg-white/15
-              px-6
-              py-3
-              rounded-xl
-              transition
-            "
-          >
-            <RotateCcw size={18} />
-            Reset
-          </button>
-        </div>
+          <div className="flex justify-center gap-2 mt-6">
+            <input
+              type="number"
+              placeholder="Custom minutes"
+              value={
+                customMinutes
+              }
+              onChange={(e) =>
+                setCustomMinutes(
+                  e.target.value
+                )
+              }
+              className="
+                bg-white/10
+                border
+                border-white/10
+                rounded-xl
+                px-4
+                py-2
+                outline-none
+              "
+            />
 
-        <div className="flex justify-center gap-4 mt-8">
-          <button
-            onClick={() =>
-              selectPreset(TWENTY_FIVE)
-            }
-            className="
-              bg-white/10
-              hover:bg-white/15
-              px-5
-              py-2
-              rounded-xl
-              transition
-            "
-          >
-            25 min
-          </button>
+            <button
+              onClick={
+                applyCustomTime
+              }
+              className="
+                bg-purple-600
+                px-4
+                py-2
+                rounded-xl
+              "
+            >
+              Apply
+            </button>
+          </div>
 
-          <button
-            onClick={() =>
-              selectPreset(FIFTY)
-            }
-            className="
-              bg-white/10
-              hover:bg-white/15
-              px-5
-              py-2
-              rounded-xl
-              transition
-            "
-          >
-            50 min
-          </button>
+          <div className="flex justify-center gap-4 mt-8">
+            <button
+              onClick={() =>
+                setIsRunning(
+                  !isRunning
+                )
+              }
+              className="
+                flex
+                items-center
+                gap-2
+                bg-purple-600
+                px-6
+                py-3
+                rounded-xl
+              "
+            >
+              {isRunning ? (
+                <Pause size={18} />
+              ) : (
+                <Play size={18} />
+              )}
+
+              {isRunning
+                ? "Pause"
+                : "Start"}
+            </button>
+
+            <button
+              onClick={
+                resetTimer
+              }
+              className="
+                flex
+                items-center
+                gap-2
+                bg-white/10
+                px-6
+                py-3
+                rounded-xl
+              "
+            >
+              <RotateCcw size={18} />
+              Reset
+            </button>
+          </div>
         </div>
       </div>
     </section>
