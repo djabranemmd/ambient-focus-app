@@ -1,73 +1,45 @@
-import { useEffect, useState } from "react";
 import StatsCard from "./StatsCard";
+import { useFocus } from "../../context/FocusContext";
 
 function Statistics() {
-  const [stats, setStats] =
-    useState({
-      totalSessions: 0,
-      totalMinutes: 0,
-      todaySessions: 0,
-      streak: 0,
-    });
+  const { sessions } = useFocus();
 
-  useEffect(() => {
-    const sessions =
-      JSON.parse(
-        localStorage.getItem(
-          "focusSessions"
-        )
-      ) || [];
+  const totalSessions = sessions.length;
 
-    const totalSessions =
-      sessions.length;
-
-    const totalMinutes =
-      sessions.reduce(
-        (sum, session) =>
-          sum +
-          session.duration / 60,
-        0
-      );
-
-    const today =
-      new Date().toDateString();
-
-    const todaySessions =
-      sessions.filter(
-        (session) =>
-          new Date(
-            session.date
-          ).toDateString() === today
-      ).length;
-
-    const uniqueDays = [
-      ...new Set(
-        sessions.map((session) =>
-          new Date(
-            session.date
-          ).toDateString()
-        )
-      ),
-    ];
-
-    const streak =
-      uniqueDays.length;
-
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setStats({
-      totalSessions,
-      totalMinutes,
-      todaySessions,
-      streak,
-    });
-  }, []);
-
-  const hours = Math.floor(
-    stats.totalMinutes / 60
+  const totalMinutes = sessions.reduce(
+    (sum, session) =>
+      sum + session.duration / 60,
+    0
   );
 
-  const minutes =
-    stats.totalMinutes % 60;
+  const today = new Date().toDateString();
+
+  const todaySessions = sessions.filter(
+    (session) =>
+      new Date(
+        session.date
+      ).toDateString() === today
+  ).length;
+
+  const uniqueDays = [
+    ...new Set(
+      sessions.map((session) =>
+        new Date(
+          session.date
+        ).toDateString()
+      )
+    ),
+  ];
+
+  const streak = uniqueDays.length;
+
+  const hours = Math.floor(
+    totalMinutes / 60
+  );
+
+  const minutes = Math.floor(
+    totalMinutes % 60
+  );
 
   return (
     <section className="max-w-6xl mx-auto px-6 mt-20">
@@ -89,21 +61,17 @@ function Statistics() {
 
         <StatsCard
           title="Sessions"
-          value={
-            stats.totalSessions
-          }
+          value={totalSessions}
         />
 
         <StatsCard
           title="Today"
-          value={
-            stats.todaySessions
-          }
+          value={todaySessions}
         />
 
         <StatsCard
           title="Streak"
-          value={`${stats.streak} days`}
+          value={`${streak} days`}
         />
       </div>
     </section>
