@@ -1,26 +1,30 @@
 import AuroraBackground from "../components/layout/AuroraBackground";
-import Hero from "../components/layout/Hero";
-import AudioMixer from "../components/audio/AudioMixer";
+import DashboardLayout from "../components/layout/DashboardLayout";
+import TopBar from "../components/layout/TopBar";
+
 import FocusTimer from "../components/timer/FocusTimer";
 import Statistics from "../components/stats/Statistics";
 import DashboardExtras from "../components/stats/DashboardExtras";
+import AudioMixer from "../components/audio/AudioMixer";
 
 function Home() {
   return (
     <>
       <AuroraBackground />
 
-      <main className="min-h-screen pb-20">
-        <Hero />
+      <DashboardLayout>
+        <main className="p-6 lg:p-10">
+          <TopBar />
 
-        <FocusTimer />
+          <FocusTimer />
 
-        <Statistics />
+          <Statistics />
 
-        <DashboardExtras />
+          <DashboardExtras />
 
-        <AudioMixer />
-      </main>
+          <AudioMixer />
+        </main>
+      </DashboardLayout>
     </>
   );
 }

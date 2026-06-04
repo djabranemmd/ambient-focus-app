@@ -62,6 +62,8 @@ function FocusTimer() {
     <section className="max-w-6xl mx-auto px-6 mt-20">
       <div
         className="
+        max-w-4xl
+    mx-auto
           bg-white/5
           backdrop-blur-xl
           border

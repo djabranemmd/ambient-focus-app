@@ -63,7 +63,7 @@ function AudioMixer() {
   };
 
   return (
-    <section className="max-w-6xl mx-auto px-6 mt-10">
+    <section className="mt-10">
       <div className="mb-6">
         <h2 className="text-3xl font-bold">
           Ambient Sounds
