@@ -1,23 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  font-family:
-    Inter,
-    system-ui,
-    sans-serif;
-
-  color-scheme: dark;
-
   --bg-primary: #050816;
-  --bg-secondary: #0d1224;
-
-  --card-bg: rgba(255, 255, 255, 0.05);
-
   --text-primary: #ffffff;
-  --text-secondary: #9ca3af;
+}
 
-  --accent: #7c3aed;
-  --accent-light: #8b5cf6;
+[data-theme="light"] {
+  --bg-primary: #f5f7fb;
+  --text-primary: #0f172a;
 }
 
 * {
@@ -32,5 +22,7 @@ body {
   background: var(--bg-primary);
   color: var(--text-primary);
 
-  overflow-x: hidden;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
 }
