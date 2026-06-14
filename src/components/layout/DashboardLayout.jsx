@@ -7,11 +7,12 @@ function DashboardLayout({
 }) {
 
   return (
-
     <div
       className="
         flex
         min-h-screen
+        w-full
+        overflow-x-hidden
       "
     >
 
@@ -21,8 +22,10 @@ function DashboardLayout({
       <div
         className="
           flex-1
+          min-w-0
           pb-24
           lg:pb-0
+          overflow-x-hidden
         "
       >
 
@@ -34,9 +37,7 @@ function DashboardLayout({
       <MobileBottomNav />
 
     </div>
-
   );
-
 }
 
 

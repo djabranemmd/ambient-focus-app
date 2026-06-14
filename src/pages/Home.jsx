@@ -67,7 +67,16 @@ function Home() {
 
       <DashboardLayout>
 
-        <main className="p-6 lg:p-10">
+        <main
+  className="
+    w-full
+    max-w-full
+    overflow-hidden
+    p-4
+    sm:p-6
+    lg:p-10
+  "
+>
 
           <TopBar />
 

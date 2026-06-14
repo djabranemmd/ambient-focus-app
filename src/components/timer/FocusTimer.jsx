@@ -140,9 +140,13 @@ function FocusTimer() {
           <div className="flex justify-center">
             <div className="relative">
               <svg
-                width="300"
-                height="300"
-              >
+  className="
+    w-57.5
+    h-57.5
+    sm:w-75
+    sm:h-75
+  "
+>
                 <circle
                   cx="150"
                   cy="150"
@@ -180,7 +184,7 @@ function FocusTimer() {
                   justify-center
                 "
               >
-                <span className="text-6xl font-bold">
+                <span className="text-5xl sm:text-6xl font-bold">
                   {formatTime(
                     timeLeft
                   )}
@@ -215,10 +219,30 @@ function FocusTimer() {
             </Button>
           </div>
 
-          <div className="flex justify-center gap-3 mt-6 flex-wrap">
+          <div
+ className="
+   flex
+   flex-col
+   sm:flex-row
+   justify-center
+   gap-3
+   mt-6
+ "
+>
             <input
               type="number"
               placeholder="Custom minutes"
+              className="
+ w-full
+ sm:w-auto
+ bg-white/10
+ border
+ border-white/10
+ rounded-xl
+ px-4
+ py-3
+ outline-none
+"
               value={
                 customMinutes
               }
