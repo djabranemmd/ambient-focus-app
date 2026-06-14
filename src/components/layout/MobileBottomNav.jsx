@@ -58,81 +58,107 @@ function MobileBottomNav() {
 
       <div
         className="
+          h-20
           bg-black/30
           backdrop-blur-2xl
           border
           border-white/10
           rounded-3xl
-          p-3
           flex
+          items-center
           justify-around
+          px-2
         "
       >
 
-        {
-          items.map((item)=>{
+        {items.map((item)=>{
 
-            const Icon =
-              item.icon;
+          const Icon =
+            item.icon;
 
-
-            const active =
-              activePage === item.id;
+          const active =
+            activePage === item.id;
 
 
-            return (
+          return (
 
-              <button
+            <button
+              key={item.id}
 
-                key={item.id}
+              onClick={() =>
+                setActivePage(
+                  item.id
+                )
+              }
 
-                onClick={() =>
-                  setActivePage(
-                    item.id
-                  )
-                }
+              className="
+                relative
+                w-16
+                h-16
+                flex
+                flex-col
+                items-center
+                justify-center
+                gap-1
+                rounded-2xl
+                transition-all
+                duration-300
+              "
+            >
+
+              {active && (
+                <span
+                  className="
+                    absolute
+                    inset-0
+                    rounded-2xl
+                    bg-purple-500/15
+                  "
+                />
+              )}
 
 
+              <Icon
+                size={20}
                 className={`
-                  flex
-                  flex-col
-                  items-center
-                  gap-1
-                  px-3
-                  py-2
-                  rounded-2xl
-                  transition-all
-                  duration-300
-
+                  relative
+                  z-10
+                  transition
                   ${
                     active
                     ?
-                    "text-purple-400 bg-purple-500/10"
+                    "text-purple-400"
                     :
                     "text-gray-400"
                   }
                 `}
+              />
 
+
+              <span
+                className={`
+                  relative
+                  z-10
+                  text-[11px]
+                  transition
+                  ${
+                    active
+                    ?
+                    "text-purple-400"
+                    :
+                    "text-gray-400"
+                  }
+                `}
               >
+                {item.label}
+              </span>
 
-                <Icon
-                  size={20}
-                />
 
-                <span
-                  className="
-                    text-[11px]
-                  "
-                >
-                  {item.label}
-                </span>
+            </button>
 
-              </button>
+          );
 
-            );
-
-          })
-        }
+        })}
 
       </div>
 
