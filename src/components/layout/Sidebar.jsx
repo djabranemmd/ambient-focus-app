@@ -5,21 +5,34 @@ import {
   BarChart3,
 } from "lucide-react";
 
+import {
+  useNavigation,
+} from "../../context/NavigationContext.jsx";
+
 function Sidebar() {
+  const {
+    activePage,
+    setActivePage,
+  } = useNavigation();
+
   const items = [
     {
+      id: "dashboard",
       icon: LayoutDashboard,
       label: "Dashboard",
     },
     {
+      id: "focus",
       icon: Timer,
       label: "Focus",
     },
     {
+      id: "sounds",
       icon: Music,
       label: "Sounds",
     },
     {
+      id: "statistics",
       icon: BarChart3,
       label: "Statistics",
     },
@@ -53,10 +66,16 @@ function Sidebar() {
         {items.map((item) => {
           const Icon = item.icon;
 
+          const active =
+            activePage === item.id;
+
           return (
             <button
-              key={item.label}
-              className="
+              key={item.id}
+              onClick={() =>
+                setActivePage(item.id)
+              }
+              className={`
                 w-full
                 flex
                 items-center
@@ -65,13 +84,18 @@ function Sidebar() {
                 py-3
                 rounded-xl
                 text-left
-                text-gray-300
-                hover:bg-white/10
                 transition
                 mb-2
-              "
+
+                ${
+                  active
+                    ? "bg-purple-600 text-white"
+                    : "text-gray-300 hover:bg-white/10"
+                }
+              `}
             >
               <Icon size={18} />
+
               {item.label}
             </button>
           );

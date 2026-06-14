@@ -6,16 +6,19 @@ import "./index.css";
 
 import { FocusProvider } from "./context/FocusContext";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
+import {
+  NavigationProvider,
+} from "./context/NavigationContext.jsx";
 
 createRoot(
-  document.getElementById(
-    "root"
-  )
+  document.getElementById("root")
 ).render(
   <StrictMode>
     <ThemeProvider>
       <FocusProvider>
-        <App />
+        <NavigationProvider>
+          <App />
+        </NavigationProvider>
       </FocusProvider>
     </ThemeProvider>
   </StrictMode>
