@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import {
   Play,
   Pause,
@@ -7,63 +8,146 @@ import {
 
 import { useFocus } from "../../context/FocusContext";
 
+import useNotification from "../../hooks/useNotification";
+
+import {
+  playCompletionSound,
+} from "../../utils/sound";
+
 import Card from "../ui/Card";
 import Button from "../ui/Button";
 import SectionTitle from "../ui/SectionTitle";
+import CompletionToast from "../ui/CompletionToast";
+
 
 const TWENTY_FIVE = 25 * 60;
 const FIFTY = 50 * 60;
 
+
 function FocusTimer() {
-  const { addSession } = useFocus();
+
+  const {
+    addSession,
+  } = useFocus();
+
+
+  const {
+    sendNotification,
+  } = useNotification();
+
+
 
   const [duration, setDuration] =
     useState(TWENTY_FIVE);
 
+
   const [timeLeft, setTimeLeft] =
     useState(TWENTY_FIVE);
+
 
   const [isRunning, setIsRunning] =
     useState(false);
 
+
   const [customMinutes, setCustomMinutes] =
     useState("");
 
+
+  const [showCompletion, setShowCompletion] =
+    useState(false);
+
+
+
   useEffect(() => {
+
     let interval;
 
-    if (isRunning && timeLeft > 0) {
+
+    if (
+      isRunning &&
+      timeLeft > 0
+    ) {
+
       interval = setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
+
+        setTimeLeft(
+          (prev) => prev - 1
+        );
+
       }, 1000);
+
     }
 
-    if (timeLeft === 0) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+
+
+    if (
+      timeLeft === 0 &&
+      isRunning
+    ) {
+
       setIsRunning(false);
 
-      addSession(duration);
 
-      alert(
-        "Focus session completed 🎉"
+      addSession(
+        duration
       );
+
+
+      sendNotification({
+
+        title:
+          "Ambient Focus",
+
+        body:
+          "Focus session completed 🎉",
+
+      });
+
+
+      playCompletionSound();
+
+
+      setShowCompletion(true);
+
+
+      setTimeout(() => {
+
+        setShowCompletion(false);
+
+      }, 4000);
+
     }
+
+
 
     return () =>
       clearInterval(interval);
+
+
   }, [
     isRunning,
     timeLeft,
     duration,
     addSession,
+    sendNotification,
   ]);
 
-  const formatTime = (seconds) => {
-    const mins = Math.floor(
-      seconds / 60
-    );
 
-    const secs = seconds % 60;
+
+
+  const formatTime = (
+    seconds
+  ) => {
+
+    const mins =
+      Math.floor(
+        seconds / 60
+      );
+
+
+    const secs =
+      seconds % 60;
+
 
     return `${String(mins).padStart(
       2,
@@ -72,23 +156,45 @@ function FocusTimer() {
       2,
       "0"
     )}`;
+
   };
+
+
+
 
   const resetTimer = () => {
+
     setIsRunning(false);
-    setTimeLeft(duration);
+
+    setTimeLeft(
+      duration
+    );
+
   };
 
-  const selectPreset = (value) => {
+
+
+
+  const selectPreset = (
+    value
+  ) => {
+
     setIsRunning(false);
 
     setDuration(value);
+
     setTimeLeft(value);
+
   };
 
+
+
+
   const applyCustomTime = () => {
+
     const minutes =
       Number(customMinutes);
+
 
     if (
       !minutes ||
@@ -96,37 +202,91 @@ function FocusTimer() {
     )
       return;
 
+
     const seconds =
       minutes * 60;
 
+
     setDuration(seconds);
+
     setTimeLeft(seconds);
+
     setIsRunning(false);
+
   };
 
+
+
+
   const progress =
-    ((duration - timeLeft) /
-      duration) *
-    100;
+    (
+      (duration - timeLeft) /
+      duration
+    ) * 100;
+
+
+
 
   const radius = 120;
+
 
   const circumference =
     2 * Math.PI * radius;
 
+
   const offset =
     circumference -
-    (progress / 100) *
-      circumference;
+    (
+      progress / 100
+    ) *
+    circumference;
+
+
+
 
   return (
-    <section className="mt-8">
-      <SectionTitle
-        title="Focus Session"
-        subtitle="Stay focused. One session at a time."
+
+    <section
+      className="mt-8"
+    >
+
+      <CompletionToast
+
+        show={
+          showCompletion
+        }
+
+        duration={
+          duration
+        }
+
+        onClose={() =>
+          setShowCompletion(false)
+        }
+
       />
 
-      <Card className="max-w-5xl mx-auto relative overflow-hidden">
+
+
+      <SectionTitle
+
+        title="Focus Session"
+
+        subtitle="Stay focused. One session at a time."
+
+      />
+
+
+
+      <Card
+        className="
+          max-w-5xl
+          mx-auto
+          relative
+          overflow-hidden
+        "
+      >
+
         <div
           className="
             absolute
@@ -136,43 +296,95 @@ function FocusTimer() {
           "
         />
 
-        <div className="relative z-10">
-          <div className="flex justify-center">
-            <div className="relative">
+
+
+        <div
+          className="
+            relative
+            z-10
+          "
+        >
+
+
+          <div
+            className="
+              flex
+              justify-center
+            "
+          >
+
+            <div
+              className="
+                relative
+              "
+            >
+
               <svg
-  className="
-    w-57.5
-    h-57.5
-    sm:w-75
-    sm:h-75
-  "
->
-                <circle
-                  cx="150"
-                  cy="150"
-                  r={radius}
-                  stroke="rgba(255,255,255,0.1)"
-                  strokeWidth="14"
-                  fill="none"
-                />
+
+                className="
+                  w-57.5
+                  h-57.5
+                  sm:w-75
+                  sm:h-75
+                "
+
+                viewBox="
+                  0 0 300 300
+                "
+
+              >
 
                 <circle
+
                   cx="150"
+
                   cy="150"
+
                   r={radius}
-                  stroke="#8b5cf6"
+
+                  stroke="rgba(255,255,255,0.1)"
+
                   strokeWidth="14"
+
                   fill="none"
+
+                />
+
+
+                <circle
+
+                  cx="150"
+
+                  cy="150"
+
+                  r={radius}
+
+                  stroke="#8b5cf6"
+
+                  strokeWidth="14"
+
+                  fill="none"
+
                   strokeLinecap="round"
+
                   strokeDasharray={
                     circumference
                   }
+
                   strokeDashoffset={
                     offset
                   }
-                  transform="rotate(-90 150 150)"
+
+                  transform="
+                    rotate(-90 150 150)
+                  "
+
                 />
+
+
               </svg>
+
+
 
               <div
                 className="
@@ -184,74 +396,112 @@ function FocusTimer() {
                   justify-center
                 "
               >
-                <span className="text-5xl sm:text-6xl font-bold">
-                  {formatTime(
-                    timeLeft
-                  )}
+
+                <span
+                  className="
+                    text-5xl
+                    sm:text-6xl
+                    font-bold
+                  "
+                >
+
+                  {
+                    formatTime(
+                      timeLeft
+                    )
+                  }
+
                 </span>
 
-                <span className="text-gray-400 mt-2">
+
+                <span
+                  className="
+                    text-gray-400
+                    mt-2
+                  "
+                >
                   Remaining
                 </span>
+
+
               </div>
+
+
             </div>
+
+
           </div>
 
-          <div className="flex justify-center gap-3 mt-8 flex-wrap">
+
+
+
+          <div
+            className="
+              flex
+              justify-center
+              gap-3
+              mt-8
+              flex-wrap
+            "
+          >
+
             <Button
+
               variant="secondary"
+
               onClick={() =>
                 selectPreset(
                   TWENTY_FIVE
                 )
               }
+
             >
               25 min
             </Button>
 
+
+
             <Button
+
               variant="secondary"
+
               onClick={() =>
-                selectPreset(FIFTY)
+                selectPreset(
+                  FIFTY
+                )
               }
+
             >
               50 min
             </Button>
+
+
           </div>
 
+
+
+
+
           <div
- className="
-   flex
-   flex-col
-   sm:flex-row
-   justify-center
-   gap-3
-   mt-6
- "
->
+            className="
+              flex
+              flex-col
+              sm:flex-row
+              justify-center
+              gap-3
+              mt-6
+            "
+          >
+
             <input
+
               type="number"
+
               placeholder="Custom minutes"
+
               className="
- w-full
- sm:w-auto
- bg-white/10
- border
- border-white/10
- rounded-xl
- px-4
- py-3
- outline-none
-"
-              value={
-                customMinutes
-              }
-              onChange={(e) =>
-                setCustomMinutes(
-                  e.target.value
-                )
-              }
-              className="
+                w-full
+                sm:w-auto
                 bg-white/10
                 border
                 border-white/10
@@ -260,52 +510,121 @@ function FocusTimer() {
                 py-3
                 outline-none
               "
+
+              value={
+                customMinutes
+              }
+
+              onChange={(e) =>
+                setCustomMinutes(
+                  e.target.value
+                )
+              }
+
             />
 
+
+
             <Button
+
               onClick={
                 applyCustomTime
               }
+
             >
               Apply
             </Button>
+
+
           </div>
 
-          <div className="flex justify-center gap-4 mt-8 flex-wrap">
+
+
+
+
+          <div
+            className="
+              flex
+              justify-center
+              gap-4
+              mt-8
+              flex-wrap
+            "
+          >
+
             <Button
+
               onClick={() =>
                 setIsRunning(
                   !isRunning
                 )
               }
+
             >
-              {isRunning ? (
-                <>
-                  <Pause size={18} />
-                  Pause
-                </>
-              ) : (
-                <>
-                  <Play size={18} />
-                  Start
-                </>
-              )}
+
+              {
+                isRunning ? (
+
+                  <>
+
+                    <Pause size={18}/>
+
+                    Pause
+
+                  </>
+
+                ) : (
+
+                  <>
+
+                    <Play size={18}/>
+
+                    Start
+
+                  </>
+
+                )
+              }
+
+
             </Button>
 
+
+
+
+
             <Button
+
               variant="secondary"
+
               onClick={
                 resetTimer
               }
+
             >
-              <RotateCcw size={18} />
+
+              <RotateCcw size={18}/>
+
               Reset
+
+
             </Button>
+
+
           </div>
+
+
         </div>
+
+
       </Card>
+
+
     </section>
+
   );
+
 }
+
 
 export default FocusTimer;
