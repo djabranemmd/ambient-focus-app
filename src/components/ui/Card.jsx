@@ -5,12 +5,12 @@ function Card({
   return (
     <div
       className={`
-        bg-white/5
+        theme-card
         backdrop-blur-xl
-        border
-        border-white/10
         rounded-[32px]
         p-6
+        transition-all
+        duration-300
         ${className}
       `}
     >
