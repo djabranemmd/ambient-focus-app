@@ -82,18 +82,23 @@ function Sidebar() {
         hidden
         lg:flex
         flex-col
+
         w-72
         min-h-screen
+
+        theme-bg
+        theme-border
         border-r
-        border-white/10
-        bg-black/20
+
         backdrop-blur-2xl
+
         p-5
+
+        transition-colors
+        duration-300
       "
     >
 
-
-      {/* Logo */}
 
       <div
         className="
@@ -125,9 +130,7 @@ function Sidebar() {
             "
           >
 
-            <Sparkles
-              size={22}
-            />
+            <Sparkles size={22} />
 
           </div>
 
@@ -138,6 +141,7 @@ function Sidebar() {
               className="
                 text-xl
                 font-bold
+                theme-text
               "
             >
               Ambient Focus
@@ -147,7 +151,7 @@ function Sidebar() {
             <p
               className="
                 text-xs
-                text-gray-400
+                theme-text-muted
               "
             >
               Productivity App
@@ -161,111 +165,99 @@ function Sidebar() {
 
 
 
-      {/* Navigation */}
 
-      <nav
-        className="
-          flex-1
-        "
-      >
+      <nav className="flex-1">
 
-        {items.map((item)=>{
+        {
+          items.map((item) => {
 
-          const Icon =
-            item.icon;
+            const Icon =
+              item.icon;
 
 
-          const active =
-            activePage === item.id;
+            const active =
+              activePage === item.id;
 
 
-          return (
 
-            <button
+            return (
 
-              key={item.id}
+              <button
 
-              onClick={() =>
-                setActivePage(
-                  item.id
-                )
-              }
+                key={item.id}
 
-
-              className={`
-                relative
-                w-full
-                flex
-                items-center
-                gap-3
-                px-4
-                py-3
-                rounded-2xl
-                mb-3
-                transition-all
-                duration-300
-
-                ${
-                  active
-                  ?
-                  "bg-purple-500/20 text-white"
-                  :
-                  "text-gray-400 hover:bg-white/10 hover:text-white"
+                onClick={() =>
+                  setActivePage(item.id)
                 }
-              `}
 
-            >
+                aria-label={item.label}
+
+                className={`
+                  relative
+                  w-full
+                  flex
+                  items-center
+                  gap-3
+                  px-4
+                  py-3
+                  rounded-2xl
+                  mb-3
+                  transition-all
+                  duration-300
+
+                  ${
+                    active
+                      ? "bg-purple-500/20 text-purple-600"
+                      : "theme-text-muted hover:bg-purple-500/10"
+                  }
+                `}
+
+              >
+
+                {
+                  active && (
+
+                    <span
+                      className="
+                        absolute
+                        left-0
+                        w-1
+                        h-7
+                        rounded-r-full
+                        bg-purple-500
+                      "
+                    />
+
+                  )
+                }
 
 
-              {
-                active && (
-
-                  <span
-                    className="
-                      absolute
-                      left-0
-                      w-1
-                      h-7
-                      rounded-r-full
-                      bg-purple-500
-                    "
-                  />
-
-                )
-              }
+                <Icon size={19} />
 
 
-              <Icon
-                size={19}
-              />
+                <span>
+                  {item.label}
+                </span>
 
 
-              <span>
-                {item.label}
-              </span>
+              </button>
 
+            );
 
-            </button>
-
-          );
-
-        })}
-
+          })
+        }
 
       </nav>
 
 
 
 
-      {/* Stats Card */}
 
       <div
         className="
           mt-auto
           rounded-3xl
-          border
-          border-white/10
-          bg-white/5
+          theme-card
           backdrop-blur-xl
           p-5
         "
@@ -274,7 +266,7 @@ function Sidebar() {
         <p
           className="
             text-sm
-            text-gray-400
+            theme-text-muted
             mb-3
           "
         >
@@ -286,6 +278,7 @@ function Sidebar() {
           className="
             text-2xl
             font-bold
+            theme-text
           "
         >
           🎯
@@ -296,7 +289,7 @@ function Sidebar() {
         <p
           className="
             text-xs
-            text-gray-400
+            theme-text-muted
             mt-2
           "
         >
@@ -309,13 +302,12 @@ function Sidebar() {
           className="
             mt-4
             text-sm
-            text-purple-400
+            text-purple-500
+            font-medium
           "
         >
 
-          {hours}h {minutes}m
-          {" "}
-          focused
+          {hours}h {minutes}m focused
 
         </div>
 
