@@ -1,7 +1,34 @@
-import Home from "./pages/Home";
+import {
+  lazy,
+  Suspense,
+} from "react";
+
+import Loader from "./components/ui/Loader";
+
+
+const Home = lazy(
+  () => import("./pages/Home")
+);
+
+
 
 function App() {
-  return <Home />;
+
+  return (
+
+    <Suspense
+      fallback={
+        <Loader />
+      }
+    >
+
+      <Home />
+
+    </Suspense>
+
+  );
+
 }
+
 
 export default App;
