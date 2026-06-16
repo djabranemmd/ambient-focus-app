@@ -1,19 +1,53 @@
-const completionSound =
-  new Audio(
-    "../assets/sounds/complete.wav"
+export function playCompletionSound() {
+
+  console.log(
+    "Trying to play completion sound..."
   );
 
 
-export function playCompletionSound() {
+  const audio =
+    new Audio(
+      "src/assets/sounds/complete.wav"
+    );
 
-  completionSound.currentTime = 0;
 
-  completionSound.play()
-    .catch((error) => {
+  audio.volume = 1;
+
+
+  audio.oncanplaythrough = () => {
+
+    console.log(
+      "Audio loaded successfully"
+    );
+
+  };
+
+
+  audio.onerror = (error) => {
+
+    console.log(
+      "Audio loading failed",
+      error
+    );
+
+  };
+
+
+  audio.play()
+    .then(() => {
+
       console.log(
-        "Sound playback blocked:",
+        "Audio playing"
+      );
+
+    })
+    .catch((error) => {
+
+      console.log(
+        "Audio play blocked",
         error
       );
+
     });
 
 }

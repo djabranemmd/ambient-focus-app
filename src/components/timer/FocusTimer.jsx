@@ -20,7 +20,7 @@ import SectionTitle from "../ui/SectionTitle";
 import CompletionToast from "../ui/CompletionToast";
 
 
-const TWENTY_FIVE = 25 * 60;
+const TWENTY_FIVE = 5;
 const FIFTY = 50 * 60;
 
 
@@ -85,6 +85,7 @@ function FocusTimer() {
       isRunning
     ) {
 
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsRunning(false);
 
 
