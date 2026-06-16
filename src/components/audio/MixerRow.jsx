@@ -1,4 +1,8 @@
 import {
+  memo,
+} from "react";
+
+import {
   Play,
   Pause,
 } from "lucide-react";
@@ -126,10 +130,10 @@ function MixerRow({
 
           ${
             isPlaying
-            ?
-            "bg-purple-500 shadow-lg shadow-purple-500/30 scale-105"
-            :
-            "bg-purple-600 hover:bg-purple-500"
+              ?
+              "bg-purple-500 shadow-lg shadow-purple-500/30 scale-105"
+              :
+              "bg-purple-600 hover:bg-purple-500"
           }
         `}
 
@@ -182,6 +186,7 @@ function MixerRow({
 
           value={volume}
 
+
           onChange={(e) =>
             onVolumeChange(
               Number(
@@ -233,4 +238,4 @@ function MixerRow({
 }
 
 
-export default MixerRow;
+export default memo(MixerRow);
