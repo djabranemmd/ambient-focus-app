@@ -268,7 +268,6 @@ function FocusTimer() {
       />
 
 
-
       <SectionTitle
 
         title="Focus Session"
@@ -298,7 +297,6 @@ function FocusTimer() {
         />
 
 
-
         <div
           className="
             relative
@@ -314,11 +312,13 @@ function FocusTimer() {
             "
           >
 
+
             <div
               className="
                 relative
               "
             >
+
 
               <svg
 
@@ -378,15 +378,8 @@ function FocusTimer() {
 
                   transform="
                     rotate(-90 150 150)
-                  "
-
-                />
-
-
+                  "/>
               </svg>
-
-
-
               <div
                 className="
                   absolute
@@ -395,14 +388,15 @@ function FocusTimer() {
                   flex-col
                   items-center
                   justify-center
-                "
-              >
-
+                ">
                 <span
                   className="
                     text-5xl
                     sm:text-6xl
                     font-bold
+                    theme-text
+                    transition-colors
+                    duration-300
                   "
                 >
 
@@ -417,11 +411,15 @@ function FocusTimer() {
 
                 <span
                   className="
-                    text-gray-400
+                    theme-text-muted
                     mt-2
+                    transition-colors
+                    duration-300
                   "
                 >
+
                   Remaining
+
                 </span>
 
 
@@ -432,11 +430,7 @@ function FocusTimer() {
 
 
           </div>
-
-
-
-
-          <div
+              <div
             className="
               flex
               justify-center
@@ -457,7 +451,9 @@ function FocusTimer() {
               }
 
             >
+
               25 min
+
             </Button>
 
 
@@ -473,7 +469,9 @@ function FocusTimer() {
               }
 
             >
+
               50 min
+
             </Button>
 
 
@@ -500,21 +498,32 @@ function FocusTimer() {
 
               placeholder="Custom minutes"
 
+
               className="
                 w-full
                 sm:w-auto
-                bg-white/10
-                border
-                border-white/10
+
+                theme-input
+
                 rounded-xl
+
                 px-4
                 py-3
+
                 outline-none
+
+                transition-all
+                duration-300
+
+                focus:ring-2
+                focus:ring-purple-500/50
               "
+
 
               value={
                 customMinutes
               }
+
 
               onChange={(e) =>
                 setCustomMinutes(
@@ -533,7 +542,9 @@ function FocusTimer() {
               }
 
             >
+
               Apply
+
             </Button>
 
 
@@ -568,7 +579,9 @@ function FocusTimer() {
 
                   <>
 
-                    <Pause size={18}/>
+                    <Pause
+                      size={18}
+                    />
 
                     Pause
 
@@ -578,7 +591,9 @@ function FocusTimer() {
 
                   <>
 
-                    <Play size={18}/>
+                    <Play
+                      size={18}
+                    />
 
                     Start
 
@@ -604,7 +619,9 @@ function FocusTimer() {
 
             >
 
-              <RotateCcw size={18}/>
+              <RotateCcw
+                size={18}
+              />
 
               Reset
 
