@@ -1,4 +1,8 @@
-import { Play, Pause } from "lucide-react";
+import {
+  Play,
+  Pause,
+} from "lucide-react";
+
 
 function MixerRow({
   sound,
@@ -7,66 +11,226 @@ function MixerRow({
   onToggle,
   onVolumeChange,
 }) {
+
   return (
+
     <div
       className="
         flex
-        items-center
+        flex-col
+        sm:flex-row
+        sm:items-center
         gap-4
-        py-4
-        border-b
-        border-white/5
+        py-5
+        transition-all
+        duration-300
       "
     >
-      <div className="w-12 text-2xl">
-        {sound.emoji}
+
+
+      {/* Sound Info */}
+
+      <div
+        className="
+          flex
+          items-center
+          gap-3
+          flex-1
+          min-w-0
+        "
+      >
+
+        <div
+          className="
+            w-12
+            h-12
+            rounded-2xl
+            bg-purple-500/10
+            flex
+            items-center
+            justify-center
+            text-2xl
+            shrink-0
+          "
+        >
+
+          {sound.emoji}
+
+        </div>
+
+
+
+        <div
+          className="
+            min-w-0
+          "
+        >
+
+          <p
+            className="
+              font-medium
+              truncate
+              theme-text
+            "
+          >
+
+            {sound.name}
+
+          </p>
+
+
+          <p
+            className="
+              text-xs
+              theme-text-muted
+              mt-1
+            "
+          >
+
+            Ambient sound
+
+          </p>
+
+
+        </div>
+
+
       </div>
 
-      <div className="w-32">
-        <p className="font-medium">
-          {sound.name}
-        </p>
-      </div>
+
+
+
+
+      {/* Play Button */}
 
       <button
+
         onClick={onToggle}
-        className="
-          h-10
-          w-10
+
+        aria-label={
+          isPlaying
+            ? `Pause ${sound.name}`
+            : `Play ${sound.name}`
+        }
+
+        className={`
+          h-11
+          w-11
           rounded-full
-          bg-purple-600
           flex
           items-center
           justify-center
           shrink-0
-        "
-      >
-        {isPlaying ? (
-          <Pause size={16} />
-        ) : (
-          <Play size={16} />
-        )}
-      </button>
+          transition-all
+          duration-300
 
-      <input
-        type="range"
-        min="0"
-        max="1"
-        step="0.01"
-        value={volume}
-        onChange={(e) =>
-          onVolumeChange(
-            Number(e.target.value)
+          ${
+            isPlaying
+            ?
+            "bg-purple-500 shadow-lg shadow-purple-500/30 scale-105"
+            :
+            "bg-purple-600 hover:bg-purple-500"
+          }
+        `}
+
+      >
+
+        {
+          isPlaying ? (
+
+            <Pause
+              size={18}
+            />
+
+          ) : (
+
+            <Play
+              size={18}
+            />
+
           )
         }
-        className="flex-1"
-      />
 
-      <div className="w-14 text-right text-sm text-gray-400">
-        {Math.round(volume * 100)}%
+
+      </button>
+
+
+
+
+
+
+      {/* Volume */}
+
+      <div
+        className="
+          flex
+          items-center
+          gap-3
+          flex-1
+        "
+      >
+
+        <input
+
+          type="range"
+
+          min="0"
+
+          max="1"
+
+          step="0.01"
+
+          value={volume}
+
+          onChange={(e) =>
+            onVolumeChange(
+              Number(
+                e.target.value
+              )
+            )
+          }
+
+
+          aria-label={
+            `${sound.name} volume`
+          }
+
+
+          className="
+            audio-slider
+            flex-1
+          "
+
+        />
+
+
+
+        <span
+          className="
+            w-14
+            text-right
+            text-sm
+            theme-text-muted
+          "
+        >
+
+          {
+            Math.round(
+              volume * 100
+            )
+          }%
+
+        </span>
+
+
       </div>
+
+
     </div>
+
   );
+
 }
+
 
 export default MixerRow;
