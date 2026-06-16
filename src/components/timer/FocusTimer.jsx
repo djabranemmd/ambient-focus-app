@@ -20,7 +20,7 @@ import SectionTitle from "../ui/SectionTitle";
 import CompletionToast from "../ui/CompletionToast";
 
 
-const TWENTY_FIVE = 5;
+const TWENTY_FIVE = 25 * 60;
 const FIFTY = 50 * 60;
 
 

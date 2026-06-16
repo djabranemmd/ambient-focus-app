@@ -1,52 +1,192 @@
 @import "tailwindcss";
 
+
 :root {
+
   --bg-primary: #050816;
+
+  --bg-secondary: rgba(255,255,255,0.05);
+
+  --card-bg: rgba(255,255,255,0.06);
+
+  --border-color: rgba(255,255,255,0.1);
+
   --text-primary: #ffffff;
+
+  --text-secondary: #94a3b8;
+
+  --accent-color: #8b5cf6;
+
 }
+
+
 
 [data-theme="light"] {
-  --bg-primary: #f5f7fb;
+
+
+  --bg-primary: #f8fafc;
+
+  --bg-secondary: rgba(255,255,255,0.8);
+
+  --card-bg: rgba(255,255,255,0.75);
+
+  --border-color: rgba(15,23,42,0.08);
+
   --text-primary: #0f172a;
+
+  --text-secondary: #64748b;
+
+  --accent-color: #7c3aed;
+
 }
+
+
 
 * {
+
   box-sizing: border-box;
+
 }
+
+
+
+html {
+
+  scroll-behavior: smooth;
+
+}
+
+
 
 body {
+
   margin: 0;
+
   min-width: 320px;
+
   min-height: 100vh;
 
-  background: var(--bg-primary);
-  color: var(--text-primary);
+
+  background:
+    var(--bg-primary);
+
+
+  color:
+    var(--text-primary);
+
 
   transition:
-    background 0.3s ease,
-    color 0.3s ease;
+
+    background-color
+    0.3s ease,
+
+    color
+    0.3s ease;
+
 }
+
+
+
+/*
+   Theme Helpers
+*/
+
+
+.theme-text {
+
+  color:
+    var(--text-primary);
+
+}
+
+
+
+.theme-text-muted {
+
+  color:
+    var(--text-secondary);
+
+}
+
+
+
+.theme-card {
+
+  background:
+    var(--card-bg);
+
+
+  border:
+
+    1px solid
+
+    var(--border-color);
+
+
+}
+
+
+
+.theme-border {
+
+  border-color:
+    var(--border-color);
+
+}
+
+
+
+.theme-bg {
+
+  background:
+    var(--bg-secondary);
+
+}
+
+
+
+
+/*
+ Completion Toast Animation
+*/
+
 
 @keyframes slide-in {
 
+
   from {
+
     opacity: 0;
+
     transform:
       translateY(-20px);
+
   }
+
+
 
   to {
+
     opacity: 1;
+
     transform:
       translateY(0);
+
   }
 
+
 }
+
 
 
 .animate-slide-in {
 
+
   animation:
-    slide-in 0.4s ease-out;
+
+    slide-in
+    0.4s
+    ease-out;
+
 
 }
