@@ -3,30 +3,73 @@ import { useState } from "react";
 
 function useNotification() {
 
+
+  const isSupported =
+    "Notification" in window;
+
+
+
   const [permission, setPermission] =
     useState(
-      Notification.permission
+      isSupported
+        ? Notification.permission
+        : "unsupported"
     );
 
 
-  const requestPermission = async () => {
-
-    if (
-      !("Notification" in window)
-    ) {
-      return false;
-    }
 
 
-    const result =
-      await Notification.requestPermission();
+  const requestPermission =
+    async () => {
 
 
-    setPermission(result);
+      if (!isSupported) {
+
+        console.warn(
+          "Browser notifications are not supported."
+        );
+
+        return false;
+
+      }
 
 
-    return result === "granted";
-  };
+
+      try {
+
+        const result =
+          await Notification.requestPermission();
+
+
+        setPermission(
+          result
+        );
+
+
+        return (
+          result === "granted"
+        );
+
+
+      } catch (error) {
+
+
+        console.error(
+          "Notification permission error:",
+          error
+        );
+
+
+        return false;
+
+      }
+
+
+    };
+
+
+
+
 
 
 
@@ -36,32 +79,83 @@ function useNotification() {
   }) => {
 
 
+    if (!isSupported) {
+
+      console.warn(
+        "Notifications unavailable."
+      );
+
+      return false;
+
+    }
+
+
+
+
     if (
-      Notification.permission ===
+      Notification.permission !==
       "granted"
     ) {
+
+      return false;
+
+    }
+
+
+
+
+    try {
+
 
       new Notification(
         title,
         {
           body,
-          icon: "/favicon.ico",
+
+          icon:
+            "/favicon.ico",
+
+          badge:
+            "/favicon.ico",
         }
       );
 
+
+
       return true;
+
+
+
+    } catch (error) {
+
+
+      console.error(
+        "Notification failed:",
+        error
+      );
+
+
+      return false;
+
+
     }
 
-
-    return false;
 
   };
 
 
+
+
+
+
   return {
+
     permission,
+
     requestPermission,
+
     sendNotification,
+
   };
 
 }
