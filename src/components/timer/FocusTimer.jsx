@@ -85,7 +85,6 @@ function FocusTimer() {
       isRunning
     ) {
 
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsRunning(false);
 
 
@@ -111,11 +110,16 @@ function FocusTimer() {
       setShowCompletion(true);
 
 
-      setTimeout(() => {
+      const toastTimer =
+        setTimeout(() => {
 
-        setShowCompletion(false);
+          setShowCompletion(false);
 
-      }, 4000);
+        }, 4000);
+
+
+      return () =>
+        clearTimeout(toastTimer);
 
     }
 
@@ -241,11 +245,7 @@ function FocusTimer() {
       progress / 100
     ) *
     circumference;
-
-
-
-
-  return (
+    return (
 
     <section
       className="mt-8"
@@ -266,6 +266,7 @@ function FocusTimer() {
         }
 
       />
+
 
 
       <SectionTitle
@@ -312,13 +313,11 @@ function FocusTimer() {
             "
           >
 
-
             <div
               className="
                 relative
               "
             >
-
 
               <svg
 
@@ -327,6 +326,8 @@ function FocusTimer() {
                   h-57.5
                   sm:w-75
                   sm:h-75
+                  transition-transform
+                  duration-500
                 "
 
                 viewBox="
@@ -376,11 +377,26 @@ function FocusTimer() {
                     offset
                   }
 
+                  className="
+                    transition-all
+                    duration-700
+                    ease-linear
+                  "
+
                   transform="
                     rotate(-90 150 150)
-                  "/>
+                  "
+
+                />
+
+
               </svg>
+
+
+
+
               <div
+
                 className="
                   absolute
                   inset-0
@@ -388,8 +404,12 @@ function FocusTimer() {
                   flex-col
                   items-center
                   justify-center
-                ">
+                "
+
+              >
+
                 <span
+
                   className="
                     text-5xl
                     sm:text-6xl
@@ -398,6 +418,7 @@ function FocusTimer() {
                     transition-colors
                     duration-300
                   "
+
                 >
 
                   {
@@ -409,13 +430,16 @@ function FocusTimer() {
                 </span>
 
 
+
                 <span
+
                   className="
                     theme-text-muted
                     mt-2
                     transition-colors
                     duration-300
                   "
+
                 >
 
                   Remaining
@@ -430,7 +454,13 @@ function FocusTimer() {
 
 
           </div>
-              <div
+
+
+
+
+
+          <div
+
             className="
               flex
               justify-center
@@ -438,6 +468,7 @@ function FocusTimer() {
               mt-8
               flex-wrap
             "
+
           >
 
             <Button
@@ -482,6 +513,7 @@ function FocusTimer() {
 
 
           <div
+
             className="
               flex
               flex-col
@@ -490,13 +522,18 @@ function FocusTimer() {
               gap-3
               mt-6
             "
+
           >
 
             <input
 
               type="number"
 
+              min="1"
+
               placeholder="Custom minutes"
+
+              aria-label="Custom focus duration in minutes"
 
 
               className="
@@ -517,6 +554,11 @@ function FocusTimer() {
 
                 focus:ring-2
                 focus:ring-purple-500/50
+
+                focus:scale-[1.02]
+
+                hover:bg-black/10
+                dark:hover:bg-white/15
               "
 
 
@@ -555,6 +597,7 @@ function FocusTimer() {
 
 
           <div
+
             className="
               flex
               justify-center
@@ -562,6 +605,7 @@ function FocusTimer() {
               mt-8
               flex-wrap
             "
+
           >
 
             <Button
@@ -570,6 +614,12 @@ function FocusTimer() {
                 setIsRunning(
                   !isRunning
                 )
+              }
+
+              aria-label={
+                isRunning
+                  ? "Pause focus timer"
+                  : "Start focus timer"
               }
 
             >
@@ -616,6 +666,8 @@ function FocusTimer() {
               onClick={
                 resetTimer
               }
+
+              aria-label="Reset focus timer"
 
             >
 
