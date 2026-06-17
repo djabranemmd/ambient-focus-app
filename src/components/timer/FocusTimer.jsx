@@ -85,6 +85,7 @@ function FocusTimer() {
       isRunning
     ) {
 
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsRunning(false);
 
 

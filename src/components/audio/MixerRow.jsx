@@ -16,25 +16,40 @@ function MixerRow({
   onVolumeChange,
 }) {
 
+
   return (
 
     <div
+
       className="
         flex
         flex-col
         sm:flex-row
         sm:items-center
+
         gap-4
+
         py-5
+
+        rounded-2xl
+
+        px-3
+
         transition-all
         duration-300
+
+        hover:bg-black/5
+        dark:hover:bg-white/5
       "
+
     >
+
 
 
       {/* Sound Info */}
 
       <div
+
         className="
           flex
           items-center
@@ -42,25 +57,40 @@ function MixerRow({
           flex-1
           min-w-0
         "
+
       >
 
         <div
+
           className="
             w-12
             h-12
+
             rounded-2xl
+
             bg-purple-500/10
+
             flex
             items-center
             justify-center
+
             text-2xl
+
             shrink-0
+
+            transition-transform
+            duration-300
+
+            hover:scale-110
           "
+
         >
 
           {sound.emoji}
 
+
         </div>
+
 
 
 
@@ -71,27 +101,34 @@ function MixerRow({
         >
 
           <p
+
             className="
               font-medium
               truncate
               theme-text
             "
+
           >
 
             {sound.name}
 
+
           </p>
 
 
+
           <p
+
             className="
               text-xs
               theme-text-muted
               mt-1
             "
+
           >
 
             Ambient sound
+
 
           </p>
 
@@ -105,11 +142,14 @@ function MixerRow({
 
 
 
+
       {/* Play Button */}
+
 
       <button
 
         onClick={onToggle}
+
 
         aria-label={
           isPlaying
@@ -117,27 +157,73 @@ function MixerRow({
             : `Play ${sound.name}`
         }
 
+
         className={`
+
           h-11
           w-11
+
           rounded-full
+
+
           flex
           items-center
           justify-center
+
+
           shrink-0
+
+
           transition-all
           duration-300
 
+
+          active:scale-90
+
+
+          focus:outline-none
+
+          focus:ring-2
+
+          focus:ring-purple-500/50
+
+
+
           ${
             isPlaying
+
               ?
-              "bg-purple-500 shadow-lg shadow-purple-500/30 scale-105"
+
+              `
+              bg-purple-500
+
+              shadow-lg
+
+              shadow-purple-500/30
+
+              scale-105
+
+              animate-pulse
+              `
+
+
               :
-              "bg-purple-600 hover:bg-purple-500"
+
+              `
+              bg-purple-600
+
+              hover:bg-purple-500
+
+              hover:scale-105
+
+              `
           }
+
+
         `}
 
       >
+
 
         {
           isPlaying ? (
@@ -163,37 +249,57 @@ function MixerRow({
 
 
 
-      {/* Volume */}
+
+
+      {/* Volume Control */}
+
 
       <div
+
         className="
           flex
           items-center
           gap-3
+
           flex-1
+
+          min-w-0
         "
+
       >
+
 
         <input
 
+
           type="range"
+
 
           min="0"
 
+
           max="1"
 
+
           step="0.01"
+
 
           value={volume}
 
 
+
           onChange={(e) =>
+
             onVolumeChange(
+
               Number(
                 e.target.value
               )
+
             )
+
           }
+
 
 
           aria-label={
@@ -201,22 +307,40 @@ function MixerRow({
           }
 
 
+
           className="
+
             audio-slider
+
             flex-1
+
+            cursor-pointer
+
           "
+
 
         />
 
 
 
+
+
         <span
+
           className="
             w-14
+
             text-right
+
             text-sm
+
             theme-text-muted
+
+            transition-colors
+
+            duration-300
           "
+
         >
 
           {
@@ -225,13 +349,18 @@ function MixerRow({
             )
           }%
 
+
         </span>
+
 
 
       </div>
 
 
+
+
     </div>
+
 
   );
 
