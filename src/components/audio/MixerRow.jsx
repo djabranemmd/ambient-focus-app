@@ -5,7 +5,9 @@ import {
 import {
   Play,
   Pause,
+  AlertCircle,
 } from "lucide-react";
+
 
 
 function MixerRow({
@@ -14,6 +16,7 @@ function MixerRow({
   volume,
   onToggle,
   onVolumeChange,
+  disabled = false,
 }) {
 
 
@@ -48,6 +51,7 @@ function MixerRow({
 
       {/* Sound Info */}
 
+
       <div
 
         className="
@@ -59,6 +63,7 @@ function MixerRow({
         "
 
       >
+
 
         <div
 
@@ -77,11 +82,6 @@ function MixerRow({
             text-2xl
 
             shrink-0
-
-            transition-transform
-            duration-300
-
-            hover:scale-110
           "
 
         >
@@ -100,6 +100,7 @@ function MixerRow({
           "
         >
 
+
           <p
 
             className="
@@ -117,6 +118,7 @@ function MixerRow({
 
 
 
+
           <p
 
             className="
@@ -127,7 +129,11 @@ function MixerRow({
 
           >
 
-            Ambient sound
+            {
+              disabled
+                ? "Unavailable"
+                : "Ambient sound"
+            }
 
 
           </p>
@@ -136,7 +142,9 @@ function MixerRow({
         </div>
 
 
+
       </div>
+
 
 
 
@@ -148,26 +156,48 @@ function MixerRow({
 
       <button
 
+
         onClick={onToggle}
 
 
+        disabled={disabled}
+
+
         aria-label={
-          isPlaying
-            ? `Pause ${sound.name}`
-            : `Play ${sound.name}`
+
+          disabled
+
+            ? `${sound.name} unavailable`
+
+            :
+
+            isPlaying
+
+              ? `Pause ${sound.name}`
+
+              : `Play ${sound.name}`
+
         }
+
+
+        aria-disabled={disabled}
+
 
 
         className={`
 
           h-11
+
           w-11
+
 
           rounded-full
 
 
           flex
+
           items-center
+
           justify-center
 
 
@@ -175,10 +205,9 @@ function MixerRow({
 
 
           transition-all
+
           duration-300
 
-
-          active:scale-90
 
 
           focus:outline-none
@@ -190,42 +219,71 @@ function MixerRow({
 
 
           ${
-            isPlaying
+            disabled
 
               ?
 
               `
-              bg-purple-500
+              bg-gray-500/20
 
-              shadow-lg
+              text-gray-400
 
-              shadow-purple-500/30
-
-              scale-105
-
-              animate-pulse
+              cursor-not-allowed
               `
 
 
               :
 
-              `
-              bg-purple-600
 
-              hover:bg-purple-500
+              isPlaying
 
-              hover:scale-105
 
-              `
+                ?
+
+                `
+                bg-purple-500
+
+                shadow-lg
+
+                shadow-purple-500/30
+
+                scale-105
+
+                animate-pulse
+                `
+
+
+                :
+
+                `
+                bg-purple-600
+
+                hover:bg-purple-500
+
+                hover:scale-105
+
+                active:scale-90
+
+                `
           }
 
 
         `}
 
+
       >
 
 
         {
+          disabled ? (
+
+            <AlertCircle
+              size={18}
+            />
+
+          ) :
+
+
           isPlaying ? (
 
             <Pause
@@ -239,10 +297,12 @@ function MixerRow({
             />
 
           )
+
         }
 
 
       </button>
+
 
 
 
@@ -269,6 +329,7 @@ function MixerRow({
       >
 
 
+
         <input
 
 
@@ -285,6 +346,10 @@ function MixerRow({
 
 
           value={volume}
+
+
+
+          disabled={disabled}
 
 
 
@@ -308,7 +373,7 @@ function MixerRow({
 
 
 
-          className="
+          className={`
 
             audio-slider
 
@@ -316,10 +381,18 @@ function MixerRow({
 
             cursor-pointer
 
-          "
+
+            ${
+              disabled
+                ? "opacity-40 cursor-not-allowed"
+                : ""
+            }
+
+          `}
 
 
         />
+
 
 
 
