@@ -1,9 +1,18 @@
-import rain from "../assets/sounds/rain.mp3";
+import rain from "/src/assets/sounds/rain.mp3";
 import forest from "../assets/sounds/forest.wav";
 import ocean from "../assets/sounds/ocean.wav";
 import coffee from "../assets/sounds/coffee.mp3";
 import fire from "../assets/sounds/fire.mp3";
 import night from "../assets/sounds/night.mp3";
+
+console.log({
+  rain,
+  forest,
+  ocean,
+  coffee,
+  fire,
+  night,
+});
 
 export const sounds = [
   {

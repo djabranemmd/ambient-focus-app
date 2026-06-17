@@ -11,28 +11,17 @@ import Card from "../ui/Card";
 import SectionTitle from "../ui/SectionTitle";
 
 
-
 function AudioMixer() {
 
-
   const audioRefs = useRef({});
-
 
 
   const [volumes, setVolumes] =
     useState({});
 
 
-
   const [playing, setPlaying] =
     useState({});
-
-
-
-  const [failedSounds, setFailedSounds] =
-    useState({});
-
-
 
 
 
@@ -47,45 +36,9 @@ function AudioMixer() {
         new Audio(sound.file);
 
 
-
       audio.loop = true;
 
-
       audio.volume = 0.5;
-
-
-
-
-      audio.onerror = () => {
-
-
-        console.error(
-          `Failed loading audio: ${sound.name}`
-        );
-
-
-
-        setFailedSounds((prev) => ({
-          ...prev,
-
-          [sound.id]: true,
-
-        }));
-
-
-
-        setPlaying((prev) => ({
-          ...prev,
-
-          [sound.id]: false,
-
-        }));
-
-
-      };
-
-
-
 
 
       audioRefs.current[sound.id] =
@@ -93,21 +46,13 @@ function AudioMixer() {
 
 
 
-
       setVolumes((prev) => ({
         ...prev,
-
         [sound.id]: 0.5,
-
       }));
 
 
-
     });
-
-
-
-
 
 
 
@@ -118,35 +63,20 @@ function AudioMixer() {
         audioRefs.current
       ).forEach((audio) => {
 
-
         audio.pause();
-
-
-        audio.currentTime = 0;
-
 
         audio.src = "";
 
-
       });
-
-
 
 
       audioRefs.current = {};
 
 
-
     };
 
 
-
   }, []);
-
-
-
-
-
 
 
 
@@ -159,65 +89,35 @@ function AudioMixer() {
       audioRefs.current[id];
 
 
-
-    if (!audio) return;
-
-
-
-
-    if (failedSounds[id]) {
-
-
-      console.warn(
-        "This audio is unavailable."
-      );
-
-
+    if (!audio)
       return;
-
-    }
-
-
-
 
 
 
     try {
 
 
-
       if (playing[id]) {
-
 
 
         audio.pause();
 
 
-
-
-        setPlaying((prev) => ({
+        setPlaying((prev)=>({
           ...prev,
-
           [id]: false,
-
         }));
-
 
 
       } else {
 
 
-
         await audio.play();
 
 
-
-
-        setPlaying((prev) => ({
+        setPlaying((prev)=>({
           ...prev,
-
           [id]: true,
-
         }));
 
 
@@ -225,9 +125,7 @@ function AudioMixer() {
 
 
 
-
-    } catch (error) {
-
+    } catch(error) {
 
 
       console.error(
@@ -236,25 +134,15 @@ function AudioMixer() {
       );
 
 
-
-
-      setPlaying((prev) => ({
+      setPlaying((prev)=>({
         ...prev,
-
         [id]: false,
-
       }));
-
-
 
     }
 
 
   };
-
-
-
-
 
 
 
@@ -266,29 +154,23 @@ function AudioMixer() {
   ) => {
 
 
-
     const audio =
       audioRefs.current[id];
 
 
-
-    if (!audio) return;
-
-
+    if (!audio)
+      return;
 
 
-    audio.volume = value;
-
+    audio.volume =
+      value;
 
 
 
-    setVolumes((prev) => ({
+    setVolumes((prev)=>({
       ...prev,
-
       [id]: value,
-
     }));
-
 
 
   };
@@ -298,15 +180,9 @@ function AudioMixer() {
 
 
 
-
-
-
   return (
 
-
-    <section
-      className="mt-10"
-    >
+    <section className="mt-10">
 
 
       <SectionTitle
@@ -316,8 +192,6 @@ function AudioMixer() {
         subtitle="Blend sounds to create your perfect environment."
 
       />
-
-
 
 
 
@@ -332,29 +206,15 @@ function AudioMixer() {
         >
 
 
-
-          {sounds.map((sound) => (
-
+          {sounds.map((sound)=>(
 
 
             <MixerRow
 
+              key={sound.id}
 
 
-              key={
-                sound.id
-              }
-
-
-
-
-
-              sound={
-                sound
-              }
-
-
-
+              sound={sound}
 
 
               isPlaying={
@@ -362,36 +222,17 @@ function AudioMixer() {
               }
 
 
-
-
-
               volume={
                 volumes[sound.id] ?? 0.5
               }
 
 
-
-
-
-              disabled={
-                failedSounds[sound.id]
+              onToggle={()=>
+                toggleSound(sound.id)
               }
 
 
-
-
-
-              onToggle={() =>
-                toggleSound(
-                  sound.id
-                )
-              }
-
-
-
-
-
-              onVolumeChange={(value) =>
+              onVolumeChange={(value)=>
                 changeVolume(
                   sound.id,
                   value
@@ -399,11 +240,7 @@ function AudioMixer() {
               }
 
 
-
-
-
             />
-
 
 
           ))}
@@ -413,20 +250,14 @@ function AudioMixer() {
         </div>
 
 
-
       </Card>
-
-
 
 
     </section>
 
-
-
   );
 
 }
-
 
 
 export default AudioMixer;
