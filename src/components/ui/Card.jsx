@@ -1,6 +1,8 @@
 import {
   motion,
+  useReducedMotion,
 } from "framer-motion";
+
 
 
 function Card({
@@ -8,73 +10,118 @@ function Card({
   className = "",
 }) {
 
+
+  const reduceMotion =
+    useReducedMotion();
+
+
+
   return (
+
 
     <motion.div
 
-      initial={{
-        opacity: 0,
-        y: 20,
-      }}
+
+      initial={
+        reduceMotion
+          ? false
+          : {
+              opacity: 0,
+              y: 20,
+            }
+      }
 
 
-      animate={{
-        opacity: 1,
-        y: 0,
-      }}
+
+      animate={
+        reduceMotion
+          ? undefined
+          : {
+              opacity: 1,
+              y: 0,
+            }
+      }
 
 
-      transition={{
-        duration: 0.4,
-        ease: "easeOut",
-      }}
+
+      transition={
+
+        reduceMotion
+          ? {
+              duration: 0,
+            }
+          :
+            {
+              duration: 0.4,
+              ease: "easeOut",
+            }
+
+      }
 
 
-      whileHover={{
-        y: -4,
-      }}
+
+      whileHover={
+        reduceMotion
+          ? undefined
+          : {
+              y: -2,
+            }
+      }
+
 
 
       className={`
+
         rounded-[32px]
+
 
         p-6
 
+
+
         transition-all
+
         duration-300
 
 
-        bg-white/5
-        dark:bg-white/5
+
+        theme-card
+
+
 
         backdrop-blur-xl
 
 
-        border
-
-        border-black/10
-        dark:border-white/10
-
 
         shadow-lg
+
         shadow-black/5
+
 
 
         hover:shadow-xl
 
 
+
         ${className}
+
       `}
+
+
 
     >
 
+
       {children}
 
+
     </motion.div>
+
 
   );
 
 }
+
 
 
 export default Card;
