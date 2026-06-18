@@ -1,6 +1,7 @@
 import {
   AnimatePresence,
   motion,
+  useReducedMotion,
 } from "framer-motion";
 
 
@@ -29,26 +30,28 @@ function Home() {
 
 
 
+  const reduceMotion =
+    useReducedMotion();
+
+
+
+
 
   const renderContent = () => {
 
 
-    switch(activePage) {
+    switch (activePage) {
 
 
       case "focus":
 
-        return (
-          <TimerSection />
-        );
+        return <TimerSection />;
 
 
 
       case "sounds":
 
-        return (
-          <AudioMixer />
-        );
+        return <AudioMixer />;
 
 
 
@@ -68,9 +71,6 @@ function Home() {
 
 
 
-      case "dashboard":
-
-      // eslint-disable-next-line no-fallthrough
       default:
 
         return (
@@ -98,9 +98,11 @@ function Home() {
 
 
 
+
   return (
 
     <>
+
 
       <AuroraBackground />
 
@@ -109,53 +111,101 @@ function Home() {
       <DashboardLayout>
 
 
+
         <main
+
           className="
             w-full
-            max-w-full
+
+            max-w-7xl
+
+            mx-auto
+
             overflow-hidden
+
             p-4
+
             sm:p-6
+
             lg:p-10
           "
+
         >
+
 
 
           <TopBar />
 
 
 
+
+
           <AnimatePresence
+
             mode="wait"
+
           >
 
+
+
             <motion.div
+
 
               key={activePage}
 
 
-              initial={{
-                opacity: 0,
-                y: 15,
-              }}
+
+              initial={
+                reduceMotion
+                  ? false
+                  : {
+                      opacity: 0,
+                      y: 15,
+                    }
+              }
 
 
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
+
+              animate={
+                reduceMotion
+                  ? undefined
+                  : {
+                      opacity: 1,
+                      y: 0,
+                    }
+              }
 
 
-              exit={{
-                opacity: 0,
-                y: -10,
-              }}
+
+              exit={
+                reduceMotion
+                  ? undefined
+                  : {
+                      opacity: 0,
+                      y: -10,
+                    }
+              }
 
 
-              transition={{
-                duration: 0.3,
-                ease: "easeOut",
-              }}
+
+              transition={
+
+                reduceMotion
+
+                  ? {
+                      duration: 0,
+                    }
+
+                  :
+
+                    {
+                      duration: 0.3,
+                      ease: "easeOut",
+                    }
+
+              }
+
+
 
             >
 
@@ -164,7 +214,9 @@ function Home() {
               }
 
 
+
             </motion.div>
+
 
 
           </AnimatePresence>
@@ -174,7 +226,9 @@ function Home() {
         </main>
 
 
+
       </DashboardLayout>
+
 
 
     </>
