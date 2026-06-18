@@ -1,25 +1,77 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import {
+  StrictMode,
+} from "react";
+
+
+import {
+  createRoot,
+} from "react-dom/client";
+
 
 import App from "./App";
+
+
 import "./index.css";
 
-import { FocusProvider } from "./context/FocusContext";
-import { ThemeProvider } from "./context/ThemeContext.jsx";
+
+
+import {
+  ThemeProvider,
+} from "./context/ThemeContext.jsx";
+
+
 import {
   NavigationProvider,
 } from "./context/NavigationContext.jsx";
 
-createRoot(
-  document.getElementById("root")
-).render(
+
+import {
+  FocusProvider,
+} from "./context/FocusContext";
+
+
+
+const rootElement =
+  document.getElementById("root");
+
+
+
+if (!rootElement) {
+
+  throw new Error(
+    "Root element not found"
+  );
+
+}
+
+
+
+createRoot(rootElement).render(
+
   <StrictMode>
+
+
     <ThemeProvider>
-      <FocusProvider>
-        <NavigationProvider>
+
+
+      <NavigationProvider>
+
+
+        <FocusProvider>
+
+
           <App />
-        </NavigationProvider>
-      </FocusProvider>
+
+
+        </FocusProvider>
+
+
+      </NavigationProvider>
+
+
     </ThemeProvider>
+
+
   </StrictMode>
+
 );
