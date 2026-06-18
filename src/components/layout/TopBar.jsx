@@ -8,12 +8,15 @@ import {
 } from "../../context/ThemeContext.jsx";
 
 
+
 function TopBar() {
+
 
   const {
     theme,
     toggleTheme,
   } = useTheme();
+
 
 
 
@@ -24,6 +27,7 @@ function TopBar() {
 
   let greeting =
     "Hello";
+
 
 
   if (hour < 12)
@@ -45,50 +49,73 @@ function TopBar() {
 
 
 
+
+  const isDark =
+    theme === "dark";
+
+
+
+
   return (
 
+
     <div
+
       className="
         flex
         items-center
         justify-between
         mb-8
       "
+
     >
+
 
 
       <div>
 
 
         <h1
+
           className="
             text-4xl
             font-bold
+
             theme-text
+
             transition-colors
             duration-300
           "
+
         >
 
           {greeting} 👋
+
 
         </h1>
 
 
 
+
         <p
+
           className="
             theme-text-muted
+
             mt-2
+
             transition-colors
             duration-300
           "
+
         >
 
           Stay focused and reach your
           goals today.
 
+
         </p>
+
 
 
       </div>
@@ -97,61 +124,134 @@ function TopBar() {
 
 
 
+
+
       <button
+
 
         onClick={toggleTheme}
 
-        aria-label="Toggle theme"
+
+
+        aria-label={
+          isDark
+            ? "Switch to light mode"
+            : "Switch to dark mode"
+        }
+
+
+
+        aria-pressed={isDark}
+
+
+
+        title={
+          isDark
+            ? "Switch to light mode"
+            : "Switch to dark mode"
+        }
+
+
 
         className="
+
           h-12
+
           w-12
+
 
           rounded-xl
 
+
+
           theme-bg
+
           theme-border
+
           border
+
+
 
           theme-text
 
+
+
           flex
+
           items-center
+
           justify-center
 
+
+
           transition-all
+
           duration-300
+
+
 
           hover:scale-105
 
+
+
+          active:scale-95
+
+
+
           focus:outline-none
-          focus:ring-2
-          focus:ring-purple-500/50
+
+          focus-visible:ring-2
+
+          focus-visible:ring-purple-500/70
+
+
+          focus-visible:ring-offset-2
+
+          focus-visible:ring-offset-black
+
         "
 
       >
 
-        {
-          theme === "dark" ? (
 
-            <Sun size={20} />
+
+        {
+          isDark ? (
+
+            <Sun
+
+              size={20}
+
+              aria-hidden="true"
+
+            />
 
           ) : (
 
-            <Moon size={20} />
+            <Moon
+
+              size={20}
+
+              aria-hidden="true"
+
+            />
 
           )
         }
 
 
+
       </button>
+
 
 
     </div>
 
+
   );
 
 }
+
 
 
 export default TopBar;
