@@ -3,10 +3,13 @@ import {
   X,
 } from "lucide-react";
 
+
 import {
   AnimatePresence,
   motion,
+  useReducedMotion,
 } from "framer-motion";
+
 
 
 function CompletionToast({
@@ -14,6 +17,11 @@ function CompletionToast({
   onClose,
   duration,
 }) {
+
+
+  const reduceMotion =
+    useReducedMotion();
+
 
 
   const minutes =
@@ -25,42 +33,68 @@ function CompletionToast({
 
   return (
 
+
     <AnimatePresence>
+
 
 
       {
         show && (
 
+
           <motion.div
+
 
             role="alert"
 
 
-            initial={{
-              opacity: 0,
-              x: 40,
-              scale: 0.95,
-            }}
+
+            initial={
+              reduceMotion
+                ? false
+                : {
+                    opacity: 0,
+                    x: 40,
+                    scale: 0.95,
+                  }
+            }
 
 
-            animate={{
-              opacity: 1,
-              x: 0,
-              scale: 1,
-            }}
+
+            animate={
+              reduceMotion
+                ? undefined
+                : {
+                    opacity: 1,
+                    x: 0,
+                    scale: 1,
+                  }
+            }
 
 
-            exit={{
-              opacity: 0,
-              x: 40,
-              scale: 0.95,
-            }}
+
+            exit={
+              reduceMotion
+                ? undefined
+                : {
+                    opacity: 0,
+                    x: 40,
+                    scale: 0.95,
+                  }
+            }
 
 
-            transition={{
-              duration: 0.3,
-              ease: "easeOut",
-            }}
+
+            transition={
+              reduceMotion
+                ? {
+                    duration: 0,
+                  }
+                : {
+                    duration: 0.3,
+                    ease: "easeOut",
+                  }
+            }
 
 
 
@@ -77,14 +111,17 @@ function CompletionToast({
 
               w-[calc(100%-2rem)]
 
-              sm:w-80
+              max-w-sm
+
             "
+
 
           >
 
 
 
             <div
+
 
               className="
                 rounded-3xl
@@ -108,19 +145,20 @@ function CompletionToast({
 
                 duration-300
 
-
-                hover:-translate-y-1
-
               "
+
 
             >
 
 
 
+
               <div
+
 
                 className="
                   h-10
+
                   w-10
 
                   rounded-2xl
@@ -128,13 +166,17 @@ function CompletionToast({
                   bg-green-500/20
 
                   flex
+
                   items-center
+
                   justify-center
 
                   shrink-0
                 "
 
+
               >
+
 
 
                 <CheckCircle
@@ -148,8 +190,8 @@ function CompletionToast({
                 />
 
 
-              </div>
 
+              </div>
 
 
 
@@ -197,9 +239,7 @@ function CompletionToast({
 
                 >
 
-                  Session completed
-                  {" "}
-                  ({minutes} min)
+                  Session completed ({minutes} min)
 
 
                 </p>
@@ -223,7 +263,7 @@ function CompletionToast({
 
 
                 aria-label="
-                  Close notification
+                  Close focus completion notification
                 "
 
 
@@ -246,20 +286,22 @@ function CompletionToast({
 
 
 
-                  focus:outline-none
+                  focus-visible:outline-none
 
 
-                  focus:ring-2
+                  focus-visible:ring-2
 
 
-                  focus:ring-purple-500/50
+                  focus-visible:ring-purple-500/50
 
 
                   rounded-lg
 
                 "
 
+
               >
+
 
 
                 <X
@@ -272,7 +314,6 @@ function CompletionToast({
 
 
 
-
             </div>
 
 
@@ -281,8 +322,8 @@ function CompletionToast({
 
 
         )
-
       }
+
 
 
     </AnimatePresence>
