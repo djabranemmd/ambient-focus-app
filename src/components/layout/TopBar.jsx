@@ -3,6 +3,7 @@ import {
   Sun,
 } from "lucide-react";
 
+
 import {
   useTheme,
 } from "../../context/ThemeContext.jsx";
@@ -20,8 +21,11 @@ function TopBar() {
 
 
 
+
   const hour =
     new Date().getHours();
+
+
 
 
 
@@ -50,8 +54,14 @@ function TopBar() {
 
 
 
-  const isDark =
-    theme === "dark";
+
+
+
+  const nextTheme =
+    theme === "dark"
+      ? "light"
+      : "dark";
+
 
 
 
@@ -80,9 +90,7 @@ function TopBar() {
           className="
             text-4xl
             font-bold
-
             theme-text
-
             transition-colors
             duration-300
           "
@@ -101,9 +109,7 @@ function TopBar() {
 
           className="
             theme-text-muted
-
             mt-2
-
             transition-colors
             duration-300
           "
@@ -115,7 +121,6 @@ function TopBar() {
 
 
         </p>
-
 
 
       </div>
@@ -134,21 +139,19 @@ function TopBar() {
 
 
         aria-label={
-          isDark
-            ? "Switch to light mode"
-            : "Switch to dark mode"
+          `Switch to ${nextTheme} mode`
         }
 
 
 
-        aria-pressed={isDark}
+        aria-pressed={
+          theme === "dark"
+        }
 
 
 
         title={
-          isDark
-            ? "Switch to light mode"
-            : "Switch to dark mode"
+          `Switch to ${nextTheme} mode`
         }
 
 
@@ -158,6 +161,7 @@ function TopBar() {
           h-12
 
           w-12
+
 
 
           rounded-xl
@@ -194,54 +198,45 @@ function TopBar() {
 
 
 
-          active:scale-95
-
-
-
-          focus:outline-none
+          focus-visible:outline-none
 
           focus-visible:ring-2
 
-          focus-visible:ring-purple-500/70
-
-
-          focus-visible:ring-offset-2
-
-          focus-visible:ring-offset-black
+          focus-visible:ring-purple-500/50
 
         "
+
 
       >
 
 
 
         {
-          isDark ? (
+          theme === "dark"
 
-            <Sun
+            ? (
 
-              size={20}
+              <Sun
+                size={20}
+                aria-hidden="true"
+              />
 
-              aria-hidden="true"
+            )
 
-            />
+            : (
 
-          ) : (
+              <Moon
+                size={20}
+                aria-hidden="true"
+              />
 
-            <Moon
-
-              size={20}
-
-              aria-hidden="true"
-
-            />
-
-          )
+            )
         }
 
 
 
       </button>
+
 
 
 
