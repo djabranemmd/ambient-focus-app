@@ -7,7 +7,6 @@ import {
 import {
   AnimatePresence,
   motion,
-  useReducedMotion,
 } from "framer-motion";
 
 
@@ -19,15 +18,13 @@ function CompletionToast({
 }) {
 
 
-  const reduceMotion =
-    useReducedMotion();
-
-
 
   const minutes =
     Math.floor(
       duration / 60
     );
+
+
 
 
 
@@ -45,56 +42,42 @@ function CompletionToast({
           <motion.div
 
 
-            role="alert"
+            role="status"
+
+
+            aria-live="polite"
 
 
 
-            initial={
-              reduceMotion
-                ? false
-                : {
-                    opacity: 0,
-                    x: 40,
-                    scale: 0.95,
-                  }
-            }
+            initial={{
+              opacity: 0,
+              x: 40,
+              scale: 0.95,
+            }}
 
 
 
-            animate={
-              reduceMotion
-                ? undefined
-                : {
-                    opacity: 1,
-                    x: 0,
-                    scale: 1,
-                  }
-            }
+            animate={{
+              opacity: 1,
+              x: 0,
+              scale: 1,
+            }}
 
 
 
-            exit={
-              reduceMotion
-                ? undefined
-                : {
-                    opacity: 0,
-                    x: 40,
-                    scale: 0.95,
-                  }
-            }
+            exit={{
+              opacity: 0,
+              x: 40,
+              scale: 0.95,
+            }}
 
 
 
-            transition={
-              reduceMotion
-                ? {
-                    duration: 0,
-                  }
-                : {
-                    duration: 0.3,
-                    ease: "easeOut",
-                  }
-            }
+            transition={{
+              duration: 0.3,
+              ease: "easeOut",
+            }}
+
 
 
 
@@ -111,12 +94,14 @@ function CompletionToast({
 
               w-[calc(100%-2rem)]
 
-              max-w-sm
-
+              sm:w-80
             "
 
 
+
           >
+
+
 
 
 
@@ -140,11 +125,11 @@ function CompletionToast({
 
                 items-start
 
-
                 transition-all
 
                 duration-300
 
+                hover:-translate-y-1
               "
 
 
@@ -153,12 +138,15 @@ function CompletionToast({
 
 
 
+
               <div
+
+
+                aria-hidden="true"
 
 
                 className="
                   h-10
-
                   w-10
 
                   rounded-2xl
@@ -166,9 +154,7 @@ function CompletionToast({
                   bg-green-500/20
 
                   flex
-
                   items-center
-
                   justify-center
 
                   shrink-0
@@ -176,7 +162,6 @@ function CompletionToast({
 
 
               >
-
 
 
                 <CheckCircle
@@ -190,8 +175,11 @@ function CompletionToast({
                 />
 
 
-
               </div>
+
+
+
+
 
 
 
@@ -209,6 +197,7 @@ function CompletionToast({
 
                 <h3
 
+
                   className="
                     font-semibold
 
@@ -216,6 +205,7 @@ function CompletionToast({
 
                     theme-text
                   "
+
 
                 >
 
@@ -227,7 +217,9 @@ function CompletionToast({
 
 
 
+
                 <p
+
 
                   className="
                     text-sm
@@ -237,9 +229,12 @@ function CompletionToast({
                     mt-1
                   "
 
+
                 >
 
-                  Session completed ({minutes} min)
+                  Session completed
+                  {" "}
+                  ({minutes} min)
 
 
                 </p>
@@ -255,23 +250,26 @@ function CompletionToast({
 
 
 
+
               <button
+
 
 
                 onClick={onClose}
 
 
 
-                aria-label="
-                  Close focus completion notification
-                "
+                aria-label="Close notification"
+
+
+
+                title="Close notification"
 
 
 
                 className="
 
                   theme-text-muted
-
 
                   hover:text-purple-500
 
@@ -305,7 +303,11 @@ function CompletionToast({
 
 
                 <X
+
                   size={18}
+
+                  aria-hidden="true"
+
                 />
 
 
@@ -314,7 +316,11 @@ function CompletionToast({
 
 
 
+
+
             </div>
+
+
 
 
 
@@ -326,11 +332,14 @@ function CompletionToast({
 
 
 
+
     </AnimatePresence>
+
 
   );
 
 }
+
 
 
 export default CompletionToast;
