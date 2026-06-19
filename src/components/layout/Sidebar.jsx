@@ -6,9 +6,11 @@ import {
   Sparkles,
 } from "lucide-react";
 
+
 import {
   useNavigation,
 } from "../../context/NavigationContext.jsx";
+
 
 import {
   useFocus,
@@ -19,10 +21,12 @@ import {
 function Sidebar() {
 
 
+
   const {
     activePage,
     setActivePage,
   } = useNavigation();
+
 
 
 
@@ -33,7 +37,9 @@ function Sidebar() {
 
 
 
+
   const items = [
+
 
     {
       id: "dashboard",
@@ -62,7 +68,10 @@ function Sidebar() {
       label: "Statistics",
     },
 
+
   ];
+
+
 
 
 
@@ -73,6 +82,7 @@ function Sidebar() {
         total + session.duration,
       0
     );
+
 
 
 
@@ -91,13 +101,13 @@ function Sidebar() {
 
 
 
+
+
+
   return (
 
 
     <aside
-
-      aria-label="Sidebar navigation"
-
 
       className="
         hidden
@@ -108,6 +118,7 @@ function Sidebar() {
         min-h-screen
 
         theme-bg
+
         theme-border
 
         border-r
@@ -121,6 +132,8 @@ function Sidebar() {
       "
 
     >
+
+
 
 
 
@@ -167,7 +180,6 @@ function Sidebar() {
 
             <Sparkles size={22} />
 
-
           </div>
 
 
@@ -189,7 +201,6 @@ function Sidebar() {
 
               Ambient Focus
 
-
             </h1>
 
 
@@ -205,11 +216,11 @@ function Sidebar() {
 
               Productivity App
 
-
             </p>
 
 
           </div>
+
 
 
         </div>
@@ -222,9 +233,11 @@ function Sidebar() {
 
 
 
+
+
       <nav
 
-        aria-label="Primary"
+        aria-label="Main navigation"
 
         className="flex-1"
 
@@ -233,7 +246,7 @@ function Sidebar() {
 
 
         {
-          items.map((item)=>{
+          items.map((item) => {
 
 
             const Icon =
@@ -257,19 +270,9 @@ function Sidebar() {
                 key={item.id}
 
 
-                type="button"
-
 
                 onClick={() =>
-                  setActivePage(
-                    item.id
-                  )
-                }
-
-
-
-                aria-label={
-                  item.label
+                  setActivePage(item.id)
                 }
 
 
@@ -278,6 +281,12 @@ function Sidebar() {
                   active
                     ? "page"
                     : undefined
+                }
+
+
+
+                aria-label={
+                  item.label
                 }
 
 
@@ -294,17 +303,13 @@ function Sidebar() {
 
                   gap-3
 
-
                   px-4
 
                   py-3
 
-
                   rounded-2xl
 
-
                   mb-3
-
 
                   transition-all
 
@@ -312,37 +317,24 @@ function Sidebar() {
 
 
 
-                  focus:outline-none
-
+                  focus-visible:outline-none
 
                   focus-visible:ring-2
 
-                  focus-visible:ring-purple-500/70
+                  focus-visible:ring-purple-500/50
 
 
 
                   ${
                     active
 
-                    ?
+                      ?
 
-                    `
-                    bg-purple-500/20
+                      "bg-purple-500/20 text-purple-600"
 
-                    text-purple-600
+                      :
 
-                    `
-
-
-                    :
-
-                    `
-
-                    theme-text-muted
-
-                    hover:bg-purple-500/10
-
-                    `
+                      "theme-text-muted hover:bg-purple-500/10"
 
                   }
 
@@ -350,6 +342,7 @@ function Sidebar() {
 
 
               >
+
 
 
 
@@ -380,6 +373,7 @@ function Sidebar() {
 
 
 
+
                 <Icon
 
                   size={19}
@@ -395,8 +389,8 @@ function Sidebar() {
 
                   {item.label}
 
-
                 </span>
+
 
 
 
@@ -412,6 +406,7 @@ function Sidebar() {
 
 
       </nav>
+
 
 
 
@@ -462,10 +457,12 @@ function Sidebar() {
 
         >
 
-          🎯 {sessions.length}
+          🎯
+          {sessions.length}
 
 
         </div>
+
 
 
 
@@ -489,6 +486,7 @@ function Sidebar() {
 
 
 
+
         <div
 
           className="
@@ -507,8 +505,8 @@ function Sidebar() {
 
 
 
-
       </div>
+
 
 
 
@@ -517,5 +515,9 @@ function Sidebar() {
 
 
   );
+
 }
+
+
+
 export default Sidebar;
