@@ -3,31 +3,20 @@ import {
 } from "react";
 
 
+
 const Button = forwardRef(
 (
   {
     children,
-
     onClick,
-
     variant = "primary",
-
     className = "",
-
     type = "button",
-
     disabled = false,
-
     ariaLabel,
-
-    ariaPressed,
-
-    title,
-
+    ...props
   },
-
   ref
-
 ) => {
 
 
@@ -36,12 +25,13 @@ const Button = forwardRef(
 
 
     primary:
-
       `
       bg-purple-600
+
       hover:bg-purple-500
 
       shadow-lg
+
       shadow-purple-500/20
 
       `,
@@ -66,6 +56,7 @@ const Button = forwardRef(
 
 
 
+
   return (
 
 
@@ -85,18 +76,15 @@ const Button = forwardRef(
 
 
 
-      aria-label={ariaLabel}
+      aria-label={
+        ariaLabel
+      }
 
-
-      aria-pressed={ariaPressed}
 
 
       aria-disabled={
         disabled
       }
-
-
-      title={title}
 
 
 
@@ -115,7 +103,6 @@ const Button = forwardRef(
         duration-300
 
 
-
         flex
 
         items-center
@@ -123,9 +110,7 @@ const Button = forwardRef(
         justify-center
 
 
-
         gap-2
-
 
 
         font-medium
@@ -140,25 +125,20 @@ const Button = forwardRef(
 
 
 
-        focus:outline-none
-
+        focus-visible:outline-none
 
 
         focus-visible:ring-2
 
-        focus-visible:ring-purple-500/70
 
-
-
-        focus-visible:ring-offset-2
-
-        focus-visible:ring-offset-black
+        focus-visible:ring-purple-500/50
 
 
 
         disabled:opacity-50
 
-        disabled:pointer-events-none
+
+        disabled:cursor-not-allowed
 
 
 
@@ -171,7 +151,12 @@ const Button = forwardRef(
       `}
 
 
+
+      {...props}
+
+
     >
+
 
       {children}
 
@@ -180,6 +165,7 @@ const Button = forwardRef(
 
 
   );
+
 
 });
 
