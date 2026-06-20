@@ -4,26 +4,24 @@ import {
 } from "framer-motion";
 
 
-
 function Card({
   children,
   className = "",
 }) {
 
 
-  const reduceMotion =
+  const shouldReduceMotion =
     useReducedMotion();
 
 
 
   return (
 
-
     <motion.div
 
 
       initial={
-        reduceMotion
+        shouldReduceMotion
           ? false
           : {
               opacity: 0,
@@ -34,7 +32,7 @@ function Card({
 
 
       animate={
-        reduceMotion
+        shouldReduceMotion
           ? undefined
           : {
               opacity: 1,
@@ -44,27 +42,23 @@ function Card({
 
 
 
-      transition={
+      transition={{
+        duration:
+          shouldReduceMotion
+            ? 0
+            : 0.4,
 
-        reduceMotion
-          ? {
-              duration: 0,
-            }
-          :
-            {
-              duration: 0.4,
-              ease: "easeOut",
-            }
-
-      }
+        ease:
+          "easeOut",
+      }}
 
 
 
       whileHover={
-        reduceMotion
+        shouldReduceMotion
           ? undefined
           : {
-              y: -2,
+              y: -4,
             }
       }
 
@@ -74,9 +68,7 @@ function Card({
 
         rounded-[32px]
 
-
         p-6
-
 
 
         transition-all
@@ -85,11 +77,23 @@ function Card({
 
 
 
-        theme-card
+        bg-white/5
+
+        dark:bg-white/5
 
 
 
         backdrop-blur-xl
+
+
+
+        border
+
+
+
+        border-black/10
+
+        dark:border-white/10
 
 
 
@@ -107,21 +111,15 @@ function Card({
 
       `}
 
-
-
     >
-
 
       {children}
 
-
     </motion.div>
-
 
   );
 
 }
-
 
 
 export default Card;
