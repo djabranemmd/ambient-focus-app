@@ -21,11 +21,8 @@ function TopBar() {
 
 
 
-
   const hour =
     new Date().getHours();
-
-
 
 
 
@@ -54,9 +51,6 @@ function TopBar() {
 
 
 
-
-
-
   const nextTheme =
     theme === "dark"
       ? "light"
@@ -65,19 +59,15 @@ function TopBar() {
 
 
 
-
   return (
 
-
     <div
-
       className="
         flex
         items-center
         justify-between
         mb-8
       "
-
     >
 
 
@@ -86,7 +76,6 @@ function TopBar() {
 
 
         <h1
-
           className="
             text-4xl
             font-bold
@@ -94,11 +83,9 @@ function TopBar() {
             transition-colors
             duration-300
           "
-
         >
 
           {greeting} 👋
-
 
         </h1>
 
@@ -106,19 +93,16 @@ function TopBar() {
 
 
         <p
-
           className="
             theme-text-muted
             mt-2
             transition-colors
             duration-300
           "
-
         >
 
           Stay focused and reach your
           goals today.
-
 
         </p>
 
@@ -157,16 +141,10 @@ function TopBar() {
 
 
         className="
-
           h-12
-
           w-12
 
-
-
           rounded-xl
-
-
 
           theme-bg
 
@@ -174,10 +152,7 @@ function TopBar() {
 
           border
 
-
-
           theme-text
-
 
 
           flex
@@ -187,52 +162,63 @@ function TopBar() {
           justify-center
 
 
-
           transition-all
 
           duration-300
 
 
-
           hover:scale-105
 
 
+          active:scale-95
 
-          focus-visible:outline-none
+
+
+          focus:outline-none
 
           focus-visible:ring-2
 
-          focus-visible:ring-purple-500/50
+          focus-visible:ring-purple-500/70
+
+          focus-visible:ring-offset-2
 
         "
 
-
       >
-
 
 
         {
           theme === "dark"
 
-            ? (
+          ?
 
-              <Sun
-                size={20}
-                aria-hidden="true"
-              />
+          (
 
-            )
+            <Sun
 
-            : (
+              size={20}
 
-              <Moon
-                size={20}
-                aria-hidden="true"
-              />
+              aria-hidden="true"
 
-            )
+            />
+
+          )
+
+          :
+
+          (
+
+            <Moon
+
+              size={20}
+
+              aria-hidden="true"
+
+            />
+
+          )
+
         }
-
 
 
       </button>
@@ -241,7 +227,6 @@ function TopBar() {
 
 
     </div>
-
 
   );
 
