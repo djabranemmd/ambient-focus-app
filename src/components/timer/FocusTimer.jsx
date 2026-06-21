@@ -1,4 +1,9 @@
-import { useEffect, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 import {
   Play,
@@ -68,7 +73,7 @@ function FocusTimer() {
       timeLeft > 0
     ) {
 
-      interval = setInterval(() => {
+      interval = Date.now() => {
 
         setTimeLeft(
           (prev) => prev - 1
@@ -141,49 +146,55 @@ function FocusTimer() {
 
 
 
-  const formatTime = (
-    seconds
-  ) => {
+  const formatTime = useCallback(
+(seconds) => {
 
-    const mins =
-      Math.floor(
-        seconds / 60
-      );
+  const mins =
+    Math.floor(seconds / 60);
 
 
-    const secs =
-      seconds % 60;
+  const secs =
+    seconds % 60;
 
 
-    return `${String(mins).padStart(
-      2,
-      "0"
-    )}:${String(secs).padStart(
-      2,
-      "0"
-    )}`;
+  return `${String(mins).padStart(
+    2,
+    "0"
+  )}:${String(secs).padStart(
+    2,
+    "0"
+  )}`;
 
-  };
-
-
-
-
-  const resetTimer = () => {
-
-    setIsRunning(false);
-
-    setTimeLeft(
-      duration
-    );
-
-  };
+},
+[]
+);
 
 
 
 
-  const selectPreset = (
-    value
-  ) => {
+  const resetTimer = useCallback(() => {
+
+  setIsRunning(false);
+
+  setTimeLeft(duration);
+
+}, [duration]);
+
+
+
+
+  const selectPreset = useCallback(
+(value) => {
+
+  setIsRunning(false);
+
+  setDuration(value);
+
+  setTimeLeft(value);
+
+},
+[]
+);
 
     setIsRunning(false);
 
@@ -196,7 +207,7 @@ function FocusTimer() {
 
 
 
-  const applyCustomTime = () => {
+  const applyCustomTime = useCallback(() => {
 
     const minutes =
       Number(customMinutes);
@@ -219,16 +230,7 @@ function FocusTimer() {
 
     setIsRunning(false);
 
-  };
-
-
-
-
-  const progress =
-    (
-      (duration - timeLeft) /
-      duration
-    ) * 100;
+  }, [customMinutes]);
 
 
 
@@ -236,16 +238,34 @@ function FocusTimer() {
   const radius = 120;
 
 
-  const circumference =
-    2 * Math.PI * radius;
+const circumference =
+  useMemo(
+    () => 2 * Math.PI * radius,
+    []
+  );
 
 
-  const offset =
-    circumference -
-    (
-      progress / 100
-    ) *
-    circumference;
+const offset =
+  useMemo(() => {
+
+    const progress =
+      (
+        (duration - timeLeft) /
+        duration
+      ) * 100;
+
+
+    return (
+      circumference -
+      (progress / 100) *
+      circumference
+    );
+
+  }, [
+    duration,
+    timeLeft,
+    circumference,
+  ]);
     return (
 
     <section
