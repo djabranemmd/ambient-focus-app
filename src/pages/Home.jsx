@@ -45,13 +45,17 @@ function Home() {
 
       case "focus":
 
-        return <TimerSection />;
+        return (
+          <TimerSection />
+        );
 
 
 
       case "sounds":
 
-        return <AudioMixer />;
+        return (
+          <AudioMixer />
+        );
 
 
 
@@ -71,6 +75,9 @@ function Home() {
 
 
 
+      case "dashboard":
+
+      // eslint-disable-next-line no-fallthrough
       default:
 
         return (
@@ -99,6 +106,7 @@ function Home() {
 
 
 
+
   return (
 
     <>
@@ -113,6 +121,10 @@ function Home() {
 
 
         <main
+
+          id="main-content"
+
+          aria-label="Ambient Focus dashboard"
 
           className="
             w-full
@@ -152,6 +164,15 @@ function Home() {
 
 
               key={activePage}
+
+
+              role="region"
+
+
+              aria-live="polite"
+
+
+              aria-label={`${activePage} section`}
 
 
 
