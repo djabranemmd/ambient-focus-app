@@ -1,4 +1,5 @@
 import {
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -29,30 +30,29 @@ function AudioMixer() {
   useEffect(() => {
 
 
-    sounds.forEach((sound) => {
+    const initialVolumes = {};
+
+sounds.forEach((sound) => {
+
+  const audio =
+    new Audio(sound.file);
 
 
-      const audio =
-        new Audio(sound.file);
+  audio.loop = true;
+
+  audio.volume = 0.5;
 
 
-      audio.loop = true;
-
-      audio.volume = 0.5;
-
-
-      audioRefs.current[sound.id] =
-        audio;
+  audioRefs.current[sound.id] =
+    audio;
 
 
+  initialVolumes[sound.id] = 0.5;
 
-      setVolumes((prev) => ({
-        ...prev,
-        [sound.id]: 0.5,
-      }));
+});
 
 
-    });
+setVolumes(initialVolumes);
 
 
 
@@ -82,7 +82,7 @@ function AudioMixer() {
 
 
 
-  const toggleSound = async (id) => {
+  const toggleSound = useCallback(async (id) => {
 
 
     const audio =
@@ -142,16 +142,17 @@ function AudioMixer() {
     }
 
 
-  };
+  }, [playing]);
 
 
 
 
 
-  const changeVolume = (
-    id,
-    value
-  ) => {
+  const changeVolume = useCallback(
+(
+  id,
+  value
+) => {
 
 
     const audio =
@@ -173,7 +174,9 @@ function AudioMixer() {
     }));
 
 
-  };
+  },
+[]
+);
 
 
 
@@ -227,9 +230,9 @@ function AudioMixer() {
               }
 
 
-              onToggle={()=>
-                toggleSound(sound.id)
-              }
+              onToggle={() =>
+  toggleSound(sound.id)
+}
 
 
               onVolumeChange={(value)=>
