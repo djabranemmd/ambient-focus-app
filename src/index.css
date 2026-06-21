@@ -199,6 +199,11 @@ body {
   cursor: pointer;
 }
 
+.audio-slider:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 
 .audio-slider::-webkit-slider-thumb {
 
@@ -301,4 +306,18 @@ body {
     0 0 0 3px
     rgba(139, 92, 246, 0.45);
 
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
 }
