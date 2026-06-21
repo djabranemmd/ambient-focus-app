@@ -186,16 +186,6 @@ function FocusTimer() {
   const selectPreset = useCallback(
 (value) => {
 
-  setIsRunning(false);
-
-  setDuration(value);
-
-  setTimeLeft(value);
-
-},
-[]
-);
-
     setIsRunning(false);
 
     setDuration(value);
