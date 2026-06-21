@@ -1,81 +1,264 @@
+import {
+  useMemo,
+} from "react";
+
 import StatsCard from "./StatsCard";
-import { useFocus } from "../../context/FocusContext";
+
+import {
+  useFocus,
+} from "../../context/FocusContext";
+
+
 
 function Statistics() {
-  const { sessions } = useFocus();
 
-  const totalSessions = sessions.length;
 
-  const totalMinutes = sessions.reduce(
-    (sum, session) =>
-      sum + session.duration / 60,
-    0
-  );
+  const {
+    sessions,
+  } = useFocus();
 
-  const today = new Date().toDateString();
 
-  const todaySessions = sessions.filter(
-    (session) =>
-      new Date(
-        session.date
-      ).toDateString() === today
-  ).length;
 
-  const uniqueDays = [
-    ...new Set(
-      sessions.map((session) =>
-        new Date(
-          session.date
-        ).toDateString()
-      )
-    ),
-  ];
 
-  const streak = uniqueDays.length;
 
-  const hours = Math.floor(
-    totalMinutes / 60
-  );
+  const stats =
+    useMemo(() => {
 
-  const minutes = Math.floor(
-    totalMinutes % 60
-  );
+
+      const today =
+        new Date().toDateString();
+
+
+
+      let totalMinutes = 0;
+
+      let todaySessions = 0;
+
+
+      const uniqueDays =
+        new Set();
+
+
+
+
+      sessions.forEach(
+        (session) => {
+
+
+          totalMinutes +=
+            session.duration / 60;
+
+
+
+          const sessionDate =
+            new Date(
+              session.date
+            ).toDateString();
+
+
+
+          uniqueDays.add(
+            sessionDate
+          );
+
+
+
+          if (
+            sessionDate === today
+          ) {
+
+            todaySessions++;
+
+          }
+
+
+        }
+      );
+
+
+
+
+      return {
+
+        totalSessions:
+          sessions.length,
+
+
+        totalMinutes,
+
+
+        todaySessions,
+
+
+        streak:
+          uniqueDays.size,
+
+      };
+
+
+    }, [sessions]);
+
+
+
+
+
+
+
+
+  const hours =
+    Math.floor(
+      stats.totalMinutes / 60
+    );
+
+
+
+  const minutes =
+    Math.floor(
+      stats.totalMinutes % 60
+    );
+
+
+
+
+
 
   return (
-    <section className="mt-10">
-      <div className="mb-8">
-        <h2 className="text-3xl font-bold">
+
+    <section
+      className="mt-10"
+      aria-labelledby="statistics-title"
+    >
+
+
+
+      <div
+        className="mb-8"
+      >
+
+
+        <h2
+
+          id="statistics-title"
+
+          className="
+            text-3xl
+            font-bold
+            theme-text
+          "
+
+        >
+
           Statistics
+
+
         </h2>
 
-        <p className="text-gray-400 mt-2">
+
+
+
+
+        <p
+
+          className="
+            theme-text-muted
+            mt-2
+          "
+
+        >
+
           Track your focus progress.
+
+
         </p>
+
+
+
       </div>
 
-      <div className="grid md:grid-cols-4 gap-6">
+
+
+
+
+
+
+
+      <div
+
+        className="
+          grid
+          md:grid-cols-4
+          gap-6
+        "
+
+      >
+
+
+
+
         <StatsCard
+
           title="Total Focus Time"
-          value={`${hours}h ${minutes}m`}
+
+          value={
+            `${hours}h ${minutes}m`
+          }
+
         />
 
+
+
+
+
         <StatsCard
+
           title="Sessions"
-          value={totalSessions}
+
+          value={
+            stats.totalSessions
+          }
+
         />
 
+
+
+
+
         <StatsCard
+
           title="Today"
-          value={todaySessions}
+
+          value={
+            stats.todaySessions
+          }
+
         />
 
+
+
+
+
         <StatsCard
+
           title="Streak"
-          value={`${streak} days`}
+
+          value={
+            `${stats.streak} days`
+          }
+
         />
+
+
+
+
       </div>
+
+
+
     </section>
+
   );
+
 }
+
 
 export default Statistics;
