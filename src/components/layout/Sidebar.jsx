@@ -94,6 +94,9 @@ function Sidebar() {
   return (
 
     <aside
+
+      aria-label="Sidebar navigation"
+
       className="
         hidden
         lg:flex
@@ -104,12 +107,18 @@ function Sidebar() {
 
         theme-bg
         theme-border
+
         border-r
 
         backdrop-blur-2xl
 
         p-5
+
+        transition-colors
+
+        duration-300
       "
+
     >
 
 
@@ -137,13 +146,17 @@ function Sidebar() {
             className="
               h-11
               w-11
+
               rounded-2xl
+
               bg-gradient-to-br
               from-purple-500
               to-blue-500
+
               flex
               items-center
               justify-center
+
               shadow-lg
             "
 
@@ -196,6 +209,8 @@ function Sidebar() {
 
       <nav
 
+        role="navigation"
+
         aria-label="Main navigation"
 
         className="flex-1"
@@ -222,6 +237,10 @@ function Sidebar() {
 
 
                 key={item.id}
+
+
+
+                type="button"
 
 
 
@@ -279,6 +298,8 @@ function Sidebar() {
                   focus-visible:ring-purple-500/70
 
                   focus-visible:ring-offset-2
+
+                  focus-visible:bg-purple-500/10
 
 
 
@@ -365,8 +386,11 @@ function Sidebar() {
       <div
         className="
           mt-auto
+
           rounded-3xl
+
           theme-card
+
           p-5
         "
       >

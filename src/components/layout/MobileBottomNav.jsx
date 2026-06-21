@@ -54,19 +54,23 @@ function MobileBottomNav() {
 
 
 
-
   return (
 
-
     <nav
+
+      role="navigation"
 
       aria-label="Mobile navigation"
 
       className="
         fixed
+
         bottom-0
+
         left-0
+
         right-0
+
         z-50
 
         lg:hidden
@@ -77,7 +81,6 @@ function MobileBottomNav() {
       "
 
     >
-
 
 
       <div
@@ -102,10 +105,13 @@ function MobileBottomNav() {
           justify-around
 
           px-2
+
+          transition-colors
+
+          duration-300
         "
 
       >
-
 
 
         {
@@ -123,9 +129,7 @@ function MobileBottomNav() {
 
 
 
-
             return (
-
 
               <button
 
@@ -134,8 +138,14 @@ function MobileBottomNav() {
 
 
 
+                type="button"
+
+
+
                 onClick={() =>
-                  setActivePage(item.id)
+                  setActivePage(
+                    item.id
+                  )
                 }
 
 
@@ -154,14 +164,12 @@ function MobileBottomNav() {
 
 
 
-                className={`
-
+                className="
                   relative
 
                   w-16
 
                   h-16
-
 
                   flex
 
@@ -171,22 +179,13 @@ function MobileBottomNav() {
 
                   justify-center
 
-
                   gap-1
 
-
                   rounded-2xl
-
-
 
                   transition-all
 
                   duration-300
-
-
-
-                  active:scale-95
-
 
 
                   focus:outline-none
@@ -197,11 +196,10 @@ function MobileBottomNav() {
 
                   focus-visible:ring-offset-2
 
-                `}
+                  active:scale-95
+                "
 
               >
-
-
 
 
 
@@ -214,8 +212,11 @@ function MobileBottomNav() {
 
                       className="
                         absolute
+
                         inset-0
+
                         rounded-2xl
+
                         bg-purple-500/15
                       "
 
@@ -223,8 +224,6 @@ function MobileBottomNav() {
 
                   )
                 }
-
-
 
 
 
@@ -242,8 +241,9 @@ function MobileBottomNav() {
 
                     z-10
 
+                    transition-colors
 
-                    transition
+                    duration-300
 
 
                     ${
@@ -267,8 +267,6 @@ function MobileBottomNav() {
 
 
 
-
-
                 <span
 
                   className={`
@@ -277,12 +275,11 @@ function MobileBottomNav() {
 
                     z-10
 
-
                     text-[11px]
 
+                    transition-colors
 
-                    transition
-
+                    duration-300
 
 
                     ${
@@ -304,8 +301,8 @@ function MobileBottomNav() {
 
                   {item.label}
 
-                </span>
 
+                </span>
 
 
 
@@ -313,7 +310,6 @@ function MobileBottomNav() {
 
 
             );
-
 
 
           })
@@ -324,14 +320,11 @@ function MobileBottomNav() {
       </div>
 
 
-
     </nav>
-
 
   );
 
 }
-
 
 
 export default MobileBottomNav;
