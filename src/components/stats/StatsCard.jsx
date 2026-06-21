@@ -15,12 +15,14 @@ function StatsCard({
 
   return (
 
-    <article
-      aria-label={`${title}: ${value}`}
-    >
+    <Card>
 
 
-      <Card>
+      <article
+
+        aria-label={`${title}: ${value}`}
+
+      >
 
 
         <p
@@ -34,9 +36,7 @@ function StatsCard({
 
           {title}
 
-
         </p>
-
 
 
 
@@ -48,18 +48,13 @@ function StatsCard({
             font-bold
             mt-2
             theme-text
-            transition-colors
-            duration-300
           "
 
         >
 
           {value}
 
-
         </h3>
-
-
 
 
 
@@ -74,14 +69,11 @@ function StatsCard({
                 theme-text-muted
                 mt-2
                 text-sm
-                transition-colors
-                duration-300
               "
 
             >
 
               {subtitle}
-
 
             </p>
 
@@ -90,11 +82,11 @@ function StatsCard({
 
 
 
-      </Card>
+      </article>
 
 
 
-    </article>
+    </Card>
 
   );
 

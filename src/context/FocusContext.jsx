@@ -1,7 +1,9 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 
@@ -13,6 +15,7 @@ const FocusContext =
 
 const STORAGE_KEY =
   "focusSessions";
+
 
 
 
@@ -28,6 +31,10 @@ export function FocusProvider({
 
 
 
+  /*
+    Load sessions once
+  */
+
   useEffect(() => {
 
 
@@ -41,11 +48,9 @@ export function FocusProvider({
 
 
 
-      if (!saved) {
-
+      if (!saved)
         return;
 
-      }
 
 
 
@@ -54,17 +59,24 @@ export function FocusProvider({
 
 
 
+
       if (
         Array.isArray(parsed)
       ) {
 
 
-        setSessions(
+        const validSessions =
           parsed.filter(
             (session) =>
               typeof session.duration === "number" &&
+              session.duration > 0 &&
               session.date
-          )
+          );
+
+
+
+        setSessions(
+          validSessions
         );
 
 
@@ -72,7 +84,7 @@ export function FocusProvider({
 
 
 
-    } catch (error) {
+    } catch(error) {
 
 
       console.error(
@@ -98,100 +110,149 @@ export function FocusProvider({
 
 
 
-  const addSession = (
-    duration
-  ) => {
+
+  /*
+    Save sessions when changed
+  */
 
 
+  useEffect(() => {
 
-    if (
-      typeof duration !== "number" ||
-      duration <= 0
-    ) {
 
-      console.warn(
-        "Invalid session duration"
+    try {
+
+
+      localStorage.setItem(
+
+        STORAGE_KEY,
+
+        JSON.stringify(
+          sessions
+        )
+
       );
 
-      return;
+
+    } catch(error) {
+
+
+      console.error(
+        "Failed saving focus sessions:",
+        error
+      );
+
 
     }
 
 
 
-
-
-
-    const newSession = {
-
-      id:
-        crypto.randomUUID
-          ? crypto.randomUUID()
-          : Date.now(),
-
-
-      duration,
-
-
-      date:
-        new Date().toISOString(),
-
-    };
+  }, [sessions]);
 
 
 
 
 
 
-    setSessions((prev) => {
-
-
-      const updated = [
-
-        ...prev,
-
-        newSession,
-
-      ];
 
 
 
-      try {
+
+  const addSession =
+    useCallback(
+      (
+        duration
+      ) => {
 
 
-        localStorage.setItem(
 
-          STORAGE_KEY,
+        if (
+          typeof duration !== "number" ||
+          duration <= 0
+        ) {
 
-          JSON.stringify(updated)
 
+          console.warn(
+            "Invalid session duration"
+          );
+
+
+          return;
+
+
+        }
+
+
+
+
+
+
+        const newSession = {
+
+
+          id:
+            crypto.randomUUID
+              ? crypto.randomUUID()
+              : Date.now(),
+
+
+
+          duration,
+
+
+
+          date:
+            new Date()
+              .toISOString(),
+
+
+        };
+
+
+
+
+
+        setSessions(
+          (prev) => [
+
+            ...prev,
+
+            newSession,
+
+          ]
         );
 
 
-      } catch (error) {
 
-
-        console.error(
-
-          "Failed saving focus session:",
-
-          error
-
-        );
-
-
-      }
+      },
+      []
+    );
 
 
 
-      return updated;
-
-
-    });
 
 
 
-  };
+
+
+
+
+  const value =
+    useMemo(
+      () => ({
+
+        sessions,
+
+        addSession,
+
+      }),
+
+      [
+        sessions,
+        addSession,
+      ]
+
+    );
+
 
 
 
@@ -201,32 +262,25 @@ export function FocusProvider({
 
   return (
 
-
     <FocusContext.Provider
 
-
-      value={{
-
-        sessions,
-
-        addSession,
-
-      }}
-
-
+      value={
+        value
+      }
 
     >
 
-
       {children}
-
 
     </FocusContext.Provider>
 
-
   );
 
+
 }
+
+
+
 
 
 
@@ -248,9 +302,7 @@ export function useFocus() {
 
 
     throw new Error(
-
       "useFocus must be used inside FocusProvider"
-
     );
 
 

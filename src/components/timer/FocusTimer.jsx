@@ -73,7 +73,7 @@ function FocusTimer() {
       timeLeft > 0
     ) {
 
-      interval = Date.now() => {
+      interval = setInterval(() => {
 
         setTimeLeft(
           (prev) => prev - 1
@@ -192,7 +192,7 @@ function FocusTimer() {
 
     setTimeLeft(value);
 
-  };
+  }, []);
 
 
 

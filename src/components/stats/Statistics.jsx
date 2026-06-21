@@ -1,13 +1,5 @@
-import {
-  useMemo,
-} from "react";
-
 import StatsCard from "./StatsCard";
-
-import {
-  useFocus,
-} from "../../context/FocusContext";
-
+import { useFocus } from "../../context/FocusContext";
 
 
 function Statistics() {
@@ -19,105 +11,65 @@ function Statistics() {
 
 
 
-
-
-  const stats =
-    useMemo(() => {
-
-
-      const today =
-        new Date().toDateString();
+  const totalSessions =
+    sessions.length;
 
 
 
-      let totalMinutes = 0;
-
-      let todaySessions = 0;
-
-
-      const uniqueDays =
-        new Set();
-
+  const totalMinutes =
+    sessions.reduce(
+      (sum, session) =>
+        sum + session.duration / 60,
+      0
+    );
 
 
 
-      sessions.forEach(
-        (session) => {
-
-
-          totalMinutes +=
-            session.duration / 60;
+  const today =
+    new Date().toDateString();
 
 
 
-          const sessionDate =
+  const todaySessions =
+    sessions.filter(
+      (session) =>
+        new Date(
+          session.date
+        ).toDateString() === today
+    ).length;
+
+
+
+  const uniqueDays =
+    [
+      ...new Set(
+        sessions.map(
+          (session) =>
             new Date(
               session.date
-            ).toDateString();
+            ).toDateString()
+        )
+      ),
+    ];
 
 
 
-          uniqueDays.add(
-            sessionDate
-          );
-
-
-
-          if (
-            sessionDate === today
-          ) {
-
-            todaySessions++;
-
-          }
-
-
-        }
-      );
-
-
-
-
-      return {
-
-        totalSessions:
-          sessions.length,
-
-
-        totalMinutes,
-
-
-        todaySessions,
-
-
-        streak:
-          uniqueDays.size,
-
-      };
-
-
-    }, [sessions]);
-
-
-
-
-
+  const streak =
+    uniqueDays.length;
 
 
 
   const hours =
     Math.floor(
-      stats.totalMinutes / 60
+      totalMinutes / 60
     );
 
 
 
   const minutes =
     Math.floor(
-      stats.totalMinutes % 60
+      totalMinutes % 60
     );
-
-
 
 
 
@@ -125,15 +77,16 @@ function Statistics() {
   return (
 
     <section
+
       className="mt-10"
+
       aria-labelledby="statistics-title"
+
     >
 
 
 
-      <div
-        className="mb-8"
-      >
+      <div className="mb-8">
 
 
         <h2
@@ -150,9 +103,7 @@ function Statistics() {
 
           Statistics
 
-
         </h2>
-
 
 
 
@@ -168,14 +119,11 @@ function Statistics() {
 
           Track your focus progress.
 
-
         </p>
 
 
 
       </div>
-
-
 
 
 
@@ -190,68 +138,77 @@ function Statistics() {
           gap-6
         "
 
+        role="list"
+
+        aria-label="Focus statistics"
+
       >
 
 
 
+        <div role="listitem">
 
-        <StatsCard
+          <StatsCard
 
-          title="Total Focus Time"
+            title="Total Focus Time"
 
-          value={
-            `${hours}h ${minutes}m`
-          }
+            value={`${hours}h ${minutes}m`}
 
-        />
+          />
 
-
-
-
-
-        <StatsCard
-
-          title="Sessions"
-
-          value={
-            stats.totalSessions
-          }
-
-        />
+        </div>
 
 
 
 
 
-        <StatsCard
+        <div role="listitem">
 
-          title="Today"
+          <StatsCard
 
-          value={
-            stats.todaySessions
-          }
+            title="Sessions"
 
-        />
+            value={totalSessions}
+
+          />
+
+        </div>
 
 
 
 
 
-        <StatsCard
+        <div role="listitem">
 
-          title="Streak"
+          <StatsCard
 
-          value={
-            `${stats.streak} days`
-          }
+            title="Today"
 
-        />
+            value={todaySessions}
 
+          />
+
+        </div>
+
+
+
+
+
+        <div role="listitem">
+
+          <StatsCard
+
+            title="Streak"
+
+            value={`${streak} days`}
+
+          />
+
+        </div>
 
 
 
       </div>
-
 
 
     </section>
