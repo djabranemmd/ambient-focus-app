@@ -5,22 +5,41 @@ import {
   useState,
 } from "react";
 
+
 import {
   Play,
   Pause,
   RotateCcw,
 } from "lucide-react";
 
+
+import {
+  useFocus,
+} from "../../context/FocusContext";
+
+
+import useNotification from "../../hooks/useNotification";
+
+
+import {
+  playCompletionSound,
+} from "../../utils/sound";
+
+
 import Card from "../ui/Card";
 import Button from "../ui/Button";
 import SectionTitle from "../ui/SectionTitle";
+import CompletionToast from "../ui/CompletionToast";
+
 
 
 const FOCUS_TIME =
   25 * 60;
 
+
 const SHORT_BREAK =
   5 * 60;
+
 
 const LONG_BREAK =
   15 * 60;
@@ -32,10 +51,18 @@ const radius = 120;
 
 
 const modeLabel = {
-  focus: "Focus",
-  shortBreak: "Short Break",
-  longBreak: "Long Break",
+
+  focus:
+    "Focus",
+
+  shortBreak:
+    "Short Break",
+
+  longBreak:
+    "Long Break",
+
 };
+
 
 
 
@@ -43,23 +70,60 @@ const modeLabel = {
 function PomodoroTimer() {
 
 
-  const [isRunning, setIsRunning] =
-    useState(false);
+
+  const {
+    addSession,
+  } = useFocus();
 
 
 
-  const [sessionCount, setSessionCount] =
-    useState(1);
+
+  const {
+    sendNotification,
+  } = useNotification();
 
 
 
-  const [mode, setMode] =
-    useState("focus");
+
+
+  const [
+    isRunning,
+    setIsRunning,
+  ] = useState(false);
 
 
 
-  const [timeLeft, setTimeLeft] =
-    useState(FOCUS_TIME);
+
+  const [
+    sessionCount,
+    setSessionCount,
+  ] = useState(1);
+
+
+
+
+  const [
+    mode,
+    setMode,
+  ] = useState("focus");
+
+
+
+
+  const [
+    timeLeft,
+    setTimeLeft,
+  ] = useState(
+    FOCUS_TIME
+  );
+
+
+
+
+  const [
+    showCompletion,
+    setShowCompletion,
+  ] = useState(false);
 
 
 
@@ -73,23 +137,22 @@ function PomodoroTimer() {
 
 
 
-    if (
+    if(
       isRunning &&
       timeLeft > 0
-    ) {
-
+    ){
 
       interval =
-        setInterval(() => {
+        setInterval(()=>{
 
 
           setTimeLeft(
-            (prev) => prev - 1
+            (prev)=>
+              prev - 1
           );
 
 
-        }, 1000);
-
+        },1000);
 
     }
 
@@ -97,24 +160,64 @@ function PomodoroTimer() {
 
 
 
-    if (
+
+    if(
       timeLeft === 0 &&
       isRunning
-    ) {
+    ){
 
 
       setIsRunning(false);
 
 
 
-      if (
+
+
+      if(
         mode === "focus"
-      ) {
+      ){
 
 
-        if (
+        addSession(
+          FOCUS_TIME
+        );
+
+
+
+        sendNotification({
+
+          title:
+            "Ambient Focus",
+
+          body:
+            "Pomodoro focus session completed 🎉",
+
+        });
+
+
+
+        playCompletionSound();
+
+
+
+        setShowCompletion(true);
+
+
+
+        setTimeout(()=>{
+
+          setShowCompletion(false);
+
+        },4000);
+
+
+
+
+
+
+        if(
           sessionCount === 4
-        ) {
+        ){
 
 
           setMode(
@@ -131,7 +234,8 @@ function PomodoroTimer() {
 
 
 
-        } else {
+        }
+        else{
 
 
           setMode(
@@ -148,7 +252,8 @@ function PomodoroTimer() {
 
 
 
-      } else {
+      }
+      else{
 
 
         setMode(
@@ -162,16 +267,14 @@ function PomodoroTimer() {
 
 
 
-        if (
+        if(
           mode === "shortBreak"
-        ) {
-
+        ){
 
           setSessionCount(
-            (prev) =>
+            (prev)=>
               prev + 1
           );
-
 
         }
 
@@ -184,55 +287,57 @@ function PomodoroTimer() {
 
 
 
-    return () => {
 
-      if (interval) {
+    return ()=>{
 
-        clearInterval(interval);
+      if(interval){
+
+        clearInterval(
+          interval
+        );
 
       }
 
     };
 
 
-
-  }, [
+  },[
     isRunning,
     timeLeft,
     mode,
     sessionCount,
+    addSession,
+    sendNotification,
   ]);
-
-
-
-
-
-
-
   const resetTimer =
-    useCallback(() => {
-
+    useCallback(()=>{
 
       setIsRunning(false);
-
 
       setMode(
         "focus"
       );
 
-
       setSessionCount(1);
-
 
       setTimeLeft(
         FOCUS_TIME
       );
 
-
-    }, []);
-
+    },[]);
 
 
+
+
+
+  const toggleTimer =
+    useCallback(()=>{
+
+      setIsRunning(
+        (prev)=>!prev
+      );
+
+    },[]);
 
 
 
@@ -241,14 +346,13 @@ function PomodoroTimer() {
 
   const formatTime =
     useCallback(
-      (seconds) => {
+      (seconds)=>{
 
 
         const mins =
           Math.floor(
             seconds / 60
           );
-
 
 
         const secs =
@@ -275,23 +379,20 @@ function PomodoroTimer() {
 
 
 
-
   const currentDuration =
-    useMemo(() => {
+    useMemo(()=>{
 
 
-      if (
+      if(
         mode === "focus"
       )
-
         return FOCUS_TIME;
 
 
 
-      if (
+      if(
         mode === "shortBreak"
       )
-
         return SHORT_BREAK;
 
 
@@ -299,8 +400,9 @@ function PomodoroTimer() {
       return LONG_BREAK;
 
 
-
-    }, [mode]);
+    },[
+      mode
+    ]);
 
 
 
@@ -310,8 +412,7 @@ function PomodoroTimer() {
 
   const circumference =
     useMemo(
-      () =>
-        2 * Math.PI * radius,
+      ()=>2 * Math.PI * radius,
       []
     );
 
@@ -322,29 +423,36 @@ function PomodoroTimer() {
 
 
   const offset =
-    useMemo(() => {
+    useMemo(()=>{
 
 
       const progress =
         (
-          (currentDuration -
-            timeLeft)
+          (
+            currentDuration -
+            timeLeft
+          )
           /
           currentDuration
         ) * 100;
 
 
 
+
       return (
+
         circumference -
+
         (
           progress / 100
-        ) *
+        )
+        *
         circumference
+
       );
 
 
-    }, [
+    },[
       currentDuration,
       timeLeft,
       circumference,
@@ -356,19 +464,35 @@ function PomodoroTimer() {
 
 
 
+
+
   return (
 
     <section
-      className="mt-8"
+      className="
+        mt-8
+      "
     >
 
 
 
-      <SectionTitle
+      <CompletionToast
 
-        title="Pomodoro Mode"
+        show={
+          showCompletion
+        }
 
-        subtitle="Work smarter with structured focus sessions."
+        duration={
+          FOCUS_TIME
+        }
+
+        onClose={()=>{
+
+          setShowCompletion(
+            false
+          );
+
+        }}
 
       />
 
@@ -376,32 +500,56 @@ function PomodoroTimer() {
 
 
 
+      <SectionTitle
+
+        title="Pomodoro Mode"
+
+        subtitle="
+          Work smarter with structured focus sessions.
+        "
+
+      />
+
+
+
+
+
+
       <Card
+
         className="
           max-w-5xl
           mx-auto
         "
+
       >
 
 
 
 
+
         <div
+
           className="
             text-center
             mb-8
           "
+
         >
 
 
           <p
+
             className="
-              text-purple-400
+              text-purple-500
               font-semibold
             "
+
           >
 
-            {modeLabel[mode]}
+            {
+              modeLabel[mode]
+            }
 
 
           </p>
@@ -409,11 +557,15 @@ function PomodoroTimer() {
 
 
 
+
+
           <p
+
             className="
-              text-gray-400
+              theme-text-muted
               mt-2
             "
+
           >
 
             Session {sessionCount} / 4
@@ -431,18 +583,28 @@ function PomodoroTimer() {
 
 
 
+
         <div
+
           className="
             flex
             justify-center
           "
+
         >
 
 
 
+
           <div
-            className="relative"
+
+            className="
+              relative
+            "
+
           >
+
+
 
 
 
@@ -452,7 +614,7 @@ function PomodoroTimer() {
 
               height="300"
 
-              aria-label="Pomodoro progress"
+              aria-hidden="true"
 
             >
 
@@ -473,6 +635,8 @@ function PomodoroTimer() {
                 fill="none"
 
               />
+
+
 
 
 
@@ -516,7 +680,21 @@ function PomodoroTimer() {
 
 
 
+
+
+
             <div
+
+              role="timer"
+
+              aria-live="polite"
+
+              aria-label={`
+                ${formatTime(timeLeft)}
+                ${modeLabel[mode]}
+                timer
+              `}
+
 
               className="
                 absolute
@@ -526,9 +704,11 @@ function PomodoroTimer() {
                 justify-center
                 text-6xl
                 font-bold
+                theme-text
               "
 
             >
+
 
               {
                 formatTime(
@@ -542,11 +722,15 @@ function PomodoroTimer() {
 
 
 
+
           </div>
 
 
 
+
+
         </div>
+
 
 
 
@@ -568,23 +752,42 @@ function PomodoroTimer() {
 
 
 
+
           <Button
 
-            onClick={() =>
-              setIsRunning(
-                (prev) =>
-                  !prev
-              )
+
+            type="button"
+
+
+            onClick={
+              toggleTimer
             }
+
+
+
+            aria-pressed={
+              isRunning
+            }
+
 
 
             aria-label={
+
               isRunning
-                ? "Pause Pomodoro timer"
-                : "Start Pomodoro timer"
+
+              ?
+
+              "Pause Pomodoro timer"
+
+              :
+
+              "Start Pomodoro timer"
+
             }
 
+
           >
+
 
 
             {
@@ -592,24 +795,42 @@ function PomodoroTimer() {
 
                 <>
 
-                  <Pause size={18}/>
+                  <Pause
+
+                    size={18}
+
+                    aria-hidden="true"
+
+                  />
 
                   Pause
+
 
                 </>
 
 
               ) : (
 
+
                 <>
 
-                  <Play size={18}/>
+
+                  <Play
+
+                    size={18}
+
+                    aria-hidden="true"
+
+                  />
 
                   Start
 
+
                 </>
 
+
               )
+
             }
 
 
@@ -622,20 +843,38 @@ function PomodoroTimer() {
 
 
 
+
           <Button
 
+
+            type="button"
+
+
             variant="secondary"
+
 
             onClick={
               resetTimer
             }
 
-            aria-label="Reset Pomodoro timer"
+
+            aria-label="
+              Reset Pomodoro timer
+            "
+
 
           >
 
 
-            <RotateCcw size={18}/>
+
+            <RotateCcw
+
+              size={18}
+
+              aria-hidden="true"
+
+            />
+
 
 
             Reset
@@ -646,7 +885,10 @@ function PomodoroTimer() {
 
 
 
+
+
         </div>
+
 
 
 
@@ -655,9 +897,12 @@ function PomodoroTimer() {
 
 
 
+
+
     </section>
 
   );
+
 
 }
 
