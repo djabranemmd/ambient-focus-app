@@ -1,10 +1,11 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
-
 
 
 const ThemeContext =
@@ -16,10 +17,8 @@ const STORAGE_KEY =
   "theme";
 
 
-
 const DEFAULT_THEME =
   "dark";
-
 
 
 const VALID_THEMES = [
@@ -84,11 +83,20 @@ export function ThemeProvider({
   useEffect(() => {
 
 
-    document.documentElement
-      .setAttribute(
-        "data-theme",
-        theme
-      );
+    const root =
+      document.documentElement;
+
+
+
+    root.setAttribute(
+      "data-theme",
+      theme
+    );
+
+
+
+    root.style.colorScheme =
+      theme;
 
 
 
@@ -128,22 +136,51 @@ export function ThemeProvider({
 
 
 
+  const toggleTheme =
+    useCallback(() => {
 
-  const toggleTheme = () => {
+
+      setTheme((prev) =>
+
+        prev === "dark"
+
+          ? "light"
+
+          : "dark"
+
+      );
 
 
-    setTheme((prev) =>
+    }, []);
 
-      prev === "dark"
 
-        ? "light"
 
-        : "dark"
 
+
+
+
+
+  const value =
+    useMemo(
+      () => ({
+
+        theme,
+
+        toggleTheme,
+
+        isDark:
+          theme === "dark",
+
+        isLight:
+          theme === "light",
+
+      }),
+
+      [
+        theme,
+        toggleTheme,
+      ]
     );
-
-
-  };
 
 
 
@@ -153,28 +190,15 @@ export function ThemeProvider({
 
   return (
 
-
     <ThemeContext.Provider
 
-
-      value={{
-
-        theme,
-
-        toggleTheme,
-
-      }}
-
-
+      value={value}
 
     >
 
-
       {children}
 
-
     </ThemeContext.Provider>
-
 
   );
 

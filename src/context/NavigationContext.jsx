@@ -1,6 +1,8 @@
 import {
   createContext,
+  useCallback,
   useContext,
+  useMemo,
   useState,
 } from "react";
 
@@ -8,6 +10,7 @@ import {
 
 const NavigationContext =
   createContext(null);
+
 
 
 
@@ -31,8 +34,10 @@ export const PAGES = {
 
 
 
+
 const VALID_PAGES =
   Object.values(PAGES);
+
 
 
 
@@ -52,36 +57,97 @@ export function NavigationProvider({
 
 
 
+  const [previousPage, setPreviousPage] =
+    useState(null);
 
 
 
-  const setActivePage = (
-    page
-  ) => {
-
-
-    if (
-      !VALID_PAGES.includes(page)
-    ) {
-
-
-      console.warn(
-
-        `Invalid navigation page: ${page}`
-
-      );
-
-
-      return;
-
-    }
 
 
 
-    setActivePageState(page);
+
+  const setActivePage =
+    useCallback(
+      (page) => {
 
 
-  };
+        if (
+          !VALID_PAGES.includes(page)
+        ) {
+
+
+          console.warn(
+
+            `Invalid navigation page: ${page}`
+
+          );
+
+
+          return;
+
+        }
+
+
+
+
+        setActivePageState(
+          (currentPage) => {
+
+
+            if (
+              currentPage !== page
+            ) {
+
+              setPreviousPage(
+                currentPage
+              );
+
+            }
+
+
+            return page;
+
+
+          }
+
+        );
+
+
+      },
+      []
+    );
+
+
+
+
+
+
+
+
+  const value =
+    useMemo(
+      () => ({
+
+        activePage,
+
+        previousPage,
+
+        setActivePage,
+
+        pages:
+          PAGES,
+
+      }),
+
+      [
+        activePage,
+        previousPage,
+        setActivePage,
+      ]
+
+    );
+
+
 
 
 
@@ -92,31 +158,29 @@ export function NavigationProvider({
 
     <NavigationContext.Provider
 
-
-      value={{
-
-        activePage,
-
-        setActivePage,
-
-      }}
-
-
+      value={value}
 
     >
 
-
       {children}
 
-
     </NavigationContext.Provider>
-
 
   );
 
 }
+
+
+
+
+
+
+
+
 // eslint-disable-next-line react-refresh/only-export-components
 export function useNavigation() {
+
+
   const context =
     useContext(
       NavigationContext

@@ -1,147 +1,227 @@
-import { useState } from "react";
+import {
+  useCallback,
+  useState,
+} from "react";
+
 
 
 function useNotification() {
 
 
   const isSupported =
+    typeof window !== "undefined" &&
     "Notification" in window;
 
 
 
+
+
   const [permission, setPermission] =
-    useState(
-      isSupported
-        ? Notification.permission
-        : "unsupported"
-    );
+    useState(() => {
+
+
+      if (!isSupported) {
+
+        return "unsupported";
+
+      }
+
+
+      return Notification.permission;
+
+
+    });
+
+
+
+
+
 
 
 
 
   const requestPermission =
-    async () => {
+    useCallback(
+      async () => {
 
 
-      if (!isSupported) {
-
-        console.warn(
-          "Browser notifications are not supported."
-        );
-
-        return false;
-
-      }
+        if (!isSupported) {
 
 
-
-      try {
-
-        const result =
-          await Notification.requestPermission();
+          console.warn(
+            "Browser notifications are not supported."
+          );
 
 
-        setPermission(
-          result
-        );
+          return false;
 
 
-        return (
-          result === "granted"
-        );
-
-
-      } catch (error) {
-
-
-        console.error(
-          "Notification permission error:",
-          error
-        );
-
-
-        return false;
-
-      }
-
-
-    };
-
-
-
-
-
-
-
-  const sendNotification = ({
-    title,
-    body,
-  }) => {
-
-
-    if (!isSupported) {
-
-      console.warn(
-        "Notifications unavailable."
-      );
-
-      return false;
-
-    }
-
-
-
-
-    if (
-      Notification.permission !==
-      "granted"
-    ) {
-
-      return false;
-
-    }
-
-
-
-
-    try {
-
-
-      new Notification(
-        title,
-        {
-          body,
-
-          icon:
-            "/favicon.ico",
-
-          badge:
-            "/favicon.ico",
         }
-      );
 
 
 
-      return true;
+
+
+        try {
+
+
+          const result =
+            await Notification.requestPermission();
 
 
 
-    } catch (error) {
+          setPermission(
+            result
+          );
 
 
-      console.error(
-        "Notification failed:",
-        error
-      );
+
+          return (
+            result === "granted"
+          );
 
 
-      return false;
+
+        } catch (error) {
 
 
-    }
+          console.error(
+
+            "Notification permission request failed:",
+
+            error
+
+          );
 
 
-  };
+
+          return false;
+
+
+        }
+
+
+      },
+
+      [
+        isSupported,
+      ]
+
+    );
+
+
+
+
+
+
+
+
+
+  const sendNotification =
+    useCallback(
+      ({
+        title,
+        body,
+      }) => {
+
+
+
+        if (!isSupported) {
+
+
+          console.warn(
+
+            "Notifications are unavailable."
+
+          );
+
+
+          return false;
+
+
+        }
+
+
+
+
+
+
+        if (
+          Notification.permission !==
+          "granted"
+        ) {
+
+
+          return false;
+
+
+        }
+
+
+
+
+
+
+
+        try {
+
+
+          new Notification(
+
+            title,
+
+            {
+
+              body,
+
+
+              icon:
+                "/favicon.ico",
+
+
+              badge:
+                "/favicon.ico",
+
+
+            }
+
+          );
+
+
+
+          return true;
+
+
+
+        } catch (error) {
+
+
+          console.error(
+
+            "Failed creating notification:",
+
+            error
+
+          );
+
+
+
+          return false;
+
+
+        }
+
+
+
+      },
+
+      [
+        isSupported,
+      ]
+
+    );
+
+
 
 
 
@@ -158,7 +238,9 @@ function useNotification() {
 
   };
 
+
 }
+
 
 
 export default useNotification;
