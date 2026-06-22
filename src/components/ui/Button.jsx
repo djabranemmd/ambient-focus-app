@@ -4,6 +4,7 @@ import {
 
 
 
+
 const Button = forwardRef(
 (
   {
@@ -21,6 +22,8 @@ const Button = forwardRef(
 
     ariaLabel,
 
+    loading = false,
+
     ...props
 
   },
@@ -35,28 +38,48 @@ const Button = forwardRef(
 
 
     primary:
-
       `
-      bg-purple-600
-      hover:bg-purple-500
-      shadow-lg
-      shadow-purple-500/20
+        bg-purple-600
+        hover:bg-purple-500
+        shadow-lg
+        shadow-purple-500/20
+        text-white
       `,
 
 
 
     secondary:
-
       `
-      bg-black/10
-      dark:bg-white/10
+        bg-black/10
+        dark:bg-white/10
 
-      hover:bg-black/20
-      dark:hover:bg-white/15
+        hover:bg-black/20
+        dark:hover:bg-white/15
       `,
 
 
+
+    ghost:
+      `
+        bg-transparent
+
+        hover:bg-black/10
+
+        dark:hover:bg-white/10
+      `,
+
+
+
   };
+
+
+
+
+
+
+  const selectedVariant =
+    variants[variant] ??
+    variants.primary;
 
 
 
@@ -81,16 +104,28 @@ const Button = forwardRef(
 
 
 
-      disabled={disabled}
+      disabled={
+        disabled ||
+        loading
+      }
 
 
 
-      aria-label={ariaLabel}
+      aria-label={
+        ariaLabel
+      }
 
 
 
       aria-disabled={
-        disabled
+        disabled ||
+        loading
+      }
+
+
+
+      aria-busy={
+        loading
       }
 
 
@@ -155,9 +190,11 @@ const Button = forwardRef(
 
         disabled:cursor-not-allowed
 
+        disabled:pointer-events-none
 
 
-        ${variants[variant]}
+
+        ${selectedVariant}
 
 
 
@@ -174,7 +211,24 @@ const Button = forwardRef(
     >
 
 
-      {children}
+      {
+        loading
+        ?
+
+        (
+          <span
+            className="
+              animate-pulse
+            "
+          >
+            Loading...
+          </span>
+        )
+
+        :
+
+        children
+      }
 
 
     </button>
@@ -184,6 +238,7 @@ const Button = forwardRef(
 
 
 });
+
 
 
 

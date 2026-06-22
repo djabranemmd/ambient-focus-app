@@ -3,64 +3,148 @@ import {
   useState,
 } from "react";
 
+
 import FocusTimer from "./FocusTimer";
 import PomodoroTimer from "./PomodoroTimer";
 import TimerTabs from "./TimerTabs";
 
 
+
+export const TIMER_MODES = {
+
+  FOCUS:
+    "focus",
+
+  POMODORO:
+    "pomodoro",
+
+};
+
+
+
+
+
+
 function TimerSection() {
 
 
-  const [mode, setMode] =
-    useState("focus");
+
+  const [
+    mode,
+    setMode,
+  ] = useState(
+    TIMER_MODES.FOCUS
+  );
+
+
 
 
 
   const handleModeChange =
-    useCallback((newMode) => {
+    useCallback(
+      (newMode)=>{
 
-      setMode(newMode);
 
-    }, []);
+        if(
+          Object.values(
+            TIMER_MODES
+          )
+          .includes(newMode)
+        ){
+
+          setMode(
+            newMode
+          );
+
+        }
+
+
+      },
+      []
+    );
+
+
+
+
+
+
+  const renderTimer =
+    () => {
+
+
+      switch(mode){
+
+
+        case TIMER_MODES.POMODORO:
+
+          return (
+            <PomodoroTimer />
+          );
+
+
+
+        case TIMER_MODES.FOCUS:
+
+        default:
+
+          return (
+            <FocusTimer />
+          );
+
+
+      }
+
+
+    };
+
+
 
 
 
 
   return (
 
-    <>
+
+    <section
+
+      aria-label="
+        Focus timer section
+      "
+
+    >
+
 
       <TimerTabs
 
-        mode={mode}
+
+        mode={
+          mode
+        }
+
 
         setMode={
           handleModeChange
         }
 
+
       />
 
 
 
+
       {
-        mode === "focus"
-
-          ?
-
-          <FocusTimer />
-
-          :
-
-          <PomodoroTimer />
-
+        renderTimer()
       }
 
 
-    </>
+
+    </section>
+
 
   );
 
 }
+
 
 
 export default TimerSection;

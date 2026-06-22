@@ -4,10 +4,24 @@ import {
 } from "framer-motion";
 
 
+
+
 function Card({
+
   children,
+
   className = "",
+
+  hover = true,
+
+  animate = true,
+
+  role,
+
+  ariaLabel,
+
 }) {
+
 
 
   const shouldReduceMotion =
@@ -15,51 +29,100 @@ function Card({
 
 
 
+
+
+
+  const enableMotion =
+    animate &&
+    !shouldReduceMotion;
+
+
+
+
+
+
   return (
+
 
     <motion.div
 
 
+
       initial={
-        shouldReduceMotion
-          ? false
-          : {
-              opacity: 0,
-              y: 20,
-            }
+        enableMotion
+          ?
+          {
+            opacity: 0,
+            y: 20,
+          }
+          :
+          false
       }
+
 
 
 
       animate={
-        shouldReduceMotion
-          ? undefined
-          : {
-              opacity: 1,
-              y: 0,
-            }
+        enableMotion
+          ?
+          {
+            opacity: 1,
+            y: 0,
+          }
+          :
+          undefined
       }
 
 
 
+
       transition={{
+
         duration:
-          shouldReduceMotion
-            ? 0
-            : 0.4,
+          enableMotion
+            ?
+            0.4
+            :
+            0,
+
 
         ease:
           "easeOut",
+
       }}
 
 
 
+
       whileHover={
-        shouldReduceMotion
-          ? undefined
-          : {
-              y: -4,
-            }
+
+        hover &&
+        enableMotion
+
+        ?
+
+        {
+          y: -4,
+        }
+
+        :
+
+        undefined
+
+      }
+
+
+
+
+
+      role={
+        role
+      }
+
+
+
+      aria-label={
+        ariaLabel
       }
 
 
@@ -71,15 +134,15 @@ function Card({
         p-6
 
 
+
         transition-all
 
         duration-300
 
 
 
-        bg-white/5
 
-        dark:bg-white/5
+        theme-card
 
 
 
@@ -87,13 +150,11 @@ function Card({
 
 
 
+
         border
 
+        theme-border
 
-
-        border-black/10
-
-        dark:border-white/10
 
 
 
@@ -107,19 +168,28 @@ function Card({
 
 
 
+
         ${className}
+
 
       `}
 
+
+
     >
+
 
       {children}
 
+
+
     </motion.div>
+
 
   );
 
 }
+
 
 
 export default Card;
