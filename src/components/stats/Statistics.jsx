@@ -1,8 +1,28 @@
+import {
+  Clock3,
+  Target,
+  CalendarDays,
+  Flame,
+} from "lucide-react";
+
+
+import {
+  useMemo,
+} from "react";
+
+
 import StatsCard from "./StatsCard";
-import { useFocus } from "../../context/FocusContext";
+
+import {
+  useFocus,
+} from "../../context/FocusContext";
+
+
+
 
 
 function Statistics() {
+
 
 
   const {
@@ -11,70 +31,282 @@ function Statistics() {
 
 
 
-  const totalSessions =
-    sessions.length;
 
 
 
-  const totalMinutes =
-    sessions.reduce(
-      (sum, session) =>
-        sum + session.duration / 60,
-      0
-    );
+  const statistics =
+    useMemo(() => {
+
+
+      const totalSessions =
+        sessions.length;
 
 
 
-  const today =
-    new Date().toDateString();
+
+
+      const totalMinutes =
+        sessions.reduce(
+          (sum, session) =>
+            sum + session.duration / 60,
+          0
+        );
 
 
 
-  const todaySessions =
-    sessions.filter(
-      (session) =>
-        new Date(
-          session.date
-        ).toDateString() === today
-    ).length;
+
+
+      const today =
+        new Date()
+          .toDateString();
 
 
 
-  const uniqueDays =
-    [
-      ...new Set(
-        sessions.map(
+
+
+      const todaySessions =
+        sessions.filter(
           (session) =>
             new Date(
               session.date
-            ).toDateString()
+            )
+            .toDateString() === today
         )
-      ),
-    ];
+        .length;
 
 
 
-  const streak =
-    uniqueDays.length;
+
+
+
+
+      const days =
+        [
+          ...new Set(
+            sessions.map(
+              (session) =>
+                new Date(
+                  session.date
+                )
+                .toDateString()
+            )
+          ),
+        ]
+        .map(
+          (date) =>
+            new Date(date)
+        )
+        .sort(
+          (a,b) =>
+            b - a
+        );
+
+
+
+
+
+
+
+      let streak = 0;
+
+
+
+
+      if(days.length > 0){
+
+
+        let current =
+          new Date();
+
+
+
+        current.setHours(
+          0,
+          0,
+          0,
+          0
+        );
+
+
+
+
+        for(
+          const day of days
+        ){
+
+
+          day.setHours(
+            0,
+            0,
+            0,
+            0
+          );
+
+
+
+          const difference =
+            (
+              current - day
+            )
+            /
+            (
+              1000 *
+              60 *
+              60 *
+              24
+            );
+
+
+
+          if(
+            difference === 0 ||
+            difference === 1
+          ){
+
+            streak++;
+
+            current =
+              day;
+
+          } else {
+
+            break;
+
+          }
+
+
+        }
+
+
+      }
+
+
+
+
+
+
+      return {
+
+
+        totalSessions,
+
+
+        totalMinutes,
+
+
+        todaySessions,
+
+
+        streak,
+
+
+      };
+
+
+
+    }, [
+      sessions,
+    ]);
+
+
+
+
+
 
 
 
   const hours =
     Math.floor(
-      totalMinutes / 60
+      statistics.totalMinutes / 60
     );
 
 
 
   const minutes =
     Math.floor(
-      totalMinutes % 60
+      statistics.totalMinutes % 60
     );
 
 
 
 
+
+
+
+
+  const cards = [
+
+
+    {
+
+      title:
+        "Total Focus Time",
+
+      value:
+        `${hours}h ${minutes}m`,
+
+      icon:
+        Clock3,
+
+    },
+
+
+
+    {
+
+      title:
+        "Sessions",
+
+      value:
+        statistics.totalSessions,
+
+      icon:
+        Target,
+
+    },
+
+
+
+    {
+
+      title:
+        "Today",
+
+      value:
+        statistics.todaySessions,
+
+      icon:
+        CalendarDays,
+
+    },
+
+
+
+    {
+
+      title:
+        "Streak",
+
+      value:
+        `${statistics.streak} days`,
+
+      icon:
+        Flame,
+
+    },
+
+
+  ];
+
+
+
+
+
+
+
+
   return (
+
 
     <section
 
@@ -130,92 +362,73 @@ function Statistics() {
 
 
 
+
       <div
 
         className="
           grid
-          md:grid-cols-4
+          grid-cols-1
+          sm:grid-cols-2
+          lg:grid-cols-4
           gap-6
         "
 
         role="list"
 
-        aria-label="Focus statistics"
-
       >
 
 
 
-        <div role="listitem">
-
-          <StatsCard
-
-            title="Total Focus Time"
-
-            value={`${hours}h ${minutes}m`}
-
-          />
-
-        </div>
+        {
+          cards.map((card)=>(
 
 
+            <div
+
+              key={card.title}
+
+              role="listitem"
+
+            >
 
 
+              <StatsCard
 
-        <div role="listitem">
+                title={
+                  card.title
+                }
 
-          <StatsCard
+                value={
+                  card.value
+                }
 
-            title="Sessions"
+                icon={
+                  card.icon
+                }
 
-            value={totalSessions}
-
-          />
-
-        </div>
-
-
-
-
-
-        <div role="listitem">
-
-          <StatsCard
-
-            title="Today"
-
-            value={todaySessions}
-
-          />
-
-        </div>
+              />
 
 
+            </div>
 
 
-
-        <div role="listitem">
-
-          <StatsCard
-
-            title="Streak"
-
-            value={`${streak} days`}
-
-          />
-
-        </div>
+          ))
+        }
 
 
 
       </div>
 
 
+
+
     </section>
+
 
   );
 
 }
+
 
 
 export default Statistics;
