@@ -29,11 +29,14 @@ const TWENTY_FIVE = 25 * 60;
 const FIFTY = 50 * 60;
 
 
+
 function FocusTimer() {
+
 
   const {
     addSession,
   } = useFocus();
+
 
 
   const {
@@ -42,20 +45,25 @@ function FocusTimer() {
 
 
 
+
   const [duration, setDuration] =
     useState(TWENTY_FIVE);
+
 
 
   const [timeLeft, setTimeLeft] =
     useState(TWENTY_FIVE);
 
 
+
   const [isRunning, setIsRunning] =
     useState(false);
 
 
+
   const [customMinutes, setCustomMinutes] =
     useState("");
+
 
 
   const [showCompletion, setShowCompletion] =
@@ -63,9 +71,13 @@ function FocusTimer() {
 
 
 
+
+
   useEffect(() => {
 
+
     let interval;
+
 
 
     if (
@@ -73,15 +85,20 @@ function FocusTimer() {
       timeLeft > 0
     ) {
 
+
       interval = setInterval(() => {
+
 
         setTimeLeft(
           (prev) => prev - 1
         );
 
-      }, 1000);
+
+      },1000);
+
 
     }
+
 
 
 
@@ -90,7 +107,7 @@ function FocusTimer() {
       isRunning
     ) {
 
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+
       setIsRunning(false);
 
 
@@ -101,8 +118,7 @@ function FocusTimer() {
 
       sendNotification({
 
-        title:
-          "Ambient Focus",
+        title:"Ambient Focus",
 
         body:
           "Focus session completed 🎉",
@@ -110,10 +126,13 @@ function FocusTimer() {
       });
 
 
+
       playCompletionSound();
 
 
+
       setShowCompletion(true);
+
 
 
       const toastTimer =
@@ -121,21 +140,28 @@ function FocusTimer() {
 
           setShowCompletion(false);
 
-        }, 4000);
+        },4000);
+
 
 
       return () =>
-        clearTimeout(toastTimer);
+        clearTimeout(
+          toastTimer
+        );
+
 
     }
 
 
 
+
     return () =>
-      clearInterval(interval);
+      clearInterval(
+        interval
+      );
 
 
-  }, [
+  },[
     isRunning,
     timeLeft,
     duration,
@@ -146,81 +172,121 @@ function FocusTimer() {
 
 
 
-  const formatTime = useCallback(
-(seconds) => {
 
-  const mins =
-    Math.floor(seconds / 60);
-
-
-  const secs =
-    seconds % 60;
+  const formatTime =
+    useCallback(
+      (seconds)=>{
 
 
-  return `${String(mins).padStart(
-    2,
-    "0"
-  )}:${String(secs).padStart(
-    2,
-    "0"
-  )}`;
-
-},
-[]
-);
+        const mins =
+          Math.floor(
+            seconds / 60
+          );
 
 
 
+        const secs =
+          seconds % 60;
 
-  const resetTimer = useCallback(() => {
 
-  setIsRunning(false);
 
-  setTimeLeft(duration);
+        return `${String(mins).padStart(
+          2,
+          "0"
+        )}:${String(secs).padStart(
+          2,
+          "0"
+        )}`;
 
-}, [duration]);
+
+      },
+      []
+    );
 
 
 
 
-  const selectPreset = useCallback(
-(value) => {
 
-    setIsRunning(false);
-
-    setDuration(value);
-
-    setTimeLeft(value);
-
-  }, []);
+  const resetTimer =
+    useCallback(()=>{
 
 
+      setIsRunning(false);
 
 
-  const applyCustomTime = useCallback(() => {
-
-    const minutes =
-      Number(customMinutes);
-
-
-    if (
-      !minutes ||
-      minutes < 1
-    )
-      return;
+      setTimeLeft(
+        duration
+      );
 
 
-    const seconds =
-      minutes * 60;
+    },[
+      duration,
+    ]);
 
 
-    setDuration(seconds);
 
-    setTimeLeft(seconds);
 
-    setIsRunning(false);
 
-  }, [customMinutes]);
+  const selectPreset =
+    useCallback(
+      (value)=>{
+
+
+        setIsRunning(false);
+
+
+        setDuration(value);
+
+
+        setTimeLeft(value);
+
+
+      },
+      []
+    );
+
+
+
+
+
+  const applyCustomTime =
+    useCallback(()=>{
+
+
+      const minutes =
+        Number(
+          customMinutes
+        );
+
+
+
+      if(
+        !minutes ||
+        minutes < 1
+      )
+        return;
+
+
+
+      const seconds =
+        minutes * 60;
+
+
+
+      setDuration(seconds);
+
+
+      setTimeLeft(seconds);
+
+
+      setIsRunning(false);
+
+
+
+    },[
+      customMinutes,
+    ]);
+
 
 
 
@@ -228,39 +294,48 @@ function FocusTimer() {
   const radius = 120;
 
 
-const circumference =
-  useMemo(
-    () => 2 * Math.PI * radius,
-    []
-  );
 
-
-const offset =
-  useMemo(() => {
-
-    const progress =
-      (
-        (duration - timeLeft) /
-        duration
-      ) * 100;
-
-
-    return (
-      circumference -
-      (progress / 100) *
-      circumference
+  const circumference =
+    useMemo(
+      ()=>2*Math.PI*radius,
+      []
     );
 
-  }, [
-    duration,
-    timeLeft,
-    circumference,
-  ]);
-    return (
+
+
+  const offset =
+    useMemo(()=>{
+
+
+      const progress =
+        (
+          (duration-timeLeft)
+          /
+          duration
+        ) * 100;
+
+
+
+      return (
+        circumference -
+        (progress/100) *
+        circumference
+      );
+
+
+    },[
+      duration,
+      timeLeft,
+      circumference,
+    ]);
+
+
+  return (
 
     <section
       className="mt-8"
     >
+
 
       <CompletionToast
 
@@ -280,6 +355,7 @@ const offset =
 
 
 
+
       <SectionTitle
 
         title="Focus Session"
@@ -290,55 +366,79 @@ const offset =
 
 
 
+
+
       <Card
+
         className="
           max-w-5xl
           mx-auto
           relative
           overflow-hidden
         "
+
       >
 
+
         <div
+
+          aria-hidden="true"
+
           className="
             absolute
             inset-0
             bg-purple-500/5
             blur-3xl
           "
+
         />
 
 
+
+
+
         <div
+
           className="
             relative
             z-10
           "
+
         >
 
 
+
+
           <div
+
             className="
               flex
               justify-center
             "
+
           >
 
+
+
             <div
+
               className="
                 relative
               "
+
             >
 
+
+
               <svg
+
+                aria-hidden="true"
 
                 className="
                   w-57.5
                   h-57.5
                   sm:w-75
                   sm:h-75
-                  transition-transform
-                  duration-500
                 "
 
                 viewBox="
@@ -346,6 +446,8 @@ const offset =
                 "
 
               >
+
+
 
                 <circle
 
@@ -362,6 +464,9 @@ const offset =
                   fill="none"
 
                 />
+
+
+
 
 
                 <circle
@@ -388,12 +493,6 @@ const offset =
                     offset
                   }
 
-                  className="
-                    transition-all
-                    duration-700
-                    ease-linear
-                  "
-
                   transform="
                     rotate(-90 150 150)
                   "
@@ -401,12 +500,30 @@ const offset =
                 />
 
 
+
               </svg>
 
 
 
 
+
+
               <div
+
+                role="timer"
+
+                aria-live="polite"
+
+                aria-label={`
+                  ${formatTime(timeLeft)}
+                  remaining
+                  ${
+                    isRunning
+                    ? "running"
+                    : "paused"
+                  }
+                `}
+
 
                 className="
                   absolute
@@ -419,6 +536,8 @@ const offset =
 
               >
 
+
+
                 <span
 
                   className="
@@ -426,8 +545,6 @@ const offset =
                     sm:text-6xl
                     font-bold
                     theme-text
-                    transition-colors
-                    duration-300
                   "
 
                 >
@@ -438,7 +555,9 @@ const offset =
                     )
                   }
 
+
                 </span>
+
 
 
 
@@ -447,8 +566,6 @@ const offset =
                   className="
                     theme-text-muted
                     mt-2
-                    transition-colors
-                    duration-300
                   "
 
                 >
@@ -458,13 +575,19 @@ const offset =
                 </span>
 
 
+
               </div>
+
+
 
 
             </div>
 
 
           </div>
+
+
+
 
 
 
@@ -482,9 +605,17 @@ const offset =
 
           >
 
+
+
             <Button
 
+              type="button"
+
               variant="secondary"
+
+              aria-label="
+                Set timer to 25 minutes
+              "
 
               onClick={() =>
                 selectPreset(
@@ -500,9 +631,17 @@ const offset =
 
 
 
+
+
             <Button
 
+              type="button"
+
               variant="secondary"
+
+              aria-label="
+                Set timer to 50 minutes
+              "
 
               onClick={() =>
                 selectPreset(
@@ -514,10 +653,17 @@ const offset =
 
               50 min
 
+
             </Button>
 
 
+
+
           </div>
+
+
+
+
 
 
 
@@ -536,15 +682,40 @@ const offset =
 
           >
 
+
+
+            <label
+
+              htmlFor="custom-focus-time"
+
+              className="
+                sr-only
+              "
+
+            >
+
+              Custom focus duration in minutes
+
+            </label>
+
+
+
+
+
             <input
+
+
+              id="custom-focus-time"
+
 
               type="number"
 
+
               min="1"
+
 
               placeholder="Custom minutes"
 
-              aria-label="Custom focus duration in minutes"
 
 
               className="
@@ -560,17 +731,10 @@ const offset =
 
                 outline-none
 
-                transition-all
-                duration-300
-
                 focus:ring-2
                 focus:ring-purple-500/50
-
-                focus:scale-[1.02]
-
-                hover:bg-black/10
-                dark:hover:bg-white/15
               "
+
 
 
               value={
@@ -578,17 +742,27 @@ const offset =
               }
 
 
-              onChange={(e) =>
+
+              onChange={(e)=>
+
                 setCustomMinutes(
                   e.target.value
                 )
+
               }
+
+
 
             />
 
 
 
+
+
+
             <Button
+
+              type="button"
 
               onClick={
                 applyCustomTime
@@ -598,10 +772,16 @@ const offset =
 
               Apply
 
+
             </Button>
 
 
+
           </div>
+
+
+
+
 
 
 
@@ -619,49 +799,94 @@ const offset =
 
           >
 
+
+
+
             <Button
 
-              onClick={() =>
-                setIsRunning(
-                  !isRunning
-                )
+
+              type="button"
+
+
+              aria-pressed={
+                isRunning
               }
+
+
 
               aria-label={
                 isRunning
-                  ? "Pause focus timer"
-                  : "Start focus timer"
+
+                ?
+
+                "Pause focus timer"
+
+                :
+
+                "Start focus timer"
+
               }
 
+
+
+              onClick={() =>
+                setIsRunning(
+                  (prev)=>!prev
+                )
+              }
+
+
+
             >
+
+
 
               {
                 isRunning ? (
 
+
                   <>
 
+
                     <Pause
+
                       size={18}
+
+                      aria-hidden="true"
+
                     />
+
 
                     Pause
 
+
                   </>
+
 
                 ) : (
 
+
                   <>
 
+
                     <Play
+
                       size={18}
+
+                      aria-hidden="true"
+
                     />
+
 
                     Start
 
+
                   </>
+
 
                 )
               }
+
 
 
             </Button>
@@ -670,42 +895,74 @@ const offset =
 
 
 
+
+
             <Button
 
+
+              type="button"
+
+
               variant="secondary"
+
 
               onClick={
                 resetTimer
               }
 
-              aria-label="Reset focus timer"
+
+              aria-label="
+                Reset focus timer
+              "
+
 
             >
 
+
+
               <RotateCcw
+
                 size={18}
+
+                aria-hidden="true"
+
               />
 
+
               Reset
+
+
 
 
             </Button>
 
 
+
+
+
           </div>
+
+
+
 
 
         </div>
 
 
+
+
       </Card>
+
+
 
 
     </section>
 
+
   );
 
 }
+
 
 
 export default FocusTimer;
