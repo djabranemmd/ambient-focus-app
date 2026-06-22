@@ -23,6 +23,7 @@ function MobileBottomNav() {
 
 
 
+
   const items = [
 
     {
@@ -54,21 +55,18 @@ function MobileBottomNav() {
 
 
 
+
+
   return (
 
     <nav
 
-      role="navigation"
-
-      aria-label="Mobile navigation"
+      aria-label="Mobile main navigation"
 
       className="
         fixed
-
         bottom-0
-
         left-0
-
         right-0
 
         z-50
@@ -114,6 +112,7 @@ function MobileBottomNav() {
       >
 
 
+
         {
           items.map((item)=>{
 
@@ -125,6 +124,7 @@ function MobileBottomNav() {
 
             const active =
               activePage === item.id;
+
 
 
 
@@ -151,7 +151,7 @@ function MobileBottomNav() {
 
 
                 aria-label={
-                  item.label
+                  `Navigate to ${item.label}`
                 }
 
 
@@ -164,7 +164,20 @@ function MobileBottomNav() {
 
 
 
-                className="
+                aria-pressed={
+                  active
+                }
+
+
+
+                title={
+                  item.label
+                }
+
+
+
+                className={`
+
                   relative
 
                   w-16
@@ -181,23 +194,35 @@ function MobileBottomNav() {
 
                   gap-1
 
+
                   rounded-2xl
+
 
                   transition-all
 
                   duration-300
 
 
+
                   focus:outline-none
+
+
 
                   focus-visible:ring-2
 
                   focus-visible:ring-purple-500/70
 
+
+
                   focus-visible:ring-offset-2
 
+
+
                   active:scale-95
-                "
+
+
+                `}
+
 
               >
 
@@ -229,11 +254,13 @@ function MobileBottomNav() {
 
 
 
+
                 <Icon
 
                   size={20}
 
                   aria-hidden="true"
+
 
                   className={`
 
@@ -241,9 +268,11 @@ function MobileBottomNav() {
 
                     z-10
 
+
                     transition-colors
 
                     duration-300
+
 
 
                     ${
@@ -255,13 +284,14 @@ function MobileBottomNav() {
 
                       :
 
-                      "text-gray-400"
+                      "theme-text-muted"
 
                     }
 
                   `}
 
                 />
+
 
 
 
@@ -275,11 +305,14 @@ function MobileBottomNav() {
 
                     z-10
 
+
                     text-[11px]
+
 
                     transition-colors
 
                     duration-300
+
 
 
                     ${
@@ -291,7 +324,7 @@ function MobileBottomNav() {
 
                       :
 
-                      "text-gray-400"
+                      "theme-text-muted"
 
                     }
 
@@ -303,6 +336,7 @@ function MobileBottomNav() {
 
 
                 </span>
+
 
 
 
