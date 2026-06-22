@@ -1,4 +1,9 @@
 import {
+  useEffect,
+} from "react";
+
+
+import {
   CheckCircle,
   X,
 } from "lucide-react";
@@ -28,11 +33,65 @@ function CompletionToast({
 
 
 
+  useEffect(() => {
+
+
+    if (!show)
+      return;
+
+
+
+    const handleEscape =
+      (event) => {
+
+
+        if (
+          event.key === "Escape"
+        ) {
+
+          onClose();
+
+        }
+
+
+      };
+
+
+
+    window.addEventListener(
+      "keydown",
+      handleEscape
+    );
+
+
+
+    return () => {
+
+
+      window.removeEventListener(
+        "keydown",
+        handleEscape
+      );
+
+
+    };
+
+
+  }, [
+    show,
+    onClose,
+  ]);
+
+
+
+
+
+
+
   return (
 
 
     <AnimatePresence>
-
 
 
       {
@@ -46,6 +105,9 @@ function CompletionToast({
 
 
             aria-live="polite"
+
+
+            aria-atomic="true"
 
 
 
@@ -80,7 +142,6 @@ function CompletionToast({
 
 
 
-
             className="
               fixed
 
@@ -98,10 +159,7 @@ function CompletionToast({
             "
 
 
-
           >
-
-
 
 
 
@@ -138,15 +196,13 @@ function CompletionToast({
 
 
 
-
               <div
-
 
                 aria-hidden="true"
 
-
                 className="
                   h-10
+
                   w-10
 
                   rounded-2xl
@@ -154,26 +210,23 @@ function CompletionToast({
                   bg-green-500/20
 
                   flex
+
                   items-center
+
                   justify-center
 
                   shrink-0
                 "
 
-
               >
-
 
                 <CheckCircle
 
-                  className="
-                    text-green-500
-                  "
+                  className="text-green-500"
 
                   size={22}
 
                 />
-
 
               </div>
 
@@ -182,21 +235,14 @@ function CompletionToast({
 
 
 
-
-
-
               <div
-
                 className="
                   flex-1
                 "
-
               >
 
 
-
                 <h3
-
 
                   className="
                     font-semibold
@@ -206,20 +252,16 @@ function CompletionToast({
                     theme-text
                   "
 
-
                 >
 
                   Great Focus 🎉
-
 
                 </h3>
 
 
 
 
-
                 <p
-
 
                   className="
                     text-sm
@@ -229,17 +271,11 @@ function CompletionToast({
                     mt-1
                   "
 
-
                 >
 
-                  Session completed
-                  {" "}
-                  ({minutes} min)
-
+                  Session completed ({minutes} min)
 
                 </p>
-
-
 
 
               </div>
@@ -249,18 +285,16 @@ function CompletionToast({
 
 
 
-
-
               <button
 
+
+                type="button"
 
 
                 onClick={onClose}
 
 
-
                 aria-label="Close notification"
-
 
 
                 title="Close notification"
@@ -268,14 +302,12 @@ function CompletionToast({
 
 
                 className="
-
                   theme-text-muted
 
                   hover:text-purple-500
 
 
                   transition-all
-
 
                   duration-300
 
@@ -290,17 +322,17 @@ function CompletionToast({
                   focus-visible:ring-2
 
 
-                  focus-visible:ring-purple-500/50
+                  focus-visible:ring-purple-500/70
+
+
+                  focus-visible:ring-offset-2
 
 
                   rounded-lg
 
                 "
 
-
               >
-
-
 
                 <X
 
@@ -316,12 +348,7 @@ function CompletionToast({
 
 
 
-
-
             </div>
-
-
-
 
 
           </motion.div>
@@ -329,8 +356,6 @@ function CompletionToast({
 
         )
       }
-
-
 
 
     </AnimatePresence>
