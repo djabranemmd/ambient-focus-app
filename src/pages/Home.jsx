@@ -13,7 +13,11 @@ import TimerSection from "../components/timer/TimerSection";
 import Statistics from "../components/stats/Statistics";
 import DashboardExtras from "../components/stats/DashboardExtras";
 import AudioMixer from "../components/audio/AudioMixer";
-
+import DashboardHero from "../components/dashboard/DashboardHero";
+import QuickStart from "../components/dashboard/QuickStart";
+import FocusOverview from "../components/dashboard/FocusOverview";
+import TodayProgress from "../components/dashboard/TodayProgress";
+import ProductivityCard from "../components/dashboard/ProductivityCard";
 
 import {
   useNavigation,
@@ -77,24 +81,38 @@ function Home() {
 
       case "dashboard":
 
-      // eslint-disable-next-line no-fallthrough
-      default:
+// eslint-disable-next-line no-fallthrough
+default:
 
-        return (
+  return (
 
-          <>
+    <>
 
-            <TimerSection />
+      <DashboardHero />
 
-            <Statistics />
+      <div
+        className="
+          grid
+          grid-cols-1
+          lg:grid-cols-2
+          gap-6
+          mt-8
+        "
+      >
 
-            <DashboardExtras />
+        <QuickStart />
 
-            <AudioMixer />
+        <FocusOverview />
 
-          </>
+        <TodayProgress />
 
-        );
+        <ProductivityCard />
+
+      </div>
+
+    </>
+
+  );
 
 
     }

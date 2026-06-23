@@ -1,9 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useAudioMixer } from "../../hooks/useAudioMixer";
 
 import { sounds } from "../../data/sounds";
 
@@ -14,170 +9,13 @@ import SectionTitle from "../ui/SectionTitle";
 
 function AudioMixer() {
 
-  const audioRefs = useRef({});
 
-
-  const [volumes, setVolumes] =
-    useState({});
-
-
-  const [playing, setPlaying] =
-    useState({});
-
-
-
-
-  useEffect(() => {
-
-
-    const initialVolumes = {};
-
-sounds.forEach((sound) => {
-
-  const audio =
-    new Audio(sound.file);
-
-
-  audio.loop = true;
-
-  audio.volume = 0.5;
-
-
-  audioRefs.current[sound.id] =
-    audio;
-
-
-  initialVolumes[sound.id] = 0.5;
-
-});
-
-
-setVolumes(initialVolumes);
-
-
-
-    return () => {
-
-
-      Object.values(
-        audioRefs.current
-      ).forEach((audio) => {
-
-        audio.pause();
-
-        audio.src = "";
-
-      });
-
-
-      audioRefs.current = {};
-
-
-    };
-
-
-  }, []);
-
-
-
-
-
-  const toggleSound = useCallback(async (id) => {
-
-
-    const audio =
-      audioRefs.current[id];
-
-
-    if (!audio)
-      return;
-
-
-
-    try {
-
-
-      if (playing[id]) {
-
-
-        audio.pause();
-
-
-        setPlaying((prev)=>({
-          ...prev,
-          [id]: false,
-        }));
-
-
-      } else {
-
-
-        await audio.play();
-
-
-        setPlaying((prev)=>({
-          ...prev,
-          [id]: true,
-        }));
-
-
-      }
-
-
-
-    } catch(error) {
-
-
-      console.error(
-        "Audio playback failed:",
-        error
-      );
-
-
-      setPlaying((prev)=>({
-        ...prev,
-        [id]: false,
-      }));
-
-    }
-
-
-  }, [playing]);
-
-
-
-
-
-  const changeVolume = useCallback(
-(
-  id,
-  value
-) => {
-
-
-    const audio =
-      audioRefs.current[id];
-
-
-    if (!audio)
-      return;
-
-
-    audio.volume =
-      value;
-
-
-
-    setVolumes((prev)=>({
-      ...prev,
-      [id]: value,
-    }));
-
-
-  },
-[]
-);
-
+  const {
+    volumes,
+    playing,
+    toggleSound,
+    changeVolume,
+  } = useAudioMixer();
 
 
 
@@ -209,44 +47,53 @@ setVolumes(initialVolumes);
         >
 
 
-          {sounds.map((sound)=>(
+          {
+            sounds.map((sound) => (
 
 
-            <MixerRow
-
-              key={sound.id}
+              <MixerRow
 
 
-              sound={sound}
+                key={sound.id}
 
 
-              isPlaying={
-                playing[sound.id]
-              }
+                sound={sound}
 
 
-              volume={
-                volumes[sound.id] ?? 0.5
-              }
+
+                isPlaying={
+                  playing[sound.id]
+                }
 
 
-              onToggle={() =>
-  toggleSound(sound.id)
-}
+
+                volume={
+                  volumes[sound.id] ?? 0.5
+                }
 
 
-              onVolumeChange={(value)=>
-                changeVolume(
-                  sound.id,
-                  value
-                )
-              }
+
+                onToggle={() =>
+                  toggleSound(
+                    sound.id
+                  )
+                }
 
 
-            />
+
+                onVolumeChange={(value) =>
+                  changeVolume(
+                    sound.id,
+                    value
+                  )
+                }
 
 
-          ))}
+              />
+
+
+            ))
+          }
 
 
 
