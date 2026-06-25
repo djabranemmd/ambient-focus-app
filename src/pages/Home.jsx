@@ -9,19 +9,19 @@ import AuroraBackground from "../components/layout/AuroraBackground";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import TopBar from "../components/layout/TopBar";
 
+import DashboardGrid from "../components/dashboard/DashboardGrid";
+
 import TimerSection from "../components/timer/TimerSection";
+import AudioMixer from "../components/audio/AudioMixer";
 import Statistics from "../components/stats/Statistics";
 import DashboardExtras from "../components/stats/DashboardExtras";
-import AudioMixer from "../components/audio/AudioMixer";
-import DashboardHero from "../components/dashboard/DashboardHero";
-import QuickStart from "../components/dashboard/QuickStart";
-import FocusOverview from "../components/dashboard/FocusOverview";
-import TodayProgress from "../components/dashboard/TodayProgress";
-import ProductivityCard from "../components/dashboard/ProductivityCard";
+
 
 import {
   useNavigation,
-} from "../context/NavigationContext.jsx";
+} from "../context/NavigationContext";
+
+
 
 
 
@@ -34,8 +34,10 @@ function Home() {
 
 
 
+
   const reduceMotion =
     useReducedMotion();
+
 
 
 
@@ -44,7 +46,7 @@ function Home() {
   const renderContent = () => {
 
 
-    switch (activePage) {
+    switch(activePage) {
 
 
       case "focus":
@@ -81,41 +83,17 @@ function Home() {
 
       case "dashboard":
 
-// eslint-disable-next-line no-fallthrough
-default:
+      default:
 
-  return (
+        return (
 
-    <>
+          <DashboardGrid />
 
-      <DashboardHero />
-
-      <div
-        className="
-          grid
-          grid-cols-1
-          lg:grid-cols-2
-          gap-6
-          mt-8
-        "
-      >
-
-        <QuickStart />
-
-        <FocusOverview />
-
-        <TodayProgress />
-
-        <ProductivityCard />
-
-      </div>
-
-    </>
-
-  );
+        );
 
 
     }
+
 
   };
 
@@ -146,17 +124,11 @@ default:
 
           className="
             w-full
-
             max-w-7xl
-
             mx-auto
-
             overflow-hidden
-
             p-4
-
             sm:p-6
-
             lg:p-10
           "
 
@@ -184,13 +156,18 @@ default:
               key={activePage}
 
 
+
               role="region"
+
 
 
               aria-live="polite"
 
 
+
               aria-label={`${activePage} section`}
+
+
 
 
 
@@ -198,10 +175,12 @@ default:
                 reduceMotion
                   ? false
                   : {
-                      opacity: 0,
-                      y: 15,
+                      opacity:0,
+                      y:15,
                     }
               }
+
+
 
 
 
@@ -209,10 +188,12 @@ default:
                 reduceMotion
                   ? undefined
                   : {
-                      opacity: 1,
-                      y: 0,
+                      opacity:1,
+                      y:0,
                     }
               }
+
+
 
 
 
@@ -220,10 +201,12 @@ default:
                 reduceMotion
                   ? undefined
                   : {
-                      opacity: 0,
-                      y: -10,
+                      opacity:0,
+                      y:-10,
                     }
               }
+
+
 
 
 
@@ -232,14 +215,14 @@ default:
                 reduceMotion
 
                   ? {
-                      duration: 0,
+                      duration:0,
                     }
 
                   :
 
                     {
-                      duration: 0.3,
-                      ease: "easeOut",
+                      duration:0.3,
+                      ease:"easeOut",
                     }
 
               }
@@ -247,6 +230,8 @@ default:
 
 
             >
+
+
 
               {
                 renderContent()
@@ -275,6 +260,7 @@ default:
   );
 
 }
+
 
 
 export default Home;
