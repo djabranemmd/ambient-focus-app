@@ -5,15 +5,14 @@ import {
 import {
   TrendingUp,
   Clock,
-  Zap,
+  Award,
 } from "lucide-react";
+
+import Card from "../ui/Card";
 
 import {
   useFocus,
 } from "../../context/FocusContext";
-
-import Card from "../ui/Card";
-
 
 
 
@@ -23,6 +22,14 @@ function ProductivityCard() {
   const {
     sessions,
   } = useFocus();
+
+
+
+
+
+  const totalSessions =
+    sessions.length;
+
 
 
 
@@ -37,20 +44,61 @@ function ProductivityCard() {
 
 
 
-  const totalHours =
-    Math.floor(
-      totalMinutes / 60
+
+  const averageSession =
+    totalSessions > 0
+
+      ?
+
+      Math.round(
+        totalMinutes / totalSessions
+      )
+
+      :
+
+      0;
+
+
+
+
+
+  const days =
+    sessions.reduce(
+      (acc, session) => {
+
+        const day =
+          new Date(
+            session.date
+          ).toLocaleDateString();
+
+
+
+        acc[day] =
+          (acc[day] || 0) +
+          session.duration / 60;
+
+
+
+        return acc;
+
+      },
+      {}
     );
 
 
 
 
-  const averageSession =
-    sessions.length > 0
-      ? Math.round(
-          totalMinutes / sessions.length
-        )
-      : 0;
+
+  const bestDay =
+    Object.entries(days)
+      .sort(
+        (a, b) =>
+          b[1] - a[1]
+      )[0];
+
+
+
+
 
 
 
@@ -58,29 +106,45 @@ function ProductivityCard() {
   const stats = [
 
     {
-      icon: Clock,
-      label: "Total Focus",
-      value:
-        `${totalHours}h ${Math.floor(totalMinutes % 60)}m`,
-    },
-
-
-    {
-      icon: Zap,
-      label: "Sessions",
-      value:
-        sessions.length,
-    },
-
-
-    {
       icon: TrendingUp,
-      label: "Average",
+
+      title:
+        "Total Sessions",
+
+      value:
+        totalSessions,
+
+    },
+
+
+    {
+      icon: Clock,
+
+      title:
+        "Average Session",
+
       value:
         `${averageSession} min`,
+
+    },
+
+
+    {
+      icon: Award,
+
+      title:
+        "Best Day",
+
+      value:
+        bestDay
+          ? bestDay[0]
+          : "No data",
+
     },
 
   ];
+
+
 
 
 
@@ -91,81 +155,35 @@ function ProductivityCard() {
     <Card>
 
 
-      <div
+      <div>
 
-        className="
-          flex
-          items-center
-          justify-between
-          mb-6
-        "
-
-      >
-
-
-        <div>
-
-          <h3
-
-            className="
-              text-xl
-              font-semibold
-              theme-text
-            "
-
-          >
-
-            Productivity
-
-          </h3>
-
-
-
-          <p
-
-            className="
-              text-sm
-              theme-text-muted
-              mt-1
-            "
-
-          >
-
-            Your focus performance overview.
-
-          </p>
-
-
-        </div>
-
-
-
-        <div
+        <h3
 
           className="
-            w-12
-            h-12
-            rounded-2xl
-            bg-purple-500/20
-            flex
-            items-center
-            justify-center
+            text-xl
+            font-semibold
+            theme-text
           "
 
         >
 
-          <TrendingUp
+          Productivity Insights
 
-            size={24}
+        </h3>
 
-            className="
-              text-purple-400
-            "
 
-          />
+        <p
 
-        </div>
+          className="
+            theme-text-muted
+            mt-1
+          "
 
+        >
+
+          Understand your focus performance.
+
+        </p>
 
 
       </div>
@@ -182,16 +200,18 @@ function ProductivityCard() {
           grid-cols-1
           sm:grid-cols-3
           gap-4
+          mt-6
         "
 
       >
 
+
         {
-          stats.map((item) => {
+          stats.map((stat) => {
 
 
             const Icon =
-              item.icon;
+              stat.icon;
 
 
 
@@ -199,7 +219,9 @@ function ProductivityCard() {
 
               <div
 
-                key={item.label}
+                key={
+                  stat.title
+                }
 
                 className="
                   rounded-2xl
@@ -210,10 +232,9 @@ function ProductivityCard() {
 
               >
 
-
                 <Icon
 
-                  size={20}
+                  size={22}
 
                   className="
                     text-purple-400
@@ -226,14 +247,14 @@ function ProductivityCard() {
                 <p
 
                   className="
-                    text-xs
+                    text-sm
                     theme-text-muted
                     mt-3
                   "
 
                 >
 
-                  {item.label}
+                  {stat.title}
 
                 </p>
 
@@ -243,27 +264,29 @@ function ProductivityCard() {
                 <p
 
                   className="
-                    text-2xl
+                    text-xl
                     font-bold
                     theme-text
                     mt-1
+                    truncate
                   "
 
                 >
 
-                  {item.value}
+                  {stat.value}
 
                 </p>
 
 
-
               </div>
+
 
             );
 
 
           })
         }
+
 
 
       </div>
