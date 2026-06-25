@@ -11,11 +11,7 @@ import TopBar from "../components/layout/TopBar";
 
 import DashboardGrid from "../components/dashboard/DashboardGrid";
 
-import TimerSection from "../components/timer/TimerSection";
-import AudioMixer from "../components/audio/AudioMixer";
-import Statistics from "../components/stats/Statistics";
-import DashboardExtras from "../components/stats/DashboardExtras";
-
+import DashboardContent from "../components/dashboard/DashboardContent";
 
 import {
   useNavigation,
@@ -52,32 +48,10 @@ function Home() {
       case "focus":
 
         return (
-          <TimerSection />
-        );
 
+  <DashboardContent />
 
-
-      case "sounds":
-
-        return (
-          <AudioMixer />
-        );
-
-
-
-      case "statistics":
-
-        return (
-
-          <>
-
-            <Statistics />
-
-            <DashboardExtras />
-
-          </>
-
-        );
+);
 
 
 
