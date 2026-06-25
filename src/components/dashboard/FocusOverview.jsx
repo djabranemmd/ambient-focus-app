@@ -1,34 +1,55 @@
 import {
+  memo,
+} from "react";
+
+import {
   Clock,
-  Target,
-  Flame,
+  PlayCircle,
 } from "lucide-react";
 
 import Card from "../ui/Card";
+
+import {
+  useFocus,
+} from "../../context/FocusContext";
+
 
 
 function FocusOverview() {
 
 
-  const items = [
-    {
-      icon: Clock,
-      title: "Focus Time",
-      value: "0 min",
-    },
+  const {
+    sessions,
+  } = useFocus();
 
-    {
-      icon: Target,
-      title: "Sessions",
-      value: "0",
-    },
 
-    {
-      icon: Flame,
-      title: "Streak",
-      value: "0 days",
-    },
-  ];
+
+
+  const latestSession =
+    sessions.length > 0
+      ? sessions[sessions.length - 1]
+      : null;
+
+
+
+
+
+  const totalSeconds =
+    sessions.reduce(
+      (total, session) =>
+        total + session.duration,
+      0
+    );
+
+
+
+
+  const totalMinutes =
+    Math.floor(
+      totalSeconds / 60
+    );
+
+
 
 
 
@@ -36,89 +57,231 @@ function FocusOverview() {
 
     <Card>
 
-      <h3
+
+      <div
+
         className="
-          text-xl
-          font-semibold
-          theme-text
+          flex
+          items-center
+          justify-between
           mb-6
         "
+
       >
-        Focus Overview
-      </h3>
+
+        <div>
+
+
+          <h3
+
+            className="
+              text-xl
+              font-semibold
+              theme-text
+            "
+
+          >
+
+            Focus Overview
+
+          </h3>
+
+
+
+          <p
+
+            className="
+              text-sm
+              theme-text-muted
+              mt-1
+            "
+
+          >
+
+            Your recent focus activity.
+
+          </p>
+
+
+        </div>
+
+
+
+        <div
+
+          className="
+            w-12
+            h-12
+            rounded-2xl
+            bg-purple-500/20
+            flex
+            items-center
+            justify-center
+          "
+
+        >
+
+          <PlayCircle
+
+            size={24}
+
+            className="
+              text-purple-400
+            "
+
+          />
+
+        </div>
+
+
+      </div>
+
+
+
 
 
 
       <div
+
         className="
-          grid
-          grid-cols-1
-          sm:grid-cols-3
-          gap-4
+          space-y-4
         "
+
       >
 
-        {
-          items.map((item) => {
 
-            const Icon = item.icon;
+        <div
 
+          className="
+            flex
+            items-center
+            justify-between
+            rounded-2xl
+            bg-black/5
+            dark:bg-white/5
+            p-4
+          "
 
-            return (
+        >
 
-              <div
+          <div
 
-                key={item.title}
+            className="
+              flex
+              items-center
+              gap-3
+            "
 
-                className="
-                  rounded-2xl
-                  bg-black/5
-                  dark:bg-white/5
-                  p-4
-                "
+          >
 
-              >
+            <Clock
 
-                <Icon
-                  size={22}
-                  className="
-                    text-purple-400
-                  "
-                />
+              size={20}
 
+              className="
+                text-purple-400
+              "
 
-                <p
-                  className="
-                    theme-text-muted
-                    text-sm
-                    mt-3
-                  "
-                >
-                  {item.title}
-                </p>
+            />
 
 
-                <p
-                  className="
-                    theme-text
-                    text-2xl
-                    font-bold
-                    mt-1
-                  "
-                >
-                  {item.value}
-                </p>
+            <span
+
+              className="
+                theme-text-muted
+              "
+
+            >
+
+              Total Focus Time
+
+            </span>
 
 
-              </div>
+          </div>
 
-            );
 
-          })
-        }
+
+          <strong
+
+            className="
+              theme-text
+            "
+
+          >
+
+            {totalMinutes} min
+
+          </strong>
+
+
+        </div>
+
+
+
+
+
+        <div
+
+          className="
+            rounded-2xl
+            bg-black/5
+            dark:bg-white/5
+            p-4
+          "
+
+        >
+
+          <p
+
+            className="
+              text-sm
+              theme-text-muted
+            "
+
+          >
+
+            Last Session
+
+          </p>
+
+
+
+
+          <p
+
+            className="
+              theme-text
+              font-semibold
+              mt-2
+            "
+
+          >
+
+            {
+              latestSession
+
+                ?
+
+                `${Math.floor(
+                  latestSession.duration / 60
+                )} minutes`
+
+                :
+
+                "No sessions yet"
+
+            }
+
+          </p>
+
+
+        </div>
+
 
 
       </div>
+
 
 
     </Card>
@@ -128,4 +291,5 @@ function FocusOverview() {
 }
 
 
-export default FocusOverview;
+
+export default memo(FocusOverview);
