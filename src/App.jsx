@@ -4,31 +4,43 @@ import {
 } from "react";
 
 import Loader from "./components/ui/Loader";
+import ErrorBoundary from "./components/ui/ErrorBoundary";
 
 
-const Home = lazy(
-  () => import("./pages/Home")
-);
+const Home =
+  lazy(
+    () => import("./pages/Home")
+  );
 
 
 
 function App() {
 
+
   return (
 
-    <Suspense
-      fallback={
-        <Loader />
-      }
-    >
+    <ErrorBoundary>
 
-      <Home />
 
-    </Suspense>
+      <Suspense
+
+        fallback={
+          <Loader />
+        }
+
+      >
+
+        <Home />
+
+      </Suspense>
+
+
+    </ErrorBoundary>
 
   );
 
 }
+
 
 
 export default App;
