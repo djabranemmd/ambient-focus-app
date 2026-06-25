@@ -1,124 +1,259 @@
 import {
-  Sparkles,
-  Clock,
+  memo,
+} from "react";
+
+import {
+  Timer,
+  Target,
+  Flame,
 } from "lucide-react";
 
 import Card from "../ui/Card";
 
+import {
+  useFocus,
+} from "../../context/FocusContext";
+
+
 
 function DashboardHero() {
 
+
+  const {
+    sessions,
+  } = useFocus();
+
+
+
+
+  const today =
+    new Date().toDateString();
+
+
+
+  const todayMinutes =
+    sessions
+      .filter(
+        (session) =>
+          new Date(
+            session.date
+          ).toDateString() === today
+      )
+      .reduce(
+        (total, session) =>
+          total + session.duration / 60,
+        0
+      );
+
+
+
+
+
+  const cards = [
+
+    {
+      icon: Timer,
+
+      title: "Today's Focus",
+
+      value:
+        `${Math.floor(todayMinutes / 60)}h ${
+          Math.floor(todayMinutes % 60)
+        }m`,
+    },
+
+
+    {
+      icon: Target,
+
+      title: "Daily Goal",
+
+      value:
+        "4 Hours",
+    },
+
+
+    {
+      icon: Flame,
+
+      title: "Streak",
+
+      value:
+        `${new Set(
+          sessions.map(
+            (session) =>
+              new Date(
+                session.date
+              ).toDateString()
+          )
+        ).size} Days`,
+    },
+
+  ];
+
+
+
+
+
+
+
   return (
 
-    <Card
-      className="
-        relative
-        overflow-hidden
-        mb-8
-      "
-    >
-
-      <div
-        className="
-          absolute
-          inset-0
-          bg-purple-500/10
-          blur-3xl
-        "
-      />
+    <Card>
 
 
       <div
+
         className="
-          relative
-          z-10
+          flex
+          flex-col
+          gap-6
         "
+
       >
 
-        <div
-          className="
-            flex
-            items-center
-            gap-4
-          "
-        >
 
-          <div
+
+        <div>
+
+
+          <h2
+
             className="
-              w-14
-              h-14
-              rounded-2xl
-              bg-purple-500/20
-              flex
-              items-center
-              justify-center
+              text-3xl
+              sm:text-4xl
+              font-bold
+              theme-text
             "
+
           >
 
-            <Sparkles
-              size={28}
-              className="text-purple-400"
-            />
+            Build your focus habit 🚀
 
-          </div>
+          </h2>
 
 
 
+          <p
 
-          <div>
+            className="
+              theme-text-muted
+              mt-3
+              max-w-xl
+            "
 
-            <h1
-              className="
-                text-3xl
-                sm:text-4xl
-                font-bold
-                theme-text
-              "
-            >
-              Ambient Focus
-            </h1>
+          >
 
+            Stay consistent, track your sessions,
+            and create a better productivity routine.
 
-            <p
-              className="
-                theme-text-muted
-                mt-2
-              "
-            >
-              Focus better, relax deeper, and build productive habits.
-            </p>
-
-          </div>
+          </p>
 
 
         </div>
+
 
 
 
 
 
         <div
+
           className="
-            flex
-            items-center
-            gap-2
-            mt-6
-            theme-text-muted
-            text-sm
+            grid
+            grid-cols-1
+            sm:grid-cols-3
+            gap-4
           "
+
         >
 
-          <Clock size={16}/>
 
-          <span>
-            Your personal productivity dashboard.
-          </span>
+          {
+            cards.map((item) => {
+
+
+              const Icon =
+                item.icon;
+
+
+
+              return (
+
+                <div
+
+                  key={
+                    item.title
+                  }
+
+                  className="
+                    rounded-2xl
+                    bg-black/5
+                    dark:bg-white/5
+                    p-4
+                  "
+
+                >
+
+                  <Icon
+
+                    size={22}
+
+                    className="
+                      text-purple-400
+                    "
+
+                  />
+
+
+                  <p
+
+                    className="
+                      text-sm
+                      theme-text-muted
+                      mt-3
+                    "
+
+                  >
+
+                    {item.title}
+
+                  </p>
+
+
+
+                  <p
+
+                    className="
+                      text-2xl
+                      font-bold
+                      theme-text
+                      mt-1
+                    "
+
+                  >
+
+                    {item.value}
+
+                  </p>
+
+
+                </div>
+
+              );
+
+
+            })
+          }
+
 
 
         </div>
+
 
 
       </div>
+
 
 
     </Card>
@@ -128,4 +263,5 @@ function DashboardHero() {
 }
 
 
-export default DashboardHero;
+
+export default memo(DashboardHero);
