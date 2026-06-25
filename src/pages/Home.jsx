@@ -9,14 +9,17 @@ import AuroraBackground from "../components/layout/AuroraBackground";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import TopBar from "../components/layout/TopBar";
 
-import DashboardGrid from "../components/dashboard/DashboardGrid";
-
 import DashboardContent from "../components/dashboard/DashboardContent";
+
+import TimerSection from "../components/timer/TimerSection";
+import AudioMixer from "../components/audio/AudioMixer";
+import Statistics from "../components/stats/Statistics";
+import DashboardExtras from "../components/stats/DashboardExtras";
+
 
 import {
   useNavigation,
 } from "../context/NavigationContext";
-
 
 
 
@@ -38,8 +41,7 @@ function Home() {
 
 
 
-
-  const renderContent = () => {
+  const renderPage = () => {
 
 
     switch(activePage) {
@@ -48,10 +50,32 @@ function Home() {
       case "focus":
 
         return (
+          <TimerSection />
+        );
 
-  <DashboardContent />
 
-);
+
+      case "sounds":
+
+        return (
+          <AudioMixer />
+        );
+
+
+
+      case "statistics":
+
+        return (
+
+          <>
+
+            <Statistics />
+
+            <DashboardExtras />
+
+          </>
+
+        );
 
 
 
@@ -60,9 +84,7 @@ function Home() {
       default:
 
         return (
-
-          <DashboardGrid />
-
+          <DashboardContent />
         );
 
 
@@ -94,8 +116,6 @@ function Home() {
 
           id="main-content"
 
-          aria-label="Ambient Focus dashboard"
-
           className="
             w-full
             max-w-7xl
@@ -109,10 +129,7 @@ function Home() {
         >
 
 
-
           <TopBar />
-
-
 
 
 
@@ -123,25 +140,10 @@ function Home() {
           >
 
 
-
             <motion.div
 
 
               key={activePage}
-
-
-
-              role="region"
-
-
-
-              aria-live="polite"
-
-
-
-              aria-label={`${activePage} section`}
-
-
 
 
 
@@ -156,8 +158,6 @@ function Home() {
 
 
 
-
-
               animate={
                 reduceMotion
                   ? undefined
@@ -169,8 +169,6 @@ function Home() {
 
 
 
-
-
               exit={
                 reduceMotion
                   ? undefined
@@ -179,8 +177,6 @@ function Home() {
                       y:-10,
                     }
               }
-
-
 
 
 
@@ -196,25 +192,19 @@ function Home() {
 
                     {
                       duration:0.3,
-                      ease:"easeOut",
                     }
 
               }
 
-
-
             >
 
 
-
               {
-                renderContent()
+                renderPage()
               }
 
 
-
             </motion.div>
-
 
 
           </AnimatePresence>
@@ -224,9 +214,7 @@ function Home() {
         </main>
 
 
-
       </DashboardLayout>
-
 
 
     </>
