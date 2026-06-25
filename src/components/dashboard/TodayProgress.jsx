@@ -3,18 +3,20 @@ import {
 } from "react";
 
 import {
-  CheckCircle,
   Target,
+  CheckCircle,
 } from "lucide-react";
+
+import Card from "../ui/Card";
 
 import {
   useFocus,
 } from "../../context/FocusContext";
 
-import Card from "../ui/Card";
 
 
-const DAILY_GOAL = 240;
+const DAILY_GOAL =
+  4 * 60;
 
 
 
@@ -31,6 +33,7 @@ function TodayProgress() {
 
   const today =
     new Date().toDateString();
+
 
 
 
@@ -52,6 +55,7 @@ function TodayProgress() {
 
 
 
+
   const progress =
     Math.min(
       (todayMinutes / DAILY_GOAL) * 100,
@@ -61,8 +65,11 @@ function TodayProgress() {
 
 
 
+
+
   const completed =
-    todayMinutes >= DAILY_GOAL;
+    progress >= 100;
+
 
 
 
@@ -83,7 +90,6 @@ function TodayProgress() {
       >
 
         <div>
-
 
           <h3
 
@@ -111,7 +117,7 @@ function TodayProgress() {
 
           >
 
-            Keep your focus streak alive.
+            Keep building your focus habit.
 
           </p>
 
@@ -121,11 +127,12 @@ function TodayProgress() {
 
 
 
+
         <div
 
           className="
-            w-12
-            h-12
+            w-11
+            h-11
             rounded-2xl
             bg-purple-500/20
             flex
@@ -139,15 +146,25 @@ function TodayProgress() {
             completed ? (
 
               <CheckCircle
-                className="text-green-400"
-                size={24}
+
+                size={22}
+
+                className="
+                  text-green-400
+                "
+
               />
 
             ) : (
 
               <Target
-                className="text-purple-400"
-                size={24}
+
+                size={22}
+
+                className="
+                  text-purple-400
+                "
+
               />
 
             )
@@ -163,6 +180,8 @@ function TodayProgress() {
 
 
 
+
+
       <div
 
         className="
@@ -171,14 +190,60 @@ function TodayProgress() {
 
       >
 
+
+        <div
+
+          className="
+            flex
+            justify-between
+            mb-2
+            text-sm
+          "
+
+        >
+
+          <span
+
+            className="
+              theme-text-muted
+            "
+
+          >
+
+            Progress
+
+          </span>
+
+
+
+          <span
+
+            className="
+              theme-text
+              font-semibold
+            "
+
+          >
+
+            {Math.round(progress)}%
+
+          </span>
+
+
+        </div>
+
+
+
+
+
         <div
 
           className="
             h-3
             rounded-full
-            overflow-hidden
             bg-black/10
             dark:bg-white/10
+            overflow-hidden
           "
 
         >
@@ -188,12 +253,14 @@ function TodayProgress() {
             className="
               h-full
               bg-purple-500
+              rounded-full
               transition-all
               duration-500
             "
 
             style={{
-              width: `${progress}%`,
+              width:
+                `${progress}%`,
             }}
 
           />
@@ -202,7 +269,9 @@ function TodayProgress() {
         </div>
 
 
+
       </div>
+
 
 
 
@@ -211,13 +280,27 @@ function TodayProgress() {
       <div
 
         className="
+          mt-5
           flex
           justify-between
-          mt-4
           text-sm
         "
 
       >
+
+        <span
+
+          className="
+            theme-text-muted
+          "
+
+        >
+
+          Today
+
+        </span>
+
+
 
         <span
 
@@ -228,29 +311,15 @@ function TodayProgress() {
 
         >
 
-          {Math.floor(todayMinutes)} min
-
-        </span>
-
-
-
-
-        <span
-
-          className="
-            theme-text-muted
-          "
-
-        >
-
-          {Math.round(progress)}%
+          {Math.floor(todayMinutes / 60)}h{" "}
+          {Math.floor(todayMinutes % 60)}m
+          {" / "}
+          4h
 
         </span>
 
 
       </div>
-
-
 
 
 
