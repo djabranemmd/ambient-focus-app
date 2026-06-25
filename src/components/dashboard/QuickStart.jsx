@@ -1,4 +1,8 @@
 import {
+  memo,
+} from "react";
+
+import {
   Play,
   Music,
   Timer,
@@ -6,32 +10,54 @@ import {
 
 import Card from "../ui/Card";
 
+import {
+  useNavigation,
+  PAGES,
+} from "../../context/NavigationContext";
+
+
 
 function QuickStart() {
 
 
-  const steps = [
+  const {
+    setActivePage,
+  } = useNavigation();
+
+
+
+
+  const actions = [
+
     {
-      icon: Timer,
+      id: PAGES.FOCUS,
+
       title: "Start Focus",
+
       description:
-        "Choose a timer and begin your focus session.",
+        "Begin a focused work session.",
+
+      icon: Timer,
+
     },
 
+
     {
+      id: PAGES.SOUNDS,
+
+      title: "Ambient Sounds",
+
+      description:
+        "Create your perfect environment.",
+
       icon: Music,
-      title: "Add Sounds",
-      description:
-        "Mix ambient sounds to improve concentration.",
+
     },
 
-    {
-      icon: Play,
-      title: "Stay Consistent",
-      description:
-        "Build your productivity habit every day.",
-    },
   ];
+
+
+
 
 
 
@@ -41,20 +67,39 @@ function QuickStart() {
     <Card>
 
 
-      <h3
+      <div>
 
-        className="
-          text-xl
-          font-semibold
-          theme-text
-          mb-6
-        "
+        <h3
 
-      >
+          className="
+            text-xl
+            font-semibold
+            theme-text
+          "
 
-        Quick Start
+        >
 
-      </h3>
+          Quick Start
+
+        </h3>
+
+
+        <p
+
+          className="
+            theme-text-muted
+            mt-1
+          "
+
+        >
+
+          Jump directly into productivity.
+
+        </p>
+
+
+      </div>
+
 
 
 
@@ -64,36 +109,52 @@ function QuickStart() {
         className="
           grid
           grid-cols-1
-          md:grid-cols-3
-          gap-5
+          sm:grid-cols-2
+          gap-4
+          mt-6
         "
 
       >
 
 
         {
-          steps.map((step) => {
+          actions.map((action) => {
 
 
             const Icon =
-              step.icon;
+              action.icon;
 
 
 
             return (
 
-              <div
+              <button
 
-                key={step.title}
+                key={
+                  action.id
+                }
+
+
+                type="button"
+
+
+                onClick={() =>
+                  setActivePage(
+                    action.id
+                  )
+                }
+
 
                 className="
+                  text-left
                   rounded-2xl
-                  p-4
+                  p-5
                   bg-black/5
                   dark:bg-white/5
+                  hover:bg-purple-500/10
                   transition-all
                   duration-300
-                  hover:-translate-y-1
+                  group
                 "
 
               >
@@ -102,39 +163,72 @@ function QuickStart() {
                 <div
 
                   className="
-                    w-12
-                    h-12
-                    rounded-2xl
-                    bg-purple-500/20
                     flex
                     items-center
-                    justify-center
-                    mb-4
+                    justify-between
                   "
 
                 >
 
-                  <Icon
-                    size={22}
+                  <div
+
                     className="
-                      text-purple-400
+                      w-11
+                      h-11
+                      rounded-2xl
+                      bg-purple-500/20
+                      flex
+                      items-center
+                      justify-center
                     "
+
+                  >
+
+                    <Icon
+
+                      size={22}
+
+                      className="
+                        text-purple-400
+                      "
+
+                    />
+
+
+                  </div>
+
+
+
+                  <Play
+
+                    size={18}
+
+                    className="
+                      theme-text-muted
+                      group-hover:text-purple-400
+                      transition-colors
+                    "
+
                   />
 
+
                 </div>
+
+
 
 
 
                 <h4
 
                   className="
-                    font-semibold
                     theme-text
+                    font-semibold
+                    mt-4
                   "
 
                 >
 
-                  {step.title}
+                  {action.title}
 
                 </h4>
 
@@ -144,23 +238,24 @@ function QuickStart() {
                 <p
 
                   className="
-                    text-sm
                     theme-text-muted
+                    text-sm
                     mt-2
-                    leading-relaxed
                   "
 
                 >
 
-                  {step.description}
+                  {action.description}
 
                 </p>
 
 
 
-              </div>
+              </button>
+
 
             );
+
 
           })
         }
@@ -179,4 +274,4 @@ function QuickStart() {
 
 
 
-export default QuickStart;
+export default memo(QuickStart);
