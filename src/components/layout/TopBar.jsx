@@ -5,8 +5,14 @@ import {
 
 
 import {
+  useMemo,
+} from "react";
+
+
+import {
   useTheme,
 } from "../../context/ThemeContext.jsx";
+
 
 
 
@@ -21,32 +27,37 @@ function TopBar() {
 
 
 
-  const hour =
-    new Date().getHours();
+
+
+  const greeting =
+    useMemo(() => {
+
+
+      const hour =
+        new Date().getHours();
 
 
 
-  let greeting =
-    "Hello";
+      if (hour < 12)
+
+        return "Good Morning";
 
 
 
-  if (hour < 12)
+      if (hour < 18)
 
-    greeting =
-      "Good Morning";
-
-
-  else if (hour < 18)
-
-    greeting =
-      "Good Afternoon";
+        return "Good Afternoon";
 
 
-  else
 
-    greeting =
-      "Good Evening";
+      return "Good Evening";
+
+
+    }, []);
+
+
+
+
 
 
 
@@ -59,16 +70,22 @@ function TopBar() {
 
 
 
+
+
+
   return (
 
     <div
+
       className="
         flex
         items-center
         justify-between
         mb-8
       "
+
     >
+
 
 
 
@@ -76,6 +93,7 @@ function TopBar() {
 
 
         <h1
+
           className="
             text-4xl
             font-bold
@@ -83,28 +101,34 @@ function TopBar() {
             transition-colors
             duration-300
           "
+
         >
 
           {greeting} 👋
+
 
         </h1>
 
 
 
 
+
         <p
+
           className="
             theme-text-muted
             mt-2
             transition-colors
             duration-300
           "
+
         >
 
-          Stay focused and reach your
-          goals today.
+          Stay focused and reach your goals today.
+
 
         </p>
+
 
 
       </div>
@@ -118,7 +142,13 @@ function TopBar() {
       <button
 
 
-        onClick={toggleTheme}
+        type="button"
+
+
+
+        onClick={
+          toggleTheme
+        }
 
 
 
@@ -142,6 +172,7 @@ function TopBar() {
 
         className="
           h-12
+
           w-12
 
           rounded-xl
@@ -154,25 +185,19 @@ function TopBar() {
 
           theme-text
 
-
           flex
 
           items-center
 
           justify-center
 
-
           transition-all
 
           duration-300
 
-
           hover:scale-105
 
-
           active:scale-95
-
-
 
           focus:outline-none
 
@@ -181,10 +206,10 @@ function TopBar() {
           focus-visible:ring-purple-500/70
 
           focus-visible:ring-offset-2
-
         "
 
       >
+
 
 
         {
@@ -192,36 +217,32 @@ function TopBar() {
 
           ?
 
-          (
+          <Sun
 
-            <Sun
+            size={20}
 
-              size={20}
+            aria-hidden="true"
 
-              aria-hidden="true"
+          />
 
-            />
-
-          )
 
           :
 
-          (
 
-            <Moon
+          <Moon
 
-              size={20}
+            size={20}
 
-              aria-hidden="true"
+            aria-hidden="true"
 
-            />
-
-          )
+          />
 
         }
 
 
+
       </button>
+
 
 
 
