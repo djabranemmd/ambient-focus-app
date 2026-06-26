@@ -6,6 +6,7 @@ import {
 
 
 const Button = forwardRef(
+
 (
   {
     children,
@@ -34,32 +35,43 @@ const Button = forwardRef(
 
 
 
+
+
   const variants = {
 
 
     primary:
+
       `
         bg-purple-600
+
         hover:bg-purple-500
+
         shadow-lg
+
         shadow-purple-500/20
+
         text-white
       `,
 
 
 
     secondary:
+
       `
         bg-black/10
+
         dark:bg-white/10
 
         hover:bg-black/20
+
         dark:hover:bg-white/15
       `,
 
 
 
     ghost:
+
       `
         bg-transparent
 
@@ -67,7 +79,6 @@ const Button = forwardRef(
 
         dark:hover:bg-white/10
       `,
-
 
 
   };
@@ -78,7 +89,8 @@ const Button = forwardRef(
 
 
   const selectedVariant =
-    variants[variant] ??
+    variants[variant]
+    ??
     variants.primary;
 
 
@@ -86,8 +98,8 @@ const Button = forwardRef(
 
 
 
-  return (
 
+  return (
 
     <button
 
@@ -100,7 +112,9 @@ const Button = forwardRef(
 
 
 
-      onClick={onClick}
+      onClick={
+        onClick
+      }
 
 
 
@@ -132,12 +146,15 @@ const Button = forwardRef(
 
       className={`
 
+
         px-5
 
         py-3
 
 
+
         rounded-xl
+
 
 
         transition-all
@@ -162,13 +179,11 @@ const Button = forwardRef(
 
 
 
-
         active:scale-95
 
 
 
         hover:-translate-y-0.5
-
 
 
 
@@ -188,7 +203,11 @@ const Button = forwardRef(
 
         disabled:opacity-50
 
+
+
         disabled:cursor-not-allowed
+
+
 
         disabled:pointer-events-none
 
@@ -201,6 +220,7 @@ const Button = forwardRef(
         ${className}
 
 
+
       `}
 
 
@@ -208,38 +228,67 @@ const Button = forwardRef(
       {...props}
 
 
+
     >
+
 
 
       {
         loading
-        ?
 
-        (
-          <span
-            className="
-              animate-pulse
-            "
-          >
-            Loading...
-          </span>
-        )
+          ?
 
-        :
+          (
 
-        children
+            <>
+
+              <span
+
+                className="
+                  h-4
+                  w-4
+
+                  rounded-full
+
+                  border-2
+
+                  border-white/40
+
+                  border-t-white
+
+                  animate-spin
+                "
+
+                aria-hidden="true"
+
+              />
+
+
+              <span>
+
+                Loading
+
+              </span>
+
+
+            </>
+
+          )
+
+          :
+
+          children
       }
+
 
 
     </button>
 
-
   );
 
+}
 
-});
-
-
+);
 
 
 Button.displayName =
