@@ -8,6 +8,7 @@ import {
 } from "react";
 
 
+
 const ThemeContext =
   createContext(null);
 
@@ -17,14 +18,21 @@ const STORAGE_KEY =
   "theme";
 
 
+
 const DEFAULT_THEME =
   "dark";
 
 
-const VALID_THEMES = [
-  "dark",
-  "light",
-];
+
+const VALID_THEMES =
+  Object.freeze([
+    "dark",
+    "light",
+  ]);
+
+
+
+
 
 
 
@@ -52,12 +60,18 @@ export function ThemeProvider({
         return VALID_THEMES.includes(
           savedTheme
         )
-          ? savedTheme
-          : DEFAULT_THEME;
+
+          ?
+
+          savedTheme
+
+          :
+
+          DEFAULT_THEME;
 
 
 
-      } catch (error) {
+      } catch(error) {
 
 
         console.error(
@@ -73,6 +87,7 @@ export function ThemeProvider({
 
 
     });
+
 
 
 
@@ -100,6 +115,8 @@ export function ThemeProvider({
 
 
 
+
+
     try {
 
 
@@ -112,15 +129,12 @@ export function ThemeProvider({
       );
 
 
-    } catch (error) {
+    } catch(error) {
 
 
       console.error(
-
         "Failed saving theme:",
-
         error
-
       );
 
 
@@ -136,17 +150,24 @@ export function ThemeProvider({
 
 
 
+
+
   const toggleTheme =
     useCallback(() => {
 
 
-      setTheme((prev) =>
+      setTheme(
+        (current) =>
 
-        prev === "dark"
+          current === "dark"
 
-          ? "light"
+            ?
 
-          : "dark"
+            "light"
+
+            :
+
+            "dark"
 
       );
 
@@ -159,28 +180,78 @@ export function ThemeProvider({
 
 
 
+  const changeTheme =
+    useCallback(
+      (newTheme) => {
+
+
+        if(
+          VALID_THEMES.includes(
+            newTheme
+          )
+        ) {
+
+
+          setTheme(
+            newTheme
+          );
+
+
+        }
+
+
+      },
+      []
+    );
+
+
+
+
+
+
+
+
 
   const value =
     useMemo(
       () => ({
 
+
         theme,
 
+
+        setTheme:
+          changeTheme,
+
+
         toggleTheme,
+
+
 
         isDark:
           theme === "dark",
 
+
+
         isLight:
           theme === "light",
+
+
 
       }),
 
       [
+
         theme,
+
         toggleTheme,
+
+        changeTheme,
+
       ]
+
     );
+
 
 
 
@@ -210,6 +281,7 @@ export function ThemeProvider({
 
 
 
+
 // eslint-disable-next-line react-refresh/only-export-components
 export function useTheme() {
 
@@ -221,13 +293,11 @@ export function useTheme() {
 
 
 
-  if (!context) {
+  if(!context) {
 
 
     throw new Error(
-
       "useTheme must be used inside ThemeProvider"
-
     );
 
 
