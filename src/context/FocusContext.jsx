@@ -8,6 +8,7 @@ import {
 } from "react";
 
 
+
 const FocusContext =
   createContext(null);
 
@@ -15,6 +16,12 @@ const FocusContext =
 
 const STORAGE_KEY =
   "focusSessions";
+
+
+const MAX_SESSIONS =
+  500;
+
+
 
 
 
@@ -30,10 +37,6 @@ export function FocusProvider({
 
 
 
-
-  /*
-    Load sessions once
-  */
 
   useEffect(() => {
 
@@ -53,7 +56,6 @@ export function FocusProvider({
 
 
 
-
       const parsed =
         JSON.parse(saved);
 
@@ -66,12 +68,16 @@ export function FocusProvider({
 
 
         const validSessions =
-          parsed.filter(
-            (session) =>
-              typeof session.duration === "number" &&
-              session.duration > 0 &&
-              session.date
-          );
+          parsed
+            .filter(
+              (session) =>
+                typeof session.duration === "number" &&
+                session.duration > 0 &&
+                session.date
+            )
+            .slice(
+              -MAX_SESSIONS
+            );
 
 
 
@@ -107,13 +113,6 @@ export function FocusProvider({
 
 
 
-
-
-
-
-  /*
-    Save sessions when changed
-  */
 
 
   useEffect(() => {
@@ -156,7 +155,6 @@ export function FocusProvider({
 
 
 
-
   const addSession =
     useCallback(
       (
@@ -166,8 +164,11 @@ export function FocusProvider({
 
 
         if (
+
           typeof duration !== "number" ||
+
           duration <= 0
+
         ) {
 
 
@@ -186,14 +187,28 @@ export function FocusProvider({
 
 
 
+        const id =
+
+          typeof crypto !== "undefined" &&
+          crypto.randomUUID
+
+            ?
+
+            crypto.randomUUID()
+
+            :
+
+            Date.now();
+
+
+
+
+
+
         const newSession = {
 
 
-          id:
-            crypto.randomUUID
-              ? crypto.randomUUID()
-              : Date.now(),
-
+          id,
 
 
           duration,
@@ -211,6 +226,7 @@ export function FocusProvider({
 
 
 
+
         setSessions(
           (prev) => [
 
@@ -219,6 +235,10 @@ export function FocusProvider({
             newSession,
 
           ]
+          .slice(
+            -MAX_SESSIONS
+          )
+
         );
 
 
@@ -227,6 +247,50 @@ export function FocusProvider({
       []
     );
 
+
+
+
+
+
+
+
+
+  const removeSession =
+    useCallback(
+      (id) => {
+
+
+        setSessions(
+          (prev) =>
+            prev.filter(
+              (session) =>
+                session.id !== id
+            )
+        );
+
+
+      },
+      []
+    );
+
+
+
+
+
+
+
+
+  const clearSessions =
+    useCallback(
+      () => {
+
+
+        setSessions([]);
+
+
+      },
+      []
+    );
 
 
 
@@ -244,11 +308,21 @@ export function FocusProvider({
 
         addSession,
 
+        removeSession,
+
+        clearSessions,
+
       }),
 
       [
         sessions,
+
         addSession,
+
+        removeSession,
+
+        clearSessions,
+
       ]
 
     );
@@ -264,9 +338,7 @@ export function FocusProvider({
 
     <FocusContext.Provider
 
-      value={
-        value
-      }
+      value={value}
 
     >
 
