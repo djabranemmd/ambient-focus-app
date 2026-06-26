@@ -14,7 +14,6 @@ import App from "./App";
 import "./index.css";
 
 
-
 import {
   ThemeProvider,
 } from "./context/ThemeContext.jsx";
@@ -27,7 +26,8 @@ import {
 
 import {
   FocusProvider,
-} from "./context/FocusContext";
+} from "./context/FocusContext.jsx";
+
 
 
 
@@ -46,31 +46,30 @@ if (!rootElement) {
 
 
 
-createRoot(rootElement).render(
+const root =
+  createRoot(
+    rootElement
+  );
+
+
+
+root.render(
 
   <StrictMode>
 
-
     <ThemeProvider>
-
 
       <NavigationProvider>
 
-
         <FocusProvider>
-
 
           <App />
 
-
         </FocusProvider>
-
 
       </NavigationProvider>
 
-
     </ThemeProvider>
-
 
   </StrictMode>
 
