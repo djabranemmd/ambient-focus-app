@@ -1,53 +1,101 @@
+import completeSound from "../assets/sounds/complete.wav";
+
+
+
+let completionAudio = null;
+
+
+
+
+
 export function playCompletionSound() {
 
-  console.log(
-    "Trying to play completion sound..."
-  );
+
+  try {
 
 
-  const audio =
-    new Audio(
-      "src/assets/sounds/complete.wav"
-    );
+    if (!completionAudio) {
 
 
-  audio.volume = 1;
+      completionAudio =
+        new Audio(
+          completeSound
+        );
 
 
-  audio.oncanplaythrough = () => {
-
-    console.log(
-      "Audio loaded successfully"
-    );
-
-  };
+      completionAudio.volume =
+        0.8;
 
 
-  audio.onerror = (error) => {
+    }
 
-    console.log(
-      "Audio loading failed",
+
+
+
+
+    completionAudio.currentTime =
+      0;
+
+
+
+
+    const playPromise =
+      completionAudio.play();
+
+
+
+
+
+    if(playPromise) {
+
+
+      playPromise
+
+        .then(() => {
+
+
+          console.log(
+            "Completion sound played"
+          );
+
+
+        })
+
+
+        .catch((error) => {
+
+
+          console.warn(
+
+            "Audio playback blocked:",
+
+            error
+
+          );
+
+
+        });
+
+
+    }
+
+
+
+
+
+  } catch(error) {
+
+
+    console.error(
+
+      "Failed playing completion sound:",
+
       error
+
     );
 
-  };
 
+  }
 
-  audio.play()
-    .then(() => {
-
-      console.log(
-        "Audio playing"
-      );
-
-    })
-    .catch((error) => {
-
-      console.log(
-        "Audio play blocked",
-        error
-      );
-
-    });
 
 }
