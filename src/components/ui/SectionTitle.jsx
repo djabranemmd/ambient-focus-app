@@ -6,6 +6,7 @@ import {
 
 
 
+
 function SectionTitle({
 
   title,
@@ -27,6 +28,15 @@ function SectionTitle({
 
 
 
+
+  const enableMotion =
+    !shouldReduceMotion;
+
+
+
+
+
+
   return (
 
 
@@ -35,45 +45,60 @@ function SectionTitle({
 
 
       initial={
-        shouldReduceMotion
+        enableMotion
+
           ?
-          false
-          :
+
           {
             opacity: 0,
             y: 10,
           }
+
+          :
+
+          false
       }
+
+
 
 
 
       animate={
-        shouldReduceMotion
+        enableMotion
+
           ?
-          undefined
-          :
+
           {
             opacity: 1,
             y: 0,
           }
+
+          :
+
+          undefined
       }
+
+
 
 
 
       transition={{
 
         duration:
-          shouldReduceMotion
-            ?
-            0
-            :
-            0.3,
+          enableMotion
+            ? 0.25
+            : 0,
+
 
         ease:
           "easeOut",
 
       }}
 
+
+
+
+      aria-hidden="false"
 
 
 
@@ -86,8 +111,8 @@ function SectionTitle({
       `}
 
 
-
     >
+
 
 
 
@@ -129,12 +154,11 @@ function SectionTitle({
 
       >
 
-
         {title}
 
 
-
       </h2>
+
 
 
 
@@ -181,9 +205,7 @@ function SectionTitle({
 
           >
 
-
             {subtitle}
-
 
 
           </p>
