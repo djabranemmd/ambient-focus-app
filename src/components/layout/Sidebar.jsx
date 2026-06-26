@@ -110,6 +110,8 @@ function Sidebar() {
 
 
 
+
+
   return (
 
     <aside
@@ -125,6 +127,7 @@ function Sidebar() {
         min-h-screen
 
         theme-bg
+
         theme-border
 
         border-r
@@ -134,6 +137,7 @@ function Sidebar() {
         p-5
 
         transition-colors
+
         duration-300
       "
 
@@ -141,10 +145,27 @@ function Sidebar() {
 
 
 
-      <div className="mb-10 px-3">
+
+      <div
+
+        className="
+          mb-10
+          px-3
+        "
+
+      >
 
 
-        <div className="flex items-center gap-3">
+        <div
+
+          className="
+            flex
+            items-center
+            gap-3
+          "
+
+        >
+
 
 
           <div
@@ -154,13 +175,17 @@ function Sidebar() {
             className="
               h-11
               w-11
+
               rounded-2xl
+
               bg-gradient-to-br
               from-purple-500
               to-blue-500
+
               flex
               items-center
               justify-center
+
               shadow-lg
             "
 
@@ -172,35 +197,53 @@ function Sidebar() {
 
 
 
+
           <div>
 
-            <h1 className="
-              text-xl
-              font-bold
-              theme-text
-            ">
+
+            <h1
+
+              className="
+                text-xl
+                font-bold
+                theme-text
+              "
+
+            >
 
               Ambient Focus
 
             </h1>
 
 
-            <p className="
-              text-xs
-              theme-text-muted
-            ">
+
+
+            <p
+
+              className="
+                text-xs
+                theme-text-muted
+              "
+
+            >
 
               Productivity App
 
             </p>
 
+
+
           </div>
+
 
 
         </div>
 
 
+
       </div>
+
+
 
 
 
@@ -210,7 +253,9 @@ function Sidebar() {
 
         aria-label="Main navigation"
 
-        className="flex-1"
+        className="
+          flex-1
+        "
 
       >
 
@@ -223,8 +268,11 @@ function Sidebar() {
               item.icon;
 
 
+
             const active =
               activePage === item.id;
+
+
 
 
 
@@ -232,13 +280,29 @@ function Sidebar() {
 
               <button
 
-                key={item.id}
+
+                key={
+                  item.id
+                }
+
+
 
                 type="button"
 
+
+
                 onClick={() =>
-                  setActivePage(item.id)
+                  setActivePage(
+                    item.id
+                  )
                 }
+
+
+
+                aria-label={
+                  item.label
+                }
+
 
 
                 aria-current={
@@ -248,43 +312,69 @@ function Sidebar() {
                 }
 
 
+
                 className={`
 
                   relative
+
                   w-full
+
                   flex
+
                   items-center
+
                   gap-3
+
                   px-4
+
                   py-3
+
                   rounded-2xl
+
                   mb-3
+
                   transition-all
+
                   duration-300
+
+
+                  focus:outline-none
+
+                  focus-visible:ring-2
+
+                  focus-visible:ring-purple-500/70
+
+
 
                   ${
                     active
 
                     ?
 
-                    "
+                    `
                     bg-purple-500/20
+
                     text-purple-500
+
                     dark:text-purple-400
-                    "
+                    `
 
                     :
 
-                    "
+                    `
                     theme-text-muted
+
                     hover:bg-purple-500/10
-                    "
+                    `
 
                   }
 
                 `}
 
+
               >
+
+
 
 
                 {
@@ -296,10 +386,15 @@ function Sidebar() {
 
                       className="
                         absolute
+
                         left-0
+
                         w-1
+
                         h-7
+
                         rounded-r-full
+
                         bg-purple-500
                       "
 
@@ -310,7 +405,16 @@ function Sidebar() {
 
 
 
-                <Icon size={19}/>
+
+
+                <Icon
+
+                  size={19}
+
+                  aria-hidden="true"
+
+                />
+
 
 
                 <span>
@@ -320,7 +424,9 @@ function Sidebar() {
                 </span>
 
 
+
               </button>
+
 
             );
 
@@ -329,24 +435,40 @@ function Sidebar() {
         }
 
 
+
       </nav>
 
 
 
 
 
-      <div className="
-        mt-auto
-        rounded-3xl
-        theme-card
-        p-5
-      ">
 
 
-        <p className="
-          text-sm
-          theme-text-muted
-        ">
+      <div
+
+        className="
+          mt-auto
+
+          rounded-3xl
+
+          theme-card
+
+          p-5
+        "
+
+      >
+
+
+
+        <p
+
+          className="
+            text-sm
+
+            theme-text-muted
+          "
+
+        >
 
           Focus Member
 
@@ -354,11 +476,18 @@ function Sidebar() {
 
 
 
-        <div className="
-          text-2xl
-          font-bold
-          theme-text
-        ">
+
+        <div
+
+          className="
+            text-2xl
+
+            font-bold
+
+            theme-text
+          "
+
+        >
 
           🎯 {sessions.length}
 
@@ -366,10 +495,16 @@ function Sidebar() {
 
 
 
-        <p className="
-          text-xs
-          theme-text-muted
-        ">
+
+        <p
+
+          className="
+            text-xs
+
+            theme-text-muted
+          "
+
+        >
 
           Completed Sessions
 
@@ -377,19 +512,31 @@ function Sidebar() {
 
 
 
-        <div className="
-          mt-4
-          text-sm
-          text-purple-500
-          font-medium
-        ">
+
+
+        <div
+
+          className="
+            mt-4
+
+            text-sm
+
+            text-purple-500
+
+            font-medium
+          "
+
+        >
 
           {hours}h {minutes}m focused
 
         </div>
 
 
+
+
       </div>
+
 
 
     </aside>
@@ -397,6 +544,7 @@ function Sidebar() {
   );
 
 }
+
 
 
 export default Sidebar;
