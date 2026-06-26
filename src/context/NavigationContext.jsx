@@ -14,29 +14,29 @@ const NavigationContext =
 
 
 
+export const PAGES =
+  Object.freeze({
 
-export const PAGES = {
+    DASHBOARD:
+      "dashboard",
 
-  DASHBOARD:
-    "dashboard",
+    FOCUS:
+      "focus",
 
-  FOCUS:
-    "focus",
+    SOUNDS:
+      "sounds",
 
-  SOUNDS:
-    "sounds",
+    STATISTICS:
+      "statistics",
 
-  STATISTICS:
-    "statistics",
-
-};
-
+  });
 
 
 
 
 const VALID_PAGES =
   Object.values(PAGES);
+
 
 
 
@@ -66,9 +66,11 @@ export function NavigationProvider({
 
 
 
+
   const setActivePage =
     useCallback(
       (page) => {
+
 
 
         if (
@@ -77,9 +79,7 @@ export function NavigationProvider({
 
 
           console.warn(
-
             `Invalid navigation page: ${page}`
-
           );
 
 
@@ -90,32 +90,110 @@ export function NavigationProvider({
 
 
 
+
+
         setActivePageState(
           (currentPage) => {
+
 
 
             if (
               currentPage !== page
             ) {
 
+
               setPreviousPage(
                 currentPage
               );
 
+
             }
+
 
 
             return page;
 
 
           }
-
         );
 
 
       },
+
       []
+
     );
+
+
+
+
+
+
+
+
+
+
+  const goBack =
+    useCallback(
+      () => {
+
+
+        if (
+          previousPage
+        ) {
+
+
+          setActivePageState(
+            previousPage
+          );
+
+
+          setPreviousPage(
+            null
+          );
+
+
+        }
+
+
+      },
+
+      [
+        previousPage,
+      ]
+
+    );
+
+
+
+
+
+
+
+
+
+
+  const resetNavigation =
+    useCallback(
+      () => {
+
+
+        setActivePageState(
+          PAGES.DASHBOARD
+        );
+
+
+        setPreviousPage(
+          null
+        );
+
+
+      },
+
+      []
+
+    );
+
 
 
 
@@ -134,18 +212,31 @@ export function NavigationProvider({
 
         setActivePage,
 
+        goBack,
+
+        resetNavigation,
+
         pages:
           PAGES,
 
       }),
 
       [
+
         activePage,
+
         previousPage,
+
         setActivePage,
+
+        goBack,
+
+        resetNavigation,
+
       ]
 
     );
+
 
 
 
@@ -192,9 +283,7 @@ export function useNavigation() {
 
 
     throw new Error(
-
       "useNavigation must be used inside NavigationProvider"
-
     );
 
 
