@@ -5,18 +5,26 @@ import {
 
 
 
+
+
 function useNotification() {
 
 
+
   const isSupported =
+
     typeof window !== "undefined" &&
+
     "Notification" in window;
 
 
 
 
 
+
+
   const [permission, setPermission] =
+
     useState(() => {
 
 
@@ -40,9 +48,13 @@ function useNotification() {
 
 
 
+
   const requestPermission =
+
     useCallback(
+
       async () => {
+
 
 
         if (!isSupported) {
@@ -62,11 +74,15 @@ function useNotification() {
 
 
 
+
         try {
 
 
+
           const result =
+
             await Notification.requestPermission();
+
 
 
 
@@ -76,13 +92,16 @@ function useNotification() {
 
 
 
+
           return (
             result === "granted"
           );
 
 
 
-        } catch (error) {
+
+        } catch(error) {
+
 
 
           console.error(
@@ -98,7 +117,9 @@ function useNotification() {
           return false;
 
 
+
         }
+
 
 
       },
@@ -118,21 +139,25 @@ function useNotification() {
 
 
   const sendNotification =
+
     useCallback(
+
       ({
         title,
+
         body,
+
+        timeout = 5000,
+
       }) => {
 
 
 
-        if (!isSupported) {
+        if(!isSupported) {
 
 
           console.warn(
-
             "Notifications are unavailable."
-
           );
 
 
@@ -146,9 +171,8 @@ function useNotification() {
 
 
 
-        if (
-          Notification.permission !==
-          "granted"
+        if(
+          permission !== "granted"
         ) {
 
 
@@ -162,30 +186,82 @@ function useNotification() {
 
 
 
+        if(
+          !title
+        ) {
+
+
+          console.warn(
+            "Notification title is required."
+          );
+
+
+          return false;
+
+
+        }
+
+
+
+
+
 
         try {
 
 
-          new Notification(
 
-            title,
+          const notification =
 
-            {
+            new Notification(
 
-              body,
+              title,
 
+              {
 
-              icon:
-                "/favicon.ico",
-
-
-              badge:
-                "/favicon.ico",
+                body:
+                  body ?? "",
 
 
-            }
 
-          );
+                icon:
+                  "/favicon.ico",
+
+
+
+                badge:
+                  "/favicon.ico",
+
+              }
+
+            );
+
+
+
+
+
+
+
+          if(timeout > 0) {
+
+
+            setTimeout(
+
+              () => {
+
+                notification.close();
+
+              },
+
+              timeout
+
+            );
+
+
+          }
+
+
+
+
 
 
 
@@ -193,7 +269,9 @@ function useNotification() {
 
 
 
-        } catch (error) {
+
+        } catch(error) {
+
 
 
           console.error(
@@ -209,14 +287,20 @@ function useNotification() {
           return false;
 
 
+
         }
+
 
 
 
       },
 
       [
+
         isSupported,
+
+        permission,
+
       ]
 
     );
@@ -228,16 +312,23 @@ function useNotification() {
 
 
 
+
   return {
+
+
+    isSupported,
+
 
     permission,
 
+
     requestPermission,
+
 
     sendNotification,
 
-  };
 
+  };
 
 }
 
