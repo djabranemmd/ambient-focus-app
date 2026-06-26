@@ -30,8 +30,6 @@ function Card({
 
 
 
-
-
   const enableMotion =
     animate &&
     !shouldReduceMotion;
@@ -50,28 +48,38 @@ function Card({
 
       initial={
         enableMotion
+
           ?
+
           {
             opacity: 0,
             y: 20,
           }
+
           :
+
           false
       }
 
 
 
 
+
       animate={
         enableMotion
+
           ?
+
           {
             opacity: 1,
             y: 0,
           }
+
           :
+
           undefined
       }
+
 
 
 
@@ -80,10 +88,8 @@ function Card({
 
         duration:
           enableMotion
-            ?
-            0.4
-            :
-            0,
+            ? 0.35
+            : 0,
 
 
         ease:
@@ -94,20 +100,22 @@ function Card({
 
 
 
+
+
       whileHover={
 
         hover &&
         enableMotion
 
-        ?
+          ?
 
-        {
-          y: -4,
-        }
+          {
+            y: -4,
+          }
 
-        :
+          :
 
-        undefined
+          undefined
 
       }
 
@@ -127,6 +135,8 @@ function Card({
 
 
 
+
+
       className={`
 
         rounded-[32px]
@@ -134,20 +144,10 @@ function Card({
         p-6
 
 
-
-        transition-all
-
-        duration-300
-
-
-
-
         theme-card
 
 
-
         backdrop-blur-xl
-
 
 
 
@@ -157,10 +157,15 @@ function Card({
 
 
 
-
         shadow-lg
 
         shadow-black/5
+
+
+
+        transition-all
+
+        duration-300
 
 
 
@@ -168,9 +173,7 @@ function Card({
 
 
 
-
         ${className}
-
 
       `}
 
