@@ -8,6 +8,7 @@ import {
 
 import {
   useNavigation,
+  PAGES,
 } from "../../context/NavigationContext.jsx";
 
 
@@ -27,25 +28,25 @@ function MobileBottomNav() {
   const items = [
 
     {
-      id: "dashboard",
+      id: PAGES.DASHBOARD,
       icon: LayoutDashboard,
       label: "Home",
     },
 
     {
-      id: "focus",
+      id: PAGES.FOCUS,
       icon: Timer,
       label: "Focus",
     },
 
     {
-      id: "sounds",
+      id: PAGES.SOUNDS,
       icon: Music,
       label: "Sounds",
     },
 
     {
-      id: "statistics",
+      id: PAGES.STATISTICS,
       icon: BarChart3,
       label: "Stats",
     },
@@ -65,8 +66,11 @@ function MobileBottomNav() {
 
       className="
         fixed
+
         bottom-0
+
         left-0
+
         right-0
 
         z-50
@@ -79,6 +83,7 @@ function MobileBottomNav() {
       "
 
     >
+
 
 
       <div
@@ -104,7 +109,7 @@ function MobileBottomNav() {
 
           px-2
 
-          transition-colors
+          transition-all
 
           duration-300
         "
@@ -134,7 +139,9 @@ function MobileBottomNav() {
               <button
 
 
-                key={item.id}
+                key={
+                  item.id
+                }
 
 
 
@@ -164,20 +171,13 @@ function MobileBottomNav() {
 
 
 
-                aria-pressed={
-                  active
-                }
-
-
-
                 title={
                   item.label
                 }
 
 
 
-                className={`
-
+                className="
                   relative
 
                   w-16
@@ -194,37 +194,26 @@ function MobileBottomNav() {
 
                   gap-1
 
-
                   rounded-2xl
-
 
                   transition-all
 
                   duration-300
 
-
-
                   focus:outline-none
-
-
 
                   focus-visible:ring-2
 
                   focus-visible:ring-purple-500/70
 
-
-
                   focus-visible:ring-offset-2
 
-
-
                   active:scale-95
-
-
-                `}
-
+                "
 
               >
+
+
 
 
 
@@ -255,6 +244,7 @@ function MobileBottomNav() {
 
 
 
+
                 <Icon
 
                   size={20}
@@ -268,11 +258,9 @@ function MobileBottomNav() {
 
                     z-10
 
-
                     transition-colors
 
                     duration-300
-
 
 
                     ${
@@ -280,17 +268,23 @@ function MobileBottomNav() {
 
                       ?
 
-                      "text-purple-400"
+                      `
+                      text-purple-500
+                      dark:text-purple-400
+                      `
 
                       :
 
-                      "theme-text-muted"
+                      `
+                      theme-text-muted
+                      `
 
                     }
 
                   `}
 
                 />
+
 
 
 
@@ -305,14 +299,11 @@ function MobileBottomNav() {
 
                     z-10
 
-
                     text-[11px]
-
 
                     transition-colors
 
                     duration-300
-
 
 
                     ${
@@ -320,11 +311,16 @@ function MobileBottomNav() {
 
                       ?
 
-                      "text-purple-400"
+                      `
+                      text-purple-500
+                      dark:text-purple-400
+                      `
 
                       :
 
-                      "theme-text-muted"
+                      `
+                      theme-text-muted
+                      `
 
                     }
 
@@ -333,7 +329,6 @@ function MobileBottomNav() {
                 >
 
                   {item.label}
-
 
                 </span>
 
