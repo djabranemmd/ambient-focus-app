@@ -6,9 +6,14 @@ import {
   Sparkles,
 } from "lucide-react";
 
+import {
+  useMemo,
+} from "react";
+
 
 import {
   useNavigation,
+  PAGES,
 } from "../../context/NavigationContext.jsx";
 
 
@@ -38,25 +43,25 @@ function Sidebar() {
   const items = [
 
     {
-      id: "dashboard",
+      id: PAGES.DASHBOARD,
       icon: LayoutDashboard,
       label: "Dashboard",
     },
 
     {
-      id: "focus",
+      id: PAGES.FOCUS,
       icon: Timer,
       label: "Focus",
     },
 
     {
-      id: "sounds",
+      id: PAGES.SOUNDS,
       icon: Music,
       label: "Sounds",
     },
 
     {
-      id: "statistics",
+      id: PAGES.STATISTICS,
       icon: BarChart3,
       label: "Statistics",
     },
@@ -66,26 +71,40 @@ function Sidebar() {
 
 
 
-  const totalSeconds =
-    sessions.reduce(
-      (total, session) =>
-        total + session.duration,
-      0
-    );
 
 
-
-  const hours =
-    Math.floor(
-      totalSeconds / 3600
-    );
-
+  const {
+    hours,
+    minutes,
+  } = useMemo(() => {
 
 
-  const minutes =
-    Math.floor(
-      (totalSeconds % 3600) / 60
-    );
+    const totalSeconds =
+      sessions.reduce(
+        (total, session) =>
+          total + session.duration,
+        0
+      );
+
+
+    return {
+
+      hours:
+        Math.floor(
+          totalSeconds / 3600
+        ),
+
+
+      minutes:
+        Math.floor(
+          (totalSeconds % 3600) / 60
+        ),
+
+    };
+
+
+  }, [sessions]);
+
 
 
 
@@ -115,7 +134,6 @@ function Sidebar() {
         p-5
 
         transition-colors
-
         duration-300
       "
 
@@ -123,20 +141,10 @@ function Sidebar() {
 
 
 
-      <div
-        className="
-          mb-10
-          px-3
-        "
-      >
+      <div className="mb-10 px-3">
 
-        <div
-          className="
-            flex
-            items-center
-            gap-3
-          "
-        >
+
+        <div className="flex items-center gap-3">
 
 
           <div
@@ -146,17 +154,13 @@ function Sidebar() {
             className="
               h-11
               w-11
-
               rounded-2xl
-
               bg-gradient-to-br
               from-purple-500
               to-blue-500
-
               flex
               items-center
               justify-center
-
               shadow-lg
             "
 
@@ -170,25 +174,21 @@ function Sidebar() {
 
           <div>
 
-            <h1
-              className="
-                text-xl
-                font-bold
-                theme-text
-              "
-            >
+            <h1 className="
+              text-xl
+              font-bold
+              theme-text
+            ">
 
               Ambient Focus
 
             </h1>
 
 
-            <p
-              className="
-                text-xs
-                theme-text-muted
-              "
-            >
+            <p className="
+              text-xs
+              theme-text-muted
+            ">
 
               Productivity App
 
@@ -199,17 +199,14 @@ function Sidebar() {
 
         </div>
 
+
       </div>
 
 
 
 
 
-
-
       <nav
-
-        role="navigation"
 
         aria-label="Main navigation"
 
@@ -235,25 +232,13 @@ function Sidebar() {
 
               <button
 
-
                 key={item.id}
 
-
-
                 type="button"
-
-
 
                 onClick={() =>
                   setActivePage(item.id)
                 }
-
-
-
-                aria-label={
-                  item.label
-                }
-
 
 
                 aria-current={
@@ -263,64 +248,43 @@ function Sidebar() {
                 }
 
 
-
                 className={`
 
                   relative
-
                   w-full
-
                   flex
-
                   items-center
-
                   gap-3
-
                   px-4
-
                   py-3
-
                   rounded-2xl
-
                   mb-3
-
-
                   transition-all
-
                   duration-300
-
-
-
-                  focus:outline-none
-
-                  focus-visible:ring-2
-
-                  focus-visible:ring-purple-500/70
-
-                  focus-visible:ring-offset-2
-
-                  focus-visible:bg-purple-500/10
-
-
 
                   ${
                     active
 
                     ?
 
-                    "bg-purple-500/20 text-purple-600"
+                    "
+                    bg-purple-500/20
+                    text-purple-500
+                    dark:text-purple-400
+                    "
 
                     :
 
-                    "theme-text-muted hover:bg-purple-500/10"
+                    "
+                    theme-text-muted
+                    hover:bg-purple-500/10
+                    "
 
                   }
 
                 `}
 
               >
-
-
 
 
                 {
@@ -346,16 +310,7 @@ function Sidebar() {
 
 
 
-
-
-                <Icon
-
-                  size={19}
-
-                  aria-hidden="true"
-
-                />
-
+                <Icon size={19}/>
 
 
                 <span>
@@ -363,7 +318,6 @@ function Sidebar() {
                   {item.label}
 
                 </span>
-
 
 
               </button>
@@ -375,32 +329,24 @@ function Sidebar() {
         }
 
 
-
       </nav>
 
 
 
 
 
+      <div className="
+        mt-auto
+        rounded-3xl
+        theme-card
+        p-5
+      ">
 
-      <div
-        className="
-          mt-auto
 
-          rounded-3xl
-
-          theme-card
-
-          p-5
-        "
-      >
-
-        <p
-          className="
-            text-sm
-            theme-text-muted
-          "
-        >
+        <p className="
+          text-sm
+          theme-text-muted
+        ">
 
           Focus Member
 
@@ -408,13 +354,11 @@ function Sidebar() {
 
 
 
-        <div
-          className="
-            text-2xl
-            font-bold
-            theme-text
-          "
-        >
+        <div className="
+          text-2xl
+          font-bold
+          theme-text
+        ">
 
           🎯 {sessions.length}
 
@@ -422,12 +366,10 @@ function Sidebar() {
 
 
 
-        <p
-          className="
-            text-xs
-            theme-text-muted
-          "
-        >
+        <p className="
+          text-xs
+          theme-text-muted
+        ">
 
           Completed Sessions
 
@@ -435,23 +377,19 @@ function Sidebar() {
 
 
 
-        <div
-          className="
-            mt-4
-            text-sm
-            text-purple-500
-            font-medium
-          "
-        >
+        <div className="
+          mt-4
+          text-sm
+          text-purple-500
+          font-medium
+        ">
 
           {hours}h {minutes}m focused
 
         </div>
 
 
-
       </div>
-
 
 
     </aside>
