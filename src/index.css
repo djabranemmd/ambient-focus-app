@@ -1,385 +1,142 @@
 @import "tailwindcss";
 
-
 :root {
-
   --bg-primary: #050816;
-
-  --bg-secondary: rgba(255,255,255,0.05);
-
-  --card-bg: rgba(255,255,255,0.06);
-
-  --border-color: rgba(255,255,255,0.1);
-
+  --bg-secondary: rgba(255, 255, 255, 0.05);
+  --card-bg: rgba(255, 255, 255, 0.06);
+  --border-color: rgba(255, 255, 255, 0.1);
   --text-primary: #ffffff;
-
   --text-secondary: #94a3b8;
-
   --accent-color: #8b5cf6;
-
 }
-
-
 
 [data-theme="light"] {
-
   --bg-primary: #f8fafc;
-
-  --bg-secondary: rgba(255,255,255,0.8);
-
-  --card-bg: rgba(255,255,255,0.75);
-
-  --border-color: rgba(15,23,42,0.08);
-
+  --bg-secondary: rgba(255, 255, 255, 0.8);
+  --card-bg: rgba(255, 255, 255, 0.75);
+  --border-color: rgba(15, 23, 42, 0.08);
   --text-primary: #0f172a;
-
   --text-secondary: #64748b;
-
   --accent-color: #7c3aed;
-
 }
-
-
-
 
 * {
-
   box-sizing: border-box;
-
 }
-
-
-
 
 html {
-
   scroll-behavior: smooth;
-
 }
-
-
-
-
 
 body {
-
   margin: 0;
-
   min-width: 320px;
-
   min-height: 100vh;
-
-
-  background:
-    var(--bg-primary);
-
-
-  color:
-    var(--text-primary);
-
-
-
-  transition:
-
-    background-color
-    .3s ease,
-
-    color
-    .3s ease;
-
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-
-
-
-
-/*
- Theme Helpers
-*/
-
-
+/* Theme Helpers */
 .theme-text {
-
-  color:
-    var(--text-primary);
-
+  color: var(--text-primary);
 }
-
-
 
 .theme-text-muted {
-
-  color:
-    var(--text-secondary);
-
+  color: var(--text-secondary);
 }
-
-
 
 .theme-card {
-
-  background:
-    var(--card-bg);
-
-
-  border:
-
-    1px solid
-
-    var(--border-color);
-
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
 }
-
-
 
 .theme-border {
-
-  border-color:
-    var(--border-color);
-
+  border-color: var(--border-color);
 }
-
-
 
 .theme-bg {
-
-  background:
-    var(--bg-secondary);
-
+  background: var(--bg-secondary);
 }
 
-
-
-
-
-
-/*
- Completion Animation
-*/
-
-
+/* Completion Animation */
 @keyframes slide-in {
-
-
   from {
-
-    opacity:0;
-
-    transform:
-      translateY(-20px);
-
+    opacity: 0;
+    transform: translateY(-20px);
   }
-
-
 
   to {
-
-    opacity:1;
-
-    transform:
-      translateY(0);
-
+    opacity: 1;
+    transform: translateY(0);
   }
-
 }
-
-
 
 .animate-slide-in {
-
-  animation:
-
-    slide-in
-    .4s
-    ease-out;
-
+  animation: slide-in 0.4s ease-out;
 }
 
-
-
-
-
-
-/*
- Audio Slider
-*/
-
-
+/* Audio Slider */
 .audio-slider {
-
-  appearance:none;
-
-  height:6px;
-
-  border-radius:999px;
-
-  background:
-    rgba(148,163,184,.25);
-
-  cursor:pointer;
-
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.25);
+  cursor: pointer;
 }
-
-
 
 .audio-slider:disabled {
-
-  opacity:.4;
-
-  cursor:not-allowed;
-
+  opacity: 0.4;
+  cursor: not-allowed;
 }
-
-
 
 .audio-slider::-webkit-slider-thumb {
-
-  appearance:none;
-
-  width:16px;
-
-  height:16px;
-
-  border-radius:50%;
-
-  background:
-    var(--accent-color);
-
-  cursor:pointer;
-
-
-  transition:
-    transform .2s ease;
-
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
-
-
 
 .audio-slider::-webkit-slider-thumb:hover {
-
-  transform:
-    scale(1.2);
-
+  transform: scale(1.2);
 }
 
-
-
-
-
-
-
-/*
- Accessibility
-*/
-
-
+/* Accessibility */
 :focus-visible {
-
-  outline:
-
-    2px solid
-
-    var(--accent-color);
-
-
-  outline-offset:
-
-    2px;
-
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
 }
-
-
-
-
 
 @media (prefers-reduced-motion: reduce) {
-
-
   *,
-
   *::before,
-
   *::after {
-
-
-    animation-duration:
-
-      .01ms !important;
-
-
-
-    animation-iteration-count:
-
-      1 !important;
-
-
-
-    transition-duration:
-
-      .01ms !important;
-
-
-
-    scroll-behavior:
-
-      auto !important;
-
-
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
-
-
 }
 
-
-
-
-
-/*
- Scrollbar
-*/
-
-
+/* Scrollbar */
 ::-webkit-scrollbar {
-
-  width:10px;
-
+  width: 10px;
 }
-
-
 
 ::-webkit-scrollbar-track {
-
-  background:
-    transparent;
-
+  background: transparent;
 }
-
-
 
 ::-webkit-scrollbar-thumb {
-
-  background:
-    rgba(139,92,246,.45);
-
-  border-radius:
-    999px;
-
+  background: rgba(139, 92, 246, 0.45);
+  border-radius: 999px;
 }
 
-
-
-
-
-/*
- Text Selection
-*/
-
-
+/* Text Selection */
 ::selection {
-
-  background:
-    rgba(139,92,246,.35);
-
-  color:white;
-
+  background: rgba(139, 92, 246, 0.35);
+  color: white;
 }

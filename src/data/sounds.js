@@ -5,15 +5,6 @@ import coffee from "../assets/sounds/coffee.mp3";
 import fire from "../assets/sounds/fire.mp3";
 import night from "../assets/sounds/night.mp3";
 
-console.log({
-  rain,
-  forest,
-  ocean,
-  coffee,
-  fire,
-  night,
-});
-
 export const sounds = [
   {
     id: 1,
