@@ -6,7 +6,7 @@ A modern productivity application combining focus sessions, ambient sounds, and 
 
 ## ✨ Preview
 
-![Ambient Focus Preview](./screenshots/dashboard.png)
+![Ambient Focus Preview](src/assets/ScreenShots/Dashboard.png)
 
 ---
 
