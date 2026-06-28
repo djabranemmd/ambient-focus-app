@@ -10,7 +10,7 @@ export const sounds = [
     id: 1,
     name: "Rain",
     emoji: "🌧️",
-    file: rain,
+    file: "/sounds/Rain.mp3",
   },
   {
     id: 2,
