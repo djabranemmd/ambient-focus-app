@@ -4,6 +4,12 @@ A modern productivity application combining focus sessions, ambient sounds, and 
 
 ---
 
+## 🌐 Live Demo
+
+https://ambient-focus-app.vercel.app
+
+---
+
 ## ✨ Preview
 
 ![Ambient Focus Preview](src/assets/ScreenShots/Dashboard.png)
