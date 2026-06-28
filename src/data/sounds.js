@@ -1,16 +1,17 @@
-import rain from "../assets/sounds/Rain.mp3";
+import rain from "../assets/sounds/rain.mp3";
 import forest from "../assets/sounds/forest.wav";
 import ocean from "../assets/sounds/ocean.wav";
 import coffee from "../assets/sounds/coffee.mp3";
 import fire from "../assets/sounds/fire.mp3";
 import night from "../assets/sounds/night.mp3";
 
+
 export const sounds = [
   {
     id: 1,
     name: "Rain",
     emoji: "🌧️",
-    file: "/sounds/Rain.mp3",
+    file: rain,
   },
   {
     id: 2,
