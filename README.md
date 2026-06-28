@@ -1,70 +1,167 @@
 # 🌌 Ambient Focus
 
-A modern productivity application combining focus sessions, ambient sounds, and productivity tracking.
+<p align="center">
+
+A modern productivity application designed to improve focus, reduce distractions, and create a personalized working environment using focus sessions, ambient sounds, and productivity analytics.
+
+</p>
+
+
+<p align="center">
+
+<img src="./screenshots/dashboard.png" width="800"/>
+
+</p>
+
 
 ---
 
 ## 🌐 Live Demo
 
+🚀 **Vercel Deployment**
+
 https://ambient-focus-app.vercel.app
 
----
-
-## ✨ Preview
-
-![Ambient Focus Preview](src/assets/ScreenShots/Dashboard.png)
 
 ---
 
-## 🚀 Features
+# ✨ Features
 
-- ⏱️ Pomodoro-style focus timer
-- 🎵 Ambient sound mixer
-- 🌙 Dark / Light mode
-- 📊 Productivity statistics
-- 🎯 Daily focus goals
-- 🔔 Browser notifications
-- 💾 Local data persistence
-- 📱 Responsive design
+
+## ⏱ Focus Management
+
+- Pomodoro-style focus sessions
+- Start / Pause / Reset timer
+- Automatic session tracking
+- Completion notifications
+- Completion sound feedback
+
+
+## 🎧 Ambient Sound Mixer
+
+- Multiple background sounds
+- Independent volume control
+- Real-time audio mixing
+- Smooth audio transitions
+
+
+## 📊 Productivity Tracking
+
+- Daily focus goals
+- Completed sessions history
+- Productivity statistics
+- Focus time calculation
+
+
+## 🎨 User Experience
+
+- Dark / Light mode
+- Responsive design
+- Modern glassmorphism UI
+- Smooth animations
+- Keyboard accessibility
+
+
+## 💾 Data Persistence
+
+- LocalStorage based storage
+- Theme persistence
+- Session history persistence
+
+
 
 ---
 
+# 🖥️ Screenshots
 
-## 🛠 Tech Stack
 
-Frontend:
+## 🏠 Dashboard
+
+<img src="./screenshots/dashboard.png" width="900"/>
+
+
+## ⌛ Focus Timer
+
+<img src="./screenshots/focus.png" width="900"/>
+
+
+## 🎧 Ambient Sounds
+
+<img src="./screenshots/sounds.png" width="900"/>
+
+
+## 📊 Statistics
+
+<img src="./screenshots/statistics.png" width="900"/>
+
+
+
+---
+
+# 🛠 Tech Stack
+
+
+## Frontend
+
 - React
 - Vite
 - Tailwind CSS
 - Framer Motion
 
-Icons:
+
+## UI & Icons
+
 - Lucide React
 
-Storage:
-- LocalStorage
 
-Deployment:
+## State Management
+
+- React Context API
+
+
+## Storage
+
+- Browser LocalStorage
+
+
+## Deployment
+
 - Vercel
 
+
+
 ---
-## 📁 Architecture
+
+# 📁 Project Architecture
+
 
 ```bash
+ambient-focus-app
+
 src
 │
 ├── assets
 │   ├── sounds
-│   └── ScreenShots
+│   └── screenshots
+│
 ├── components
+│   │
+│   ├── audio
+│   │
 │   ├── dashboard
+│   │
 │   ├── layout
-│   ├── settings
+│   │
 │   ├── stats
+│   │
 │   ├── timer
+│   │
 │   └── ui
 │
 ├── context
+│   ├── FocusContext
+│   ├── ThemeContext
+│   └── NavigationContext
 │
 ├── hooks
 │
@@ -74,63 +171,87 @@ src
 │
 ├── pages
 │
-├── App.css
 ├── App.jsx
 ├── index.css
 └── main.jsx
 ```
 
+## 🚀 Installation
+
+### Clone repository:
+
+```bash
+git clone https://github.com/yourusername/ambient-focus-app.git
+```
+
+### Move into project:
+
+```bash
+cd ambient-focus-app
+```
+
+### Install dependencies:
+
+```bash
+npm install
+```
+
+### Start development server:
+
+```bash
+npm run dev
+```
+
+### 📦 Available Scripts:
+
+```bash
+npm run dev
+```
+
+### Start development server:
+
+```bash
+npm run build
+```
+
+### Create production build:
+
+```bash
+npm run preview
+```
+
+### Preview production build.
+
+## 🏗 Application Architecture
+```bash
+
+User Interface
+      |
+      |
+React Components
+      |
+      |
+Context API
+      |
+      |
+Custom Hooks
+      |
+      |
+LocalStorage
+```
 ---
 
-## 🖥️ Screenshots
+## The application follows a component-based architecture with:
 
-### 🏠 Dashboard
-
-![Dashboard](src/assets/ScreenShots/Dashboard.png)
-
-### ⌛️ Focus Timer
-
-![Dashboard](src/assets/ScreenShots/Focus%20Timer.png)
-
-### 🎧 Sounds
-
-![Dashboard](src/assets/ScreenShots/Sounds.png)
-
-### 📊 Statics
-
-![Dashboard](src/assets/ScreenShots/statics.png)
+- Reusable UI components
+- Separation between logic and presentation
+- Context-based global state management
+- Custom hooks for reusable behaviors
 
 ---
 
-## 🤝 Contributing
+## 🎬 Demo:
 
-Contributions, issues, and feature requests are welcome.
+### Add your demo GIF here:
 
-Feel free to fork the project and submit a pull request.
-
----
-
-## ⭐ Support
-
-If you find this project useful:
-
-- Star the repository
-- Share it with friends
-- Suggest new Things
-
----
-
-# Author
-
-Ahmed Djabrane Mammadi
-Frontend Developer passionate about building modern web experiences.
-
----
-
-## 📜 License
-
-MIT License
-
----
-
-Made with ❤️ for Computer Science Students
+<img src="src/assets/ScreenShots/demo.gif" width="900"/>
