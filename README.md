@@ -9,7 +9,7 @@ A modern productivity application designed to improve focus, reduce distractions
 
 <p align="center">
 
-<img src="./screenshots/dashboard.png" width="800"/>
+<img src="src/assets/ScreenShots/Dashboard.png" width="800"/>
 
 </p>
 
@@ -18,7 +18,7 @@ A modern productivity application designed to improve focus, reduce distractions
 
 ## 🌐 Live Demo
 
-🚀 **Vercel Deployment**
+### 🚀 **Vercel Deployment**
 
 https://ambient-focus-app.vercel.app
 
@@ -26,7 +26,6 @@ https://ambient-focus-app.vercel.app
 ---
 
 # ✨ Features
-
 
 ## ⏱ Focus Management
 
@@ -44,14 +43,12 @@ https://ambient-focus-app.vercel.app
 - Real-time audio mixing
 - Smooth audio transitions
 
-
 ## 📊 Productivity Tracking
 
 - Daily focus goals
 - Completed sessions history
 - Productivity statistics
 - Focus time calculation
-
 
 ## 🎨 User Experience
 
@@ -61,14 +58,11 @@ https://ambient-focus-app.vercel.app
 - Smooth animations
 - Keyboard accessibility
 
-
 ## 💾 Data Persistence
 
 - LocalStorage based storage
 - Theme persistence
 - Session history persistence
-
-
 
 ---
 
@@ -77,29 +71,28 @@ https://ambient-focus-app.vercel.app
 
 ## 🏠 Dashboard
 
-<img src="./screenshots/dashboard.png" width="900"/>
+<img src="src/assets/ScreenShots/Dashboard.png" width="900"/>
 
 
 ## ⌛ Focus Timer
 
-<img src="./screenshots/focus.png" width="900"/>
+<img src="src/assets/ScreenShots/Focus Timer.png" width="900"/>
 
 
 ## 🎧 Ambient Sounds
 
-<img src="./screenshots/sounds.png" width="900"/>
+<img src="src/assets/ScreenShots/Sounds.png" width="900"/>
 
 
 ## 📊 Statistics
 
-<img src="./screenshots/statistics.png" width="900"/>
+<img src="src/assets/ScreenShots/statics.png" width="900"/>
 
 
 
 ---
 
 # 🛠 Tech Stack
-
 
 ## Frontend
 
@@ -108,27 +101,21 @@ https://ambient-focus-app.vercel.app
 - Tailwind CSS
 - Framer Motion
 
-
 ## UI & Icons
 
 - Lucide React
-
 
 ## State Management
 
 - React Context API
 
-
 ## Storage
 
 - Browser LocalStorage
 
-
 ## Deployment
 
 - Vercel
-
-
 
 ---
 
@@ -181,7 +168,7 @@ src
 ### Clone repository:
 
 ```bash
-git clone https://github.com/yourusername/ambient-focus-app.git
+git clone https://github.com/djabranemmd/ambient-focus-app
 ```
 
 ### Move into project:
@@ -255,3 +242,31 @@ LocalStorage
 ### Add your demo GIF here:
 
 <img src="src/assets/ScreenShots/demo.gif" width="900"/>
+
+---
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome.
+
+Feel free to fork this repository and submit a pull request.
+
+## ⭐ Support
+
+If you like this project:
+
+⭐ Star the repository
+Share it with others
+Suggest improvements
+
+## 👨‍💻 Author
+
+Ahmed Djabrane Mammadi
+
+Frontend Developer passionate about building modern and interactive web applications.
+
+## 📜 License
+
+MIT License
+
+Made with ❤️ for productivity and computer science students.
