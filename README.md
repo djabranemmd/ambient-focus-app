@@ -1,16 +1,128 @@
-# React + Vite
+# 🌌 Ambient Focus
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern productivity application combining focus sessions, ambient sounds, and productivity tracking.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Preview
 
-## React Compiler
+![Ambient Focus Preview](./screenshots/dashboard.png)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🚀 Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- ⏱️ Pomodoro-style focus timer
+- 🎵 Ambient sound mixer
+- 🌙 Dark / Light mode
+- 📊 Productivity statistics
+- 🎯 Daily focus goals
+- 🔔 Browser notifications
+- 💾 Local data persistence
+- 📱 Responsive design
+
+---
+
+
+## 🛠 Tech Stack
+
+Frontend:
+- React
+- Vite
+- Tailwind CSS
+- Framer Motion
+
+Icons:
+- Lucide React
+
+Storage:
+- LocalStorage
+
+Deployment:
+- Vercel
+
+---
+## 📁 Architecture
+
+src
+│
+├── assets
+│   ├── sounds
+│   └── ScreenShots
+├── components
+│   ├── dashboard
+│   ├── layout
+│   ├── settings
+│   ├── stats
+│   ├── timer
+│   └── ui
+│
+├── context
+│
+├── hooks
+│
+├── utils
+│
+├── data
+│
+├── pages
+│
+├── App.css
+├── App.jsx
+├── index.css
+└── main.jsx
+
+---
+
+## 🖥️ Screenshots
+
+### 🏠 Dashboard
+
+![Dashboard](src/assets/ScreenShots/Dashboard.png)
+
+### ⌛️ Focus Timer
+
+![Dashboard](src/assets/ScreenShots/Focus%20Timer.png)
+
+### 🎧 Sounds
+
+![Dashboard](src/assets/ScreenShots/Sounds.png)
+
+### 📊 Statics
+
+![Dashboard](src/assets/ScreenShots/statics.png)
+
+---
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome.
+
+Feel free to fork the project and submit a pull request.
+
+---
+
+## ⭐ Support
+
+If you find this project useful:
+
+- Star the repository
+- Share it with friends
+- Suggest new Things
+
+---
+
+# Author
+
+Ahmed Djabrane Mammadi
+Frontend Developer passionate about building modern web experiences.
+
+---
+
+## 📜 License
+
+MIT License
+
+---
+
+Made with ❤️ for Computer Science Students
