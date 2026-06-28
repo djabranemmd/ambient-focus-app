@@ -1,4 +1,4 @@
-import rain from "/src/assets/sounds/rain.mp3";
+import rain from "../assets/sounds/rain.mp3";
 import forest from "../assets/sounds/forest.wav";
 import ocean from "../assets/sounds/ocean.wav";
 import coffee from "../assets/sounds/coffee.mp3";
