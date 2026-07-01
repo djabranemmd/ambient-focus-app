@@ -261,7 +261,7 @@ Suggest improvements
 
 ## 👨‍💻 Author
 
-Ahmed Djabrane Mammadi
+Ahmed Djabrane Mammadi - Network management and Security Master's Student
 
 Frontend Developer passionate about building modern and interactive web applications.
 
